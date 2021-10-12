@@ -4,23 +4,27 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "movies")
 public class Movie {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private int id;
+
     @Basic@Column(name = "Title", nullable = false, length = 45)
     private String title;
+
     @Basic@Column(name = "Rating", nullable = false)
     private double rating;
+
     @Basic@Column(name = "Min_Age", nullable = false)
     private short minAge;
+
     @Basic@Column(name = "Description", nullable = false)
     private String description;
 
@@ -28,7 +32,7 @@ public class Movie {
     private int categoryId;
 
     @OneToMany(mappedBy = "movie")
-    private Collection<Show> shows;
+    private List<Show> shows;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
@@ -39,4 +43,12 @@ public class Movie {
                     @JoinColumn(name = "Actors_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
     private List<Actor> actorList = new ArrayList<>();
+
+    public Movie(String title, double rating, short minAge, String description, int categoryId) {
+        this.title = title;
+        this.rating = rating;
+        this.minAge = minAge;
+        this.description = description;
+        this.categoryId = categoryId;
+    }
 }

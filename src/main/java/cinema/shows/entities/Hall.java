@@ -3,18 +3,20 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "halls")
-@IdClass(HallPK.class)
 public class Hall {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, insertable = false, updatable = false)
     private int id;
-    @Id@Column(name = "Theaters_id", nullable = false)
+
+    @Column(name = "Theaters_id", nullable = false)
     private int theatersId;
+
     @Basic@Column(name = "Tag", nullable = false, length = 45)
     private String tag;
 
