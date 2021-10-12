@@ -30,7 +30,8 @@ public class Show {
     @JoinColumn(name = "Movies_id", referencedColumnName = "id", nullable = false)
     private Movie movie;
 
-    @OneToMany(mappedBy = "show")
-    private List<Hall> halls;
+    @ManyToOne
+    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    private Hall hall;
 
 }

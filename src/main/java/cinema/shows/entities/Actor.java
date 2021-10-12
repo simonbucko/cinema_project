@@ -21,7 +21,7 @@ public class Actor {
     @Basic@Column(name = "Last_Name", nullable = false, length = 45)
     private String lastName;
 
-    @ManyToMany(mappedBy = "actorList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "actorList")
     private List<Movie> movieList;
 
     public Actor(String firstName, String lastName) {
