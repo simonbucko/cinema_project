@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
-@Data
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "theaters")
 public class Theater {
@@ -18,6 +19,8 @@ public class Theater {
     private String city;
     @Basic@Column(name = "Zipcode", nullable = false)
     private short zipcode;
-    @OneToMany(mappedBy = "theatersByTheatersId")
-    private Collection<Hall> hallsById;
+
+    @OneToMany(mappedBy = "theater")
+    private Collection<Hall> halls;
+
 }

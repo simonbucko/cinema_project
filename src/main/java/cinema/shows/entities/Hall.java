@@ -3,20 +3,27 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
-@Data
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "halls")
+@IdClass(HallPK.class)
 public class Hall {
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)@Column(name = "id", nullable = false)
     private int id;
-    @Basic@Column(name = "Theaters_id", nullable = false)
+    @Id@Column(name = "Theaters_id", nullable = false)
     private int theatersId;
     @Basic@Column(name = "Tag", nullable = false, length = 45)
     private String tag;
-    @OneToMany(mappedBy = "hallsByHallId")
-    private Collection<HallShow> hallShowsById;
+
+    @ManyToOne
+    @JoinColumn(name = "Theaters_id", referencedColumnName = "id", nullable = false)
+    private Theater theater;
+
+    @ManyToOne
+    @JoinColumn(name = "id", referencedColumnName = "Halls_id", nullable = false)
+    private Show show;
 
 }

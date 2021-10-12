@@ -5,7 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Data
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "categories")
 public class Category {
@@ -13,5 +14,4 @@ public class Category {
     private int id;
     @Basic@Column(name = "Name", nullable = false, length = 45)
     private String name;
-
 }

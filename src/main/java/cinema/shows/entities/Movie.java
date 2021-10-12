@@ -3,10 +3,13 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
-@Data
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "movies")
 public class Movie {
@@ -14,19 +17,26 @@ public class Movie {
     private int id;
     @Basic@Column(name = "Title", nullable = false, length = 45)
     private String title;
-    @Basic@Column(name = "Rating", nullable = false, precision = 0)
+    @Basic@Column(name = "Rating", nullable = false)
     private double rating;
     @Basic@Column(name = "Min_Age", nullable = false)
     private short minAge;
-    @Basic@Column(name = "Description", nullable = false, length = 255)
+    @Basic@Column(name = "Description", nullable = false)
     private String description;
-    @Basic@Column(name = "Category_id", nullable = false)
-    private int categoryId;
-    @OneToMany(mappedBy = "moviesByMoviesId")
-    private Collection<MovieActor> movieActorsById;
-    @ManyToOne@JoinColumn(name = "Category_id", referencedColumnName = "id", nullable = false)
-    private Category categoriesByCategoryId;
-    @OneToMany(mappedBy = "moviesByMoviesId")
-    private Collection<Show> showsById;
 
+    @Column(name = "Category_id", nullable = false)
+    private int categoryId;
+
+    @OneToMany(mappedBy = "movie")
+    private Collection<Show> shows;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "movie_actors",
+            joinColumns = {
+                    @JoinColumn(name = "Movies_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "Actors_id", referencedColumnName = "id",
+                            nullable = false, updatable = false)})
+    private List<Actor> actorList = new ArrayList<>();
 }
