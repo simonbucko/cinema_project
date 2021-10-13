@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class MovieRepoTest {
+class MovieAndActorReposTest {
     @Autowired
     MovieRepo movieRepo;
     @Autowired
@@ -24,17 +24,24 @@ class MovieRepoTest {
     @Sql("/createMovie.sql")
     @Sql("/createActor.sql")
     public void testBidirectionalRel() {
-        Movie m1 = movieRepo.getById(1);
+        assertEquals(1, actorRepo.count());
+        assertEquals(1, movieRepo.count());
+
         Actor a1 = actorRepo.getById(1);
-//        Actor a1 = new Actor("Al","Pacino");
-//        Actor a2 = new Actor("Robert","De Niro");
-//        m1.setActorList(Arrays.asList(a1,a2));
-        m1.getActorList().add(a1);
+        Actor a2 = new Actor("Robert","De Niro");
+        assertEquals(1, actorRepo.count());
+
+        Movie m1 = movieRepo.getById(1);
+        m1.setActorList(Arrays.asList(a1,a2));
+        assertEquals(0, movieRepo.getById(1).getActorList().size());
+        assertEquals(1, actorRepo.count());
+
         Movie movieSaved = movieRepo.save(m1);
-        assertTrue(movieSaved.getActorList().contains(a1));
-//        assertEquals(2,actorRepo.count());
-//        Actor actorRetrieved = actorRepo.getById(1);
-//        assertTrue(actorRetrieved.getMovieList().contains(m1));
+        System.out.println(actorRepo.getById(1).getMovieList().toString());
+        assertEquals(2, movieRepo.getById(1).getActorList().size());
+        assertEquals(2, actorRepo.count());
+        assertEquals(1, actorRepo.getById(1).getMovieList().size());
+
     }
 
 

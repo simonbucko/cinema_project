@@ -8,6 +8,7 @@ import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
+@ToString
 @Entity
 @Table(name = "movies")
 public class Movie {
@@ -50,5 +51,10 @@ public class Movie {
         this.minAge = minAge;
         this.description = description;
         this.categoryId = categoryId;
+    }
+
+    public void addActor(Actor actor) {
+        actorList.add(actor);
+        actor.getMovieList().add(this);
     }
 }
