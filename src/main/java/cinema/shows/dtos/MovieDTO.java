@@ -1,8 +1,7 @@
 package cinema.shows.dtos;
 
 import cinema.shows.entities.Movie;
-import cinema.shows.staticCalls.ActorEx;
-import cinema.shows.staticCalls.MovieEx;
+import cinema.shows.staticCalls.StaticCalls;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +32,7 @@ public class MovieDTO {
         if (movie.getActorList() != null) {
             this.actorList = null;
         } else {
-            this.actorList = ActorEx.getActorDTOs(movie.getActorList());
+            this.actorList = StaticCalls.getActorDTOs(movie.getActorList());
         }
     }
 }

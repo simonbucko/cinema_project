@@ -3,7 +3,7 @@ package cinema.shows.services;
 import cinema.shows.dtos.MovieDTO;
 import cinema.shows.entities.Movie;
 import cinema.shows.repos.MovieRepo;
-import cinema.shows.staticCalls.MovieEx;
+import cinema.shows.staticCalls.StaticCalls;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +16,7 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public MovieDTO addMovie(MovieDTO movieDTO) {
-        Movie movieToAdd = MovieEx.movieFromMovieDTO(movieDTO);
+        Movie movieToAdd = StaticCalls.movieFromMovieDTO(movieDTO);
         return new MovieDTO(movieRepo.save(movieToAdd));
     }
 

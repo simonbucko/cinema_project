@@ -1,5 +1,6 @@
 package cinema.shows.entities;
 
+import cinema.shows.dtos.ActorDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,11 @@ public class Actor implements Serializable {
     public Actor(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Actor(ActorDTO actorDTO) {
+        this.firstName = actorDTO.getFirstName();
+        this.lastName = actorDTO.getLastName();
     }
 
     public void addMovie(Movie movie) {

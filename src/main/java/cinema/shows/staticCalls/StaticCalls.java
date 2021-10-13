@@ -4,14 +4,19 @@ import cinema.shows.dtos.ActorDTO;
 import cinema.shows.dtos.MovieDTO;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
-import cinema.shows.services.ActorServicesImp;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-@Component
-public class MovieEx {
+public class StaticCalls {
+
+    public static List<ActorDTO> getActorDTOs(Iterable<Actor> actors) {
+        return StreamSupport.stream(actors.spliterator(), false)
+                .map(actor -> new ActorDTO(actor))
+                .collect(Collectors.toList());
+    }
 
     public static Movie movieFromMovieDTO(MovieDTO movieDTO) {
         Movie movie = new Movie();
@@ -23,7 +28,7 @@ public class MovieEx {
         if (movieDTO.getActorList() != null) {
             List<Actor> actorList = new ArrayList<>();
             for (ActorDTO a : movieDTO.getActorList()) {
-                Actor actor = ActorEx.actorFromActorDTO(a);
+                Actor actor = new Actor(a);
                 actorList.add(actor);
             }
             movie.setActorList(actorList);
