@@ -15,15 +15,21 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
         this.movieServices = movieServices;
     }
 
-    @PutMapping("/editMovie")
-    public ResponseEntity<MovieDTO> updateMovie(@RequestBody MovieDTO movieDTO) {
-        MovieDTO movie = movieServices.updateMovie(movieDTO);
-        return new ResponseEntity<>(movie, HttpStatus.OK);
-    }
-
     @PostMapping("/addMovie")
     public ResponseEntity<MovieDTO> addMovie(@RequestBody MovieDTO movieDTO) {
         MovieDTO movie = movieServices.addMovie(movieDTO);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieDTO> getMovie(@PathVariable int id) {
+        MovieDTO movie = movieServices.getMovie(id);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
+    @PutMapping("/editMovie")
+    public ResponseEntity<MovieDTO> updateMovie(@RequestBody MovieDTO movieDTO) {
+        MovieDTO movie = movieServices.updateMovie(movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 

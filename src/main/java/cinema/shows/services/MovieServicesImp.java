@@ -14,6 +14,16 @@ public class MovieServicesImp implements MovieServices {
         this.movieRepo = movieRepo;
     }
 
+    @Override
+    public MovieDTO addMovie(MovieDTO movieDTO) {
+        Movie movieToAdd = MovieEx.movieFromMovieDTO(movieDTO);
+        return new MovieDTO(movieRepo.save(movieToAdd));
+    }
+
+    @Override
+    public MovieDTO getMovie(int id) {
+        return new MovieDTO(movieRepo.getById(id));
+    }
 
     @Override
     public MovieDTO updateMovie(MovieDTO movieDTO) {
@@ -46,9 +56,4 @@ public class MovieServicesImp implements MovieServices {
         movieRepo.deleteById(movieId);
     }
 
-    @Override
-    public MovieDTO addMovie(MovieDTO movieDTO) {
-        Movie movieToAdd = MovieEx.movieFromMovieDTO(movieDTO);
-        return new MovieDTO(movieRepo.save(movieToAdd));
-    }
 }

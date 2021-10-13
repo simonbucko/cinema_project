@@ -30,6 +30,10 @@ public class MovieDTO {
         this.minAge = movie.getMinAge();
         this.description = movie.getDescription();
         this.categoryId = movie.getCategoryId();
-        this.actorList = ActorEx.getActorDTOs(movie.getActorList());
+        if (movie.getActorList() != null) {
+            this.actorList = null;
+        } else {
+            this.actorList = ActorEx.getActorDTOs(movie.getActorList());
+        }
     }
 }
