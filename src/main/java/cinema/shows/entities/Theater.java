@@ -15,16 +15,18 @@ public class Theater {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Basic@Column(name = "Street", nullable = false, length = 45)
+    @Column(name = "Street", nullable = false, length = 45)
     private String street;
 
-    @Basic@Column(name = "City", nullable = false, length = 45)
+    @Column(name = "City", nullable = false, length = 45)
     private String city;
 
-    @Basic@Column(name = "Zipcode", nullable = false)
+    @Column(name = "Zipcode", nullable = false)
     private short zipcode;
+
+    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private MoviesPlaying moviesPlaying;
 
     @OneToMany(mappedBy = "theater")
     private List<Hall> halls;
-
 }

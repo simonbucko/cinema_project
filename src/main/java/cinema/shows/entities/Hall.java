@@ -15,7 +15,7 @@ public class Hall {
     @Column(name = "id", nullable = false, insertable = false, updatable = false)
     private int id;
 
-    @Basic@Column(name = "Tag", nullable = false, length = 45)
+    @Column(name = "Tag", nullable = false, length = 45)
     private String tag;
 
     @ManyToOne
