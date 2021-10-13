@@ -20,10 +20,10 @@ public class Show {
     @Column(name = "Halls_id", nullable = false)
     private int hallsId;
 
-    @Basic@Column(name = "Date", nullable = false)
+    @Column(name = "Date", nullable = false)
     private Date date;
 
-    @Basic@Column(name = "Time", nullable = false)
+    @Column(name = "Time", nullable = false)
     private Time time;
 
     @ManyToOne

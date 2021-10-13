@@ -17,20 +17,23 @@ public class Movie {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Basic@Column(name = "Title", nullable = false, length = 45)
+    @Column(name = "Title", nullable = false, length = 45)
     private String title;
 
-    @Basic@Column(name = "Rating", nullable = false)
+    @Column(name = "Rating", nullable = false)
     private double rating;
 
-    @Basic@Column(name = "Min_Age", nullable = false)
+    @Column(name = "Min_Age", nullable = false)
     private short minAge;
 
-    @Basic@Column(name = "Description", nullable = false)
+    @Column(name = "Description", nullable = false)
     private String description;
 
     @Column(name = "Category_id", nullable = false)
     private int categoryId;
+
+    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private MoviesPlaying moviesPlaying;
 
     @OneToMany(mappedBy = "movie")
     private List<Show> shows;
