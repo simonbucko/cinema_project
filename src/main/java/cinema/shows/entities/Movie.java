@@ -53,6 +53,15 @@ public class Movie {
         this.categoryId = categoryId;
     }
 
+    public Movie(String title, double rating, short minAge, String description, int categoryId, List<Actor> actorList) {
+        this.title = title;
+        this.rating = rating;
+        this.minAge = minAge;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.actorList=actorList;
+    }
+
     public void addActor(Actor actor) {
         actorList.add(actor);
         actor.getMovieList().add(this);

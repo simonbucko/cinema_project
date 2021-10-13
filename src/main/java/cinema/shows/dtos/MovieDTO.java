@@ -1,5 +1,8 @@
 package cinema.shows.dtos;
 
+import cinema.shows.entities.Movie;
+import cinema.shows.staticCalls.ActorEx;
+import cinema.shows.staticCalls.MovieEx;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +22,14 @@ public class MovieDTO {
     private String description;
     private Integer categoryId;
     private List<ActorDTO> actorList;
+
+    public MovieDTO(Movie movie) {
+        this.id = movie.getId();
+        this.title = movie.getTitle();
+        this.rating = movie.getRating();
+        this.minAge = movie.getMinAge();
+        this.description = movie.getDescription();
+        this.categoryId = movie.getCategoryId();
+        this.actorList = ActorEx.getActorDTOs(movie.getActorList());
+    }
 }
