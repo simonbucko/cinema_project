@@ -11,7 +11,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/moviesplaying")
+@RequestMapping("/api/now")
 public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
     private MoviePlayingServices moviePlayingServices;
 
@@ -33,4 +33,14 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
         List<MoviePlayingDTO> moviePlaying = moviePlayingServices.getAllMoviesPlayingForDates(dateStarts,dateEnds);
         return new ResponseEntity<>(moviePlaying, HttpStatus.OK);
     }
+
+//    @GetMapping("/{dateStarts}/{dateEnds}")
+//    public ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDates(
+//            @PathVariable("dateStarts") String dateStarts,
+//            @PathVariable("dateEnds") String dateEnds) {
+//        Date dateStarting = Date.valueOf(dateStarts);
+//        Date dateEnding = Date.valueOf(dateEnds);
+//        List<MoviePlayingDTO> moviePlaying = moviePlayingServices.getAllMoviesPlayingForDates(dateStarting,dateEnding);
+//        return new ResponseEntity<>(moviePlaying, HttpStatus.OK);
+//    }
 }
