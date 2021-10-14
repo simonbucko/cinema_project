@@ -18,7 +18,7 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
         this.moviePlayingServices = moviePlayingServices;
     }
 
-    @GetMapping
+    @GetMapping("/byDate")
     public ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDate(
             @RequestParam("date") String date) {
         Date dateLooked = Date.valueOf(date);
@@ -26,7 +26,7 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
         return new ResponseEntity<>(moviePlaying, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/byDates")
     public ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDates(
             @RequestParam("dateStarts") String dateStarts,
             @RequestParam("dateEnds") String dateEnds) {

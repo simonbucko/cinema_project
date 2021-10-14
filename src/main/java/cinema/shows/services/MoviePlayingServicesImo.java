@@ -38,13 +38,14 @@ public class MoviePlayingServicesImo implements MoviePlayingServices {
 
     @Override
     public List<MoviePlayingDTO> getAllMoviesPlayingForDate(Date date) {
-        List<MoviePlaying> moviesPlaying = moviePlayingRepo.getAllByDateStarts(date);
+        List<MoviePlaying> moviesPlaying = moviePlayingRepo.getAllByDateEndsIsLessThan(date);
         return getMoviesPlayingDTOs(moviesPlaying);
     }
 
     @Override
     public List<MoviePlayingDTO> getAllMoviesPlayingForDates(Date dateStarts, Date dateEnds) {
-        List<MoviePlaying> moviesPlaying = moviePlayingRepo.getAllByDateEndsIsBetween(dateStarts, dateEnds);
+        List<MoviePlaying> moviesPlaying = moviePlayingRepo.getAllByDateEndsIsBetween(dateStarts,dateEnds);
+//        if (dateStarts > )
         return getMoviesPlayingDTOs(moviesPlaying);
     }
 }
