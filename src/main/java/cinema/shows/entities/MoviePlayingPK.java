@@ -1,13 +1,15 @@
 package cinema.shows.entities;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@NoArgsConstructor
 @Embeddable
-public class MoviesPlayingPK implements Serializable {
+public class MoviePlayingPK implements Serializable {
     @Column(name = "Movies_id", nullable = false)
     private int moviesId;
     public int getMoviesId() {
@@ -30,12 +32,17 @@ public class MoviesPlayingPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MoviesPlayingPK that = (MoviesPlayingPK) o;
+        MoviePlayingPK that = (MoviePlayingPK) o;
         return moviesId == that.moviesId && theatersId == that.theatersId;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(moviesId, theatersId);
+    }
+
+    public MoviePlayingPK(int moviesId, int theatersId) {
+        this.moviesId = moviesId;
+        this.theatersId = theatersId;
     }
 }

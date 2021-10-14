@@ -33,7 +33,7 @@ public class Movie {
     private int categoryId;
 
     @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private MoviesPlaying moviesPlaying;
+    private MoviePlaying moviePlaying;
 
     @OneToMany(mappedBy = "movie")
     private List<Show> shows;

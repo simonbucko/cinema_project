@@ -21,6 +21,7 @@ class MovieAndActorReposTest {
     ActorRepo actorRepo;
 
     @Test
+    @Sql("/createCategory.sql")
     @Sql("/createMovie.sql")
     @Sql("/createActor.sql")
     public void testBidirectionalRel() {

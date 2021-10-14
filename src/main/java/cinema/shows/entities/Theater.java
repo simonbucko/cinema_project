@@ -25,7 +25,7 @@ public class Theater {
     private short zipcode;
 
     @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private MoviesPlaying moviesPlaying;
+    private MoviePlaying moviePlaying;
 
     @OneToMany(mappedBy = "theater")
     private List<Hall> halls;

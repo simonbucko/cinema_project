@@ -4,15 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Objects;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "movies_playing")
-public class MoviesPlaying {
+public class MoviePlaying {
     @EmbeddedId
-    private MoviesPlayingPK moviesPlayingPK;
+    private MoviePlayingPK moviePlayingPK;
 
     @Column(name = "Date_Starts", nullable = false)
     private Date dateStarts;
@@ -27,4 +26,10 @@ public class MoviesPlaying {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Theaters_id", nullable = false, insertable = false, updatable = false)
     private Theater theater;
+
+    public MoviePlaying(MoviePlayingPK moviePlayingPK, Date dateStarts, Date dateEnds) {
+        this.moviePlayingPK = moviePlayingPK;
+        this.dateStarts = dateStarts;
+        this.dateEnds = dateEnds;
+    }
 }
