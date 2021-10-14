@@ -17,7 +17,7 @@ In this project we will use:
   <ol>
   <li>git clone https://github.com/simonbucko/cinema_project.git</li>
   <li>create a database schema on your local MySQL Server</li>
-  <li>set up an environment variable to replace the ${DATABASE_URL} variable in the application-dev.properties</li>
+ <li>set up an environment variable to replace the <b>${DATABASE_URL}</b> variable in the <b>application-dev.properties</b></li>
       *something like this: jdbc:mysql://localhost:3306/<schema_name>?username=<your_db_username>&password=<your_db_password>
       *if you're using IntelliJIDEA you can set that from <Edit Configuration>
   <li>when you are running the project for the first time undo the comment line on the @Configuration annotation located in cinema.shows.configurations.DataBootstrap</li>
