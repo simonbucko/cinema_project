@@ -2,6 +2,7 @@ package cinema.shows.staticCalls;
 
 import cinema.shows.dtos.ActorDTO;
 import cinema.shows.dtos.MovieDTO;
+import cinema.shows.dtos.MoviePlayingDTO;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 
