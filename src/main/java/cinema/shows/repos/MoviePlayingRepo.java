@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface MoviePlayingRepo extends JpaRepository<MoviePlaying, MoviePlayingPK> {
     List<MoviePlaying> getAllByDateStarts(Date date);
-    List<MoviePlaying> getAllByDateStartsAndDateEnds(Date dateStarts, Date dateEnds);
+    List<MoviePlaying> getAllByDateEndsIsBetween(Date dateStarts, Date dateEnds);
 }
