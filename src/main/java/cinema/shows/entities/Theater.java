@@ -27,9 +27,6 @@ public class Theater {
     @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MoviePlaying moviePlaying;
 
-    @OneToMany(mappedBy = "theater")
-    private List<Hall> halls;
-
     public Theater(String street, String city, short zipcode) {
         this.street = street;
         this.city = city;

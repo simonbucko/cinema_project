@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/movies")
+@RequestMapping("/api/playing")
 public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
     private MoviePlayingServices moviePlayingServices;
 
@@ -18,7 +18,7 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
         this.moviePlayingServices = moviePlayingServices;
     }
 
-    @GetMapping("/byDate")
+    @GetMapping("/date")
     public ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDate(
             @RequestParam("date") String date) {
         Date dateLooked = Date.valueOf(date);
@@ -26,7 +26,7 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
         return new ResponseEntity<>(moviePlaying, HttpStatus.OK);
     }
 
-    @GetMapping("/byDates")
+    @GetMapping("/dates")
     public ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDates(
             @RequestParam("dateStarts") String dateStarts,
             @RequestParam("dateEnds") String dateEnds) {

@@ -1,9 +1,7 @@
 package cinema.shows.repos;
 
-import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.MoviePlayingPK;
-import cinema.shows.entities.Theater;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ class MoviePlayingRepoTest {
     CategoryRepo categoryRepo;
 
     @AfterEach
-    private void cleanDB() {
+    public void cleanDB() {
         categoryRepo.deleteAll();
         movieRepo.deleteAll();
         theaterRepo.deleteAll();
@@ -39,7 +37,7 @@ class MoviePlayingRepoTest {
     @Sql("/createCategory.sql")
     @Sql("/createMovie.sql")
     @Sql("/createTheater.sql")
-    public void testAddingMovieInTheater() {
+    public void testAddingMoviePlayingInTheater() {
         MoviePlayingPK moviePlayingPK = new MoviePlayingPK(1,1);
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
@@ -56,21 +54,43 @@ class MoviePlayingRepoTest {
     @Sql("/createCategory.sql")
     @Sql("/createMovie.sql")
     @Sql("/createTheater.sql")
-    public void testGettingMovieForDate() {
+    public void testGettingMoviePlayingForASpecificDate() {
         MoviePlayingPK moviePlayingPK = new MoviePlayingPK(1,1);
-        Date wrongDate = Date.valueOf("2021-11-10");
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
         MoviePlaying moviePlaying = new MoviePlaying(moviePlayingPK, dateStarts, dateEnds);
+
+        Date beforeStartDate = Date.valueOf("2021-11-10");
+        Date betweenPlayingDates = Date.valueOf("2021-11-16");
+        Date afterEndingDate = Date.valueOf("2021-11-23");
         moviePlayingRepo.save(moviePlaying);
-        assertEquals(0, moviePlayingRepo.getAllByDateStarts(wrongDate).size());
-        assertEquals(1, moviePlayingRepo.getAllByDateStarts(dateStarts).size());
-        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsBetween(dateStarts,dateEnds).size());
+        assertEquals(0, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(beforeStartDate, beforeStartDate).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts, dateStarts).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(betweenPlayingDates, betweenPlayingDates).size());
+        assertEquals(0, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(afterEndingDate, afterEndingDate).size());
+    }
+
+    @Test
+    @Sql("/createCategory.sql")
+    @Sql("/createMovie.sql")
+    @Sql("/createTheater.sql")
+    public void testGettingMoviePlayingForAPairOFDates() {
+        MoviePlayingPK moviePlayingPK = new MoviePlayingPK(1,1);
+        Date dateStarts = Date.valueOf("2021-11-11");
+        Date dateEnds = Date.valueOf("2021-11-22");
+        MoviePlaying moviePlaying = new MoviePlaying(moviePlayingPK, dateStarts, dateEnds);
+
+        Date beforeStartDate = Date.valueOf("2021-11-10");
+        Date betweenPlayingDates = Date.valueOf("2021-11-16");
         moviePlayingRepo.save(moviePlaying);
-        assertEquals(1, moviePlayingRepo.count());
-        moviePlayingRepo.delete(moviePlaying);
-        assertEquals(1,movieRepo.count());
-        assertEquals(1,theaterRepo.count());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts,dateEnds).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(beforeStartDate,dateEnds).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(beforeStartDate,betweenPlayingDates).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(beforeStartDate,dateStarts).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts,betweenPlayingDates).size());
+        assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(betweenPlayingDates,dateEnds).size());
+
+        assertEquals(0, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts,beforeStartDate).size());
     }
 
 }

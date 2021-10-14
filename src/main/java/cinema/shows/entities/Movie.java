@@ -35,9 +35,6 @@ public class Movie {
     @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MoviePlaying moviePlaying;
 
-    @OneToMany(mappedBy = "movie")
-    private List<Show> shows;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
             joinColumns = {

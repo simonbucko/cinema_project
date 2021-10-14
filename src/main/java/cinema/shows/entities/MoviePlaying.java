@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -26,6 +28,9 @@ public class MoviePlaying {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "Theaters_id", nullable = false, insertable = false, updatable = false)
     private Theater theater;
+
+    @OneToMany(mappedBy = "moviePlaying")
+    private List<Show> shows;
 
     public MoviePlaying(MoviePlayingPK moviePlayingPK, Date dateStarts, Date dateEnds) {
         this.moviePlayingPK = moviePlayingPK;

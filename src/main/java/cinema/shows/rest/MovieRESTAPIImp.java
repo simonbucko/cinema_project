@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/movie")
+@RequestMapping("/api/movies")
 public class MovieRESTAPIImp implements MovieRESTAPI {
     private MovieServices movieServices;
 
