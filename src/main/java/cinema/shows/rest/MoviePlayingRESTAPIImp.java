@@ -11,7 +11,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/now")
+@RequestMapping("/api/movies/now")
 public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
     private MoviePlayingServices moviePlayingServices;
 
