@@ -3,9 +3,7 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -13,25 +11,21 @@ import java.util.List;
 @Table(name = "shows")
 public class Show {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = false, updatable = false)
+    @GeneratedValue
+    @Column(name = "id", nullable = false)
     private int id;
-
-    @Column(name = "Halls_id", nullable = false)
-    private int hallsId;
-
-    @Column(name = "Date", nullable = false)
-    private Date date;
 
     @Column(name = "Time", nullable = false)
     private Time time;
 
     @ManyToOne
-    @JoinColumn(name = "Movies_id", referencedColumnName = "id", nullable = false)
-    private Movie movie;
+    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false)
+    private Hall hall;
 
     @ManyToOne
-    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-    private Hall hall;
+    @JoinColumns(
+            {@JoinColumn(name = "Movies_Playing_Theaters_id", referencedColumnName = "Theaters_id", nullable = false),
+                    @JoinColumn(name = "Movies_Playing_Movies_id", referencedColumnName = "Movies_id", nullable = false)})
+    private MoviePlaying moviePlaying;
 
 }
