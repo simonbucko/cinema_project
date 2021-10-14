@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/movies")
+@RequestMapping("/api/movie")
 public class MovieRESTAPIImp implements MovieRESTAPI {
     private MovieServices movieServices;
 
@@ -15,7 +15,7 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
         this.movieServices = movieServices;
     }
 
-    @PostMapping("/addMovie")
+    @PostMapping
     public ResponseEntity<MovieDTO> addMovie(@RequestBody MovieDTO movieDTO) {
         MovieDTO movie = movieServices.addMovie(movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
@@ -27,13 +27,13 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
-    @PutMapping("/editMovie")
+    @PutMapping
     public ResponseEntity<MovieDTO> updateMovie(@RequestBody MovieDTO movieDTO) {
         MovieDTO movie = movieServices.updateMovie(movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
-    @DeleteMapping("/removeMovie/{id}")
+    @DeleteMapping("/{id}")
     public void removeMovie(@PathVariable int id) {
         movieServices.removeMovie(id);
     }
