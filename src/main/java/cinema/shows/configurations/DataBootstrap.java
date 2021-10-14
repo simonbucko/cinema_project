@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.Date;
 import java.util.Arrays;
 
-@Configuration
+//@Configuration
 public class DataBootstrap implements CommandLineRunner {
     CategoryRepo categoryRepo;
     MovieRepo movieRepo;
@@ -32,7 +32,9 @@ public class DataBootstrap implements CommandLineRunner {
         categoryRepo.save(category);
 
         Actor actorOne = new Actor(1,"Al", "Pacino");
+        actorRepo.save(actorOne);
         Actor actorTwo = new Actor(2, "Robert", "De Niro");
+        actorRepo.save(actorTwo);
         Movie movieOne = new Movie(1,"The Godfather", 10, (short) 16, "A classic for any time...",1);
         movieOne.setActorList(Arrays.asList(actorOne,actorTwo));
         movieRepo.save(movieOne);

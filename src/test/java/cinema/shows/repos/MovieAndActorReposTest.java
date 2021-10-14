@@ -29,7 +29,7 @@ class MovieAndActorReposTest {
         assertEquals(1, movieRepo.count());
 
         Actor a1 = actorRepo.getById(1);
-        Actor a2 = new Actor("Robert","De Niro");
+        Actor a2 = new Actor(2,"Robert","De Niro");
         assertEquals(1, actorRepo.count());
 
         Movie m1 = movieRepo.getById(1);
@@ -37,8 +37,7 @@ class MovieAndActorReposTest {
         assertEquals(0, movieRepo.getById(1).getActorList().size());
         assertEquals(1, actorRepo.count());
 
-        Movie movieSaved = movieRepo.save(m1);
-        System.out.println(actorRepo.getById(1).getMovieList().toString());
+        movieRepo.save(m1);
         assertEquals(2, movieRepo.getById(1).getActorList().size());
         assertEquals(2, actorRepo.count());
         assertEquals(1, actorRepo.getById(1).getMovieList().size());
