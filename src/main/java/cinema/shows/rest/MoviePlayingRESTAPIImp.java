@@ -28,8 +28,8 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
 
     @GetMapping("/{dateStarts}/{dateEnds}")
     public ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDates(
-            @RequestParam("dateStarts") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateStarts,
-            @RequestParam("dateEnds") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateEnds) {
+            @PathVariable("dateStarts") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateStarts,
+            @PathVariable("dateEnds") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateEnds) {
         List<MoviePlayingDTO> moviePlaying = moviePlayingServices.getAllMoviesPlayingForDates(dateStarts,dateEnds);
         return new ResponseEntity<>(moviePlaying, HttpStatus.OK);
     }
