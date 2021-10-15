@@ -32,6 +32,8 @@ public class MovieDTO {
         this.categoryId = movie.getCategoryId();
         if (!movie.getActorList().isEmpty()) {
             this.actorList = StaticCalls.getActorDTOs(movie.getActorList());
+        } else {
+            this.actorList = new ArrayList<>();
         }
     }
 }

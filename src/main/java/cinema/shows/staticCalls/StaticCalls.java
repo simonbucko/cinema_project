@@ -36,10 +36,13 @@ public class StaticCalls {
 //                .collect(Collectors.toList());
 //    }
 
-    public static List<Actor> getActors(Iterable<ActorDTO> actorsDTOs) {
+    public static List<Actor> getActors(List<ActorDTO> actorsDTOs) {
         List<Actor> actors = new ArrayList<>();
         for (ActorDTO a: actorsDTOs) {
-            actors.add(new Actor(a));
+            Actor actor = new Actor();
+            actor.setFirstName(a.getFirstName());
+            actor.setLastName(a.getLastName());
+            actors.add(actor);
         }
         return actors;
     }
@@ -51,14 +54,12 @@ public class StaticCalls {
         movie.setMinAge(movieDTO.getMinAge());
         movie.setDescription(movieDTO.getDescription());
         movie.setCategoryId(movieDTO.getCategoryId());
-        if (movieDTO.getActorList() == null) {
+        if (movieDTO.getActorList() == null || movieDTO.getActorList().size() == 0
+            || movieDTO.getActorList().get(0).getFirstName().equals("String") &&
+                movieDTO.getActorList().get(0).getLastName().equals("String")) {
+            movie.setActorList(new HashSet<>());
             return movie;
-        }
-        if (movieDTO.getActorList().size() == 0) {
-            return movie;
-        }
-        if (!movieDTO.getActorList().get(1).getFirstName().equals("String") &&
-                !movieDTO.getActorList().get(1).getLastName().equals("String")) {
+        } else {
             List<Actor> actorList = new ArrayList<>();
             for (ActorDTO a : movieDTO.getActorList()) {
                 Actor actor = new Actor(a);

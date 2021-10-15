@@ -40,6 +40,7 @@ public class MovieServicesImp implements MovieServices {
         Short minAge = movieDTO.getMinAge();
         String description = movieDTO.getDescription();
         Integer categoryId = movieDTO.getCategoryId();
+        List<ActorDTO> actorDTOS = movieDTO.getActorList();
         if (title != null) {
             movieInDB.setTitle(title);
         }
@@ -55,7 +56,7 @@ public class MovieServicesImp implements MovieServices {
         if (categoryId != null) {
             movieInDB.setCategoryId(categoryId);
         }
-        if (movieDTO.getActorList() != null) {
+        if (actorDTOS != null || actorDTOS.size() != 0) {
             Set<Actor> actorSet = new HashSet<>(StaticCalls.getActors(movieDTO.getActorList()));
             movieInDB.setActorList(actorSet);
         }
