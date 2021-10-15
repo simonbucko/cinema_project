@@ -1,5 +1,6 @@
 package cinema.shows.rest;
 
+import cinema.shows.dtos.InputMovieDTO;
 import cinema.shows.dtos.MovieDTO;
 import cinema.shows.services.MovieServices;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
     }
 
     @PostMapping
-    public ResponseEntity<MovieDTO> addMovie(@RequestBody MovieDTO movieDTO) {
+    public ResponseEntity<MovieDTO> addMovie(@RequestBody InputMovieDTO movieDTO) {
         MovieDTO movie = movieServices.addMovie(movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }

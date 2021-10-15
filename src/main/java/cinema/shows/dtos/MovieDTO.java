@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -29,9 +30,7 @@ public class MovieDTO {
         this.minAge = movie.getMinAge();
         this.description = movie.getDescription();
         this.categoryId = movie.getCategoryId();
-        if (movie.getActorList() != null) {
-            this.actorList = null;
-        } else {
+        if (!movie.getActorList().isEmpty()) {
             this.actorList = StaticCalls.getActorDTOs(movie.getActorList());
         }
     }

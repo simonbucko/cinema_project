@@ -3,8 +3,8 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -43,7 +43,7 @@ public class Movie {
             inverseJoinColumns = {
                     @JoinColumn(name = "Actors_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    private List<Actor> actorList = new ArrayList<>();
+    private Set<Actor> actorList = new HashSet<>();
 
     public Movie(String title, double rating, short minAge, String description, int categoryId) {
         this.title = title;
@@ -53,7 +53,7 @@ public class Movie {
         this.categoryId = categoryId;
     }
 
-    public Movie(String title, double rating, short minAge, String description, int categoryId, List<Actor> actorList) {
+    public Movie(String title, double rating, short minAge, String description, int categoryId, Set<Actor> actorList) {
         this.title = title;
         this.rating = rating;
         this.minAge = minAge;
@@ -75,4 +75,5 @@ public class Movie {
         actorList.add(actor);
         actor.getMovieList().add(this);
     }
+
 }

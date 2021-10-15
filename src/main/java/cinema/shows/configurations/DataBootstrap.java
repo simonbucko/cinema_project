@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 //@Configuration
 public class DataBootstrap implements CommandLineRunner {
@@ -36,7 +38,8 @@ public class DataBootstrap implements CommandLineRunner {
         Actor actorTwo = new Actor(2, "Robert", "De Niro");
         actorRepo.save(actorTwo);
         Movie movieOne = new Movie(1,"The Godfather", 10, (short) 16, "A classic for any time...",1);
-        movieOne.setActorList(Arrays.asList(actorOne,actorTwo));
+        Set<Actor> actorSet = new HashSet<>(Arrays.asList(actorOne, actorTwo));
+        movieOne.setActorList(actorSet);
         movieRepo.save(movieOne);
 
         Theater theater = new Theater(1,"Lygten 16", "Copenhagen", (short) 2400);

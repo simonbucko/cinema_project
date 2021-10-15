@@ -10,6 +10,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,24 +35,23 @@ class MovieAndActorReposTest {
     @Sql("/createActor.sql")
     public void testBidirectionalRel() {
         //check the sql scripts worked
-        System.out.println(actorRepo.getById(1));
         assertEquals(1, actorRepo.count());
         assertEquals(1, movieRepo.count());
         //getting one actor from the db
         Actor a1 = actorRepo.getById(1);
         //creating new actor
-        Actor a2 = new Actor(2,"Robert","De Niro");
-        actorRepo.save(a2);
+        Actor a2 = new Actor("Robert","De Niro");
         //actor yet not saved
         assertEquals(1, actorRepo.count());
         //getting the movie from the db
         Movie m1 = movieRepo.getById(1);
         //set the movie's actor list
-        m1.setActorList(Arrays.asList(a1,a2));
+        Set<Actor> actorSet = new HashSet<>(Arrays.asList(a1, a2));
+        m1.setActorList(actorSet);
         //check there are no actors for that movie yet
         assertEquals(0, movieRepo.getById(1).getActorList().size());
         //check there is one saved actor just
-        assertEquals(2, actorRepo.count());
+        assertEquals(1, actorRepo.count());
         //save the movie
         movieRepo.save(m1);
         //now we have two movies

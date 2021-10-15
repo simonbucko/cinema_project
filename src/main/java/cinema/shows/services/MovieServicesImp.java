@@ -1,10 +1,17 @@
 package cinema.shows.services;
 
+import cinema.shows.dtos.ActorDTO;
+import cinema.shows.dtos.InputMovieDTO;
 import cinema.shows.dtos.MovieDTO;
+import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 import cinema.shows.repos.MovieRepo;
 import cinema.shows.staticCalls.StaticCalls;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class MovieServicesImp implements MovieServices {
@@ -15,8 +22,8 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
-    public MovieDTO addMovie(MovieDTO movieDTO) {
-        Movie movieToAdd = StaticCalls.movieFromMovieDTO(movieDTO);
+    public MovieDTO addMovie(InputMovieDTO inputMovieDTO) {
+        Movie movieToAdd = StaticCalls.movieFromMovieDTO(inputMovieDTO);
         return new MovieDTO(movieRepo.save(movieToAdd));
     }
 
@@ -47,6 +54,10 @@ public class MovieServicesImp implements MovieServices {
         }
         if (categoryId != null) {
             movieInDB.setCategoryId(categoryId);
+        }
+        if (movieDTO.getActorList() != null) {
+            Set<Actor> actorSet = new HashSet<>(StaticCalls.getActors(movieDTO.getActorList()));
+            movieInDB.setActorList(actorSet);
         }
         return new MovieDTO(movieRepo.save(movieInDB));
     }
