@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -23,8 +24,8 @@ public class Actor implements Serializable {
     @Column(name = "Last_Name", length = 45)
     private String lastName;
 
-    @ManyToMany(mappedBy = "actorList")
-    private List<Movie> movieList;
+    @ManyToMany(mappedBy = "actorSet")
+    private Set<Movie> movieSet;
 
     public Actor(String firstName, String lastName) {
         this.firstName = firstName;
@@ -43,7 +44,7 @@ public class Actor implements Serializable {
     }
 
     public void addMovie(Movie movie) {
-        movieList.add(movie);
-        movie.getActorList().add(this);
+        movieSet.add(movie);
+        movie.getActorSet().add(this);
     }
 }

@@ -11,7 +11,7 @@ import java.sql.Time;
 @Table(name = "shows")
 public class Show {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 

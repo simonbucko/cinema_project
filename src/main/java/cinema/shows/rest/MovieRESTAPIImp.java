@@ -1,5 +1,6 @@
 package cinema.shows.rest;
 
+import cinema.shows.dtos.EditMovieDTO;
 import cinema.shows.dtos.InputMovieDTO;
 import cinema.shows.dtos.MovieDTO;
 import cinema.shows.services.MovieServices;
@@ -29,7 +30,7 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
     }
 
     @PutMapping
-    public ResponseEntity<MovieDTO> updateMovie(@RequestBody MovieDTO movieDTO) {
+    public ResponseEntity<MovieDTO> updateMovie(@RequestBody EditMovieDTO movieDTO) {
         MovieDTO movie = movieServices.updateMovie(movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }

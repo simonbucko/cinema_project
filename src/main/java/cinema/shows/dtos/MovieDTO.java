@@ -1,18 +1,21 @@
 package cinema.shows.dtos;
 
+import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 import cinema.shows.staticCalls.StaticCalls;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MovieDTO {
     private Integer id;
@@ -30,10 +33,15 @@ public class MovieDTO {
         this.minAge = movie.getMinAge();
         this.description = movie.getDescription();
         this.categoryId = movie.getCategoryId();
-        if (!movie.getActorList().isEmpty()) {
-            this.actorList = StaticCalls.getActorDTOs(movie.getActorList());
+        if (!movie.getActorSet().isEmpty()) {
+            Set<Actor> actorSet = movie.getActorSet();
+            this.actorList = StaticCalls.getListOfActorsToShowWithMovieRequest(actorSet);
         } else {
             this.actorList = new ArrayList<>();
         }
     }
+
+
+
+
 }

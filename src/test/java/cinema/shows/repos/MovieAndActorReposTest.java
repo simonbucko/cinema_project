@@ -9,9 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,27 +36,27 @@ class MovieAndActorReposTest {
         assertEquals(1, actorRepo.count());
         assertEquals(1, movieRepo.count());
         //getting one actor from the db
-        Actor a1 = actorRepo.getById(1);
+        Actor actorOne = actorRepo.getById(1);
         //creating new actor
-        Actor a2 = new Actor("Robert","De Niro");
+        Actor actorTwo = new Actor("Robert","De Niro");
         //actor yet not saved
         assertEquals(1, actorRepo.count());
         //getting the movie from the db
-        Movie m1 = movieRepo.getById(1);
+        Movie movieOne = movieRepo.getById(1);
         //set the movie's actor list
-        Set<Actor> actorSet = new HashSet<>(Arrays.asList(a1, a2));
-        m1.setActorList(actorSet);
-        //check there are no actors for that movie yet
-        assertEquals(0, movieRepo.getById(1).getActorList().size());
-        //check there is one saved actor just
+        List<Actor> actors = new ArrayList<>(Arrays.asList(actorOne, actorTwo));
+        movieOne.setActorSet(new HashSet(actors));
+        //check there are no actors for that movie yet since we didn't save the movie yet
+        assertEquals(0, movieRepo.getById(1).getActorSet().size());
+        //check there is only one saved actor in the db yet
         assertEquals(1, actorRepo.count());
         //save the movie
-        movieRepo.save(m1);
+        movieRepo.save(movieOne);
         //now we have two movies
-        assertEquals(2, movieRepo.getById(1).getActorList().size());
-        // AND TWO Actors
+        assertEquals(2, movieRepo.getById(1).getActorSet().size());
+        // AND TWO Actors BECAUSE OF THE BIDIRECTIONAL WAY OF SAVING provided by HIBERNATE
         assertEquals(2, actorRepo.count());
         // Querying the actors side we should get a list of the movies he's playing in
-        assertEquals(1, actorRepo.getById(1).getMovieList().size());
+        assertEquals(1, actorRepo.getById(1).getMovieSet().size());
     }
 }

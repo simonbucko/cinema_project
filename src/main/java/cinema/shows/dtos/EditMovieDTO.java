@@ -9,9 +9,11 @@ import lombok.Setter;
 import java.util.List;
 
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InputMovieDTO {
+public class EditMovieDTO {
+    private Integer id;
     private String title;
     private Double rating;
     private Short minAge;
