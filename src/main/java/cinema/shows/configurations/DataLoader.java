@@ -55,12 +55,12 @@ public class DataLoader {
         Movie truman = new Movie(2, "The Truman Show", 8, (short) 12, "Something different...",2);
         List<Actor> actorListTruman = new ArrayList(Arrays.asList(three));
         Set<Actor> actorSetTruman = new HashSet(actorListTruman);
-        godfather.setActorSet(actorSetTruman);
+        truman.setActorSet(actorSetTruman);
         movieRepo.save(truman);
         Movie matrix = new Movie(3, "The Matrix", 10, (short) 14, "Will blow your mind...",3);
         List<Actor> actorListMatrix = new ArrayList(Arrays.asList(four));
         Set<Actor> actorSetMatrix = new HashSet(actorListMatrix);
-        godfather.setActorSet(actorSetMatrix);
+        matrix.setActorSet(actorSetMatrix);
         movieRepo.save(matrix);
     }
 
