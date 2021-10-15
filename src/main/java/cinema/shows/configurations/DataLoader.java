@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.*;
 
 @Component
 public class DataLoader {
@@ -25,8 +26,7 @@ public class DataLoader {
         this.moviePlayingRepo = moviePlayingRepo;
         if (categoryRepo.count() == 0) {
             loadCategories();
-            loadMovies();
-            loadActors();
+            loadMoviesAndActors();
             loadTheater();
             loadMoviesPlaying();
         }
@@ -38,17 +38,30 @@ public class DataLoader {
         categoryRepo.save(new Category(3, "sci-fy"));
     }
 
-    private void loadMovies() {
-        movieRepo.save(new Movie(1,"The Godfather", 9, (short) 16, "A classic for any time...",1));
-        movieRepo.save(new Movie(2,"The Truman Show", 8, (short) 12, "Something different...",2));
-        movieRepo.save(new Movie(3,"The Matrix", 10, (short) 14, "Will twist your mind...",3));
-    }
-
-    private void loadActors() {
-        actorRepo.save(new Actor(1, "Al", "Pacino"));
-        actorRepo.save(new Actor(2, "Robert", "DeNiro"));
-        actorRepo.save(new Actor(3, "Jim", "Carrey"));
-        actorRepo.save(new Actor(4, "Keanu", "Reeves"));
+    private void loadMoviesAndActors() {
+        Actor one = new Actor(1, "Al", "Pacino");
+        Actor two = new Actor(2, "Robert", "DeNiro");
+        Actor three = new Actor(3, "Jim", "Carrey");
+        Actor four = new Actor(4, "Keanu", "Reeves");
+        actorRepo.save(one);
+        actorRepo.save(two);
+        actorRepo.save(three);
+        actorRepo.save(four);
+        Movie godfather = new Movie(1,"The Godfather", 9, (short) 16, "A classic for any time...",1);
+        List<Actor> actorListGodfather = new ArrayList(Arrays.asList(one,two));
+        Set<Actor> actorSetGodfather = new HashSet(actorListGodfather);
+        godfather.setActorSet(actorSetGodfather);
+        movieRepo.save(godfather);
+        Movie truman = new Movie(2, "The Truman Show", 8, (short) 12, "Something different...",2);
+        List<Actor> actorListTruman = new ArrayList(Arrays.asList(three));
+        Set<Actor> actorSetTruman = new HashSet(actorListTruman);
+        godfather.setActorSet(actorSetTruman);
+        movieRepo.save(truman);
+        Movie matrix = new Movie(3, "The Matrix", 10, (short) 14, "Will blow your mind...",3);
+        List<Actor> actorListMatrix = new ArrayList(Arrays.asList(four));
+        Set<Actor> actorSetMatrix = new HashSet(actorListMatrix);
+        godfather.setActorSet(actorSetMatrix);
+        movieRepo.save(matrix);
     }
 
     private void loadTheater() {
