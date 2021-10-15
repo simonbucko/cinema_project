@@ -3,6 +3,7 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
@@ -24,8 +25,8 @@ public class Theater {
     @Column(name = "Zipcode", nullable = false)
     private short zipcode;
 
-    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private MoviePlaying moviePlaying;
+    @OneToMany(mappedBy = "theater")
+    public List<MoviePlaying> moviesPlaying;
 
     public Theater(String street, String city, short zipcode) {
         this.street = street;

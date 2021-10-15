@@ -12,20 +12,19 @@ import java.sql.Time;
 public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private int id;
+    @Column(name = "Number", nullable = false)
+    private long number;
 
     @Column(name = "Time", nullable = false)
     private Time time;
 
     @ManyToOne
-    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false)
-    private Hall hall;
-
-    @ManyToOne
-    @JoinColumns(
-            {@JoinColumn(name = "Movies_Playing_Theaters_id", referencedColumnName = "Theaters_id", nullable = false),
-                    @JoinColumn(name = "Movies_Playing_Movies_id", referencedColumnName = "Movies_id", nullable = false)})
+    @JoinColumns({
+            @JoinColumn(name = "Movies_Playing_Theaters_id", referencedColumnName = "Theaters_id", nullable = false),
+            @JoinColumn(name = "Movies_Playing_Movies_id", referencedColumnName = "Movies_id", nullable = false)})
     private MoviePlaying moviePlaying;
 
+    @ManyToOne
+    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false)
+    private Hall hall;
 }

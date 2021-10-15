@@ -22,11 +22,11 @@ public class MoviePlaying {
     private Date dateEnds;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Movies_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "Movies_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Movie movie;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Theaters_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "Theaters_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
     private Theater theater;
 
     @OneToMany(mappedBy = "moviePlaying")

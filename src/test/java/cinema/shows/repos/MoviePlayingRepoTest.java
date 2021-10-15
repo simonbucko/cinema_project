@@ -89,7 +89,6 @@ class MoviePlayingRepoTest {
         assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(beforeStartDate,dateStarts).size());
         assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts,betweenPlayingDates).size());
         assertEquals(1, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(betweenPlayingDates,dateEnds).size());
-
         assertEquals(0, moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts,beforeStartDate).size());
     }
 
