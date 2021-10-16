@@ -1,5 +1,6 @@
 package cinema.shows.services;
 
+import cinema.shows.dtos.InputMoviePlayingDTO;
 import cinema.shows.dtos.MovieDTO;
 import cinema.shows.dtos.MoviePlayingDTO;
 import cinema.shows.entities.MoviePlaying;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MoviePlayingServicesImo implements MoviePlayingServices {
+public class MoviePlayingServicesImp implements MoviePlayingServices {
     private MoviePlayingRepo moviePlayingRepo;
 
-    public MoviePlayingServicesImo(MoviePlayingRepo moviePlayingRepo) {
+    public MoviePlayingServicesImp(MoviePlayingRepo moviePlayingRepo) {
         this.moviePlayingRepo = moviePlayingRepo;
     }
 
@@ -24,13 +25,10 @@ public class MoviePlayingServicesImo implements MoviePlayingServices {
         for (MoviePlaying m: moviesPlaying) {
             MoviePlayingDTO moviePlayingDTO = new MoviePlayingDTO();
             MovieDTO movieDTO = new MovieDTO(m.getMovie());
-            int theaterId = m.getTheater().getId();
-            int movieId = m.getMovie().getId();
-            MoviePlayingPK moviePlayingPK = new MoviePlayingPK(movieId, theaterId);
             moviePlayingDTO.setMovieDTO(movieDTO);
-            moviePlayingDTO.setMoviePlayingPK(moviePlayingPK);
             moviePlayingDTO.setDateStarts(m.getDateStarts());
             moviePlayingDTO.setDateEnds(m.getDateEnds());
+            moviePlayingDTO.setTheater(m.getTheater().getName());
             moviePlayingDTOS.add(moviePlayingDTO);
         }
         return moviePlayingDTOS;
@@ -47,5 +45,30 @@ public class MoviePlayingServicesImo implements MoviePlayingServices {
         List<MoviePlaying> moviesPlaying =
                 moviePlayingRepo.getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(dateStarts,dateEnds);
         return getMoviesPlayingDTOs(moviesPlaying);
+    }
+
+    @Override
+    public MoviePlayingDTO addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
+        return null;
+    }
+
+    @Override
+    public MoviePlayingDTO updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
+        return null;
+    }
+
+    @Override
+    public void removeMoviePlayingInTheater(MoviePlayingPK moviePlayingPK) {
+
+    }
+
+    @Override
+    public MoviePlayingDTO getMoviePlayingInTheater(MoviePlayingPK moviePlayingPK) {
+        return null;
+    }
+
+    @Override
+    public List<MoviePlayingDTO> getAllMoviesPlayingInTheater(int theaterId) {
+        return null;
     }
 }

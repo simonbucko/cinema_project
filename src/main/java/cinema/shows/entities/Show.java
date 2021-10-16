@@ -3,6 +3,7 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Time;
 
 @AllArgsConstructor @NoArgsConstructor
@@ -10,13 +11,14 @@ import java.sql.Time;
 @Entity
 @Table(name = "shows")
 public class Show {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Number", nullable = false)
-    private long number;
+    @EmbeddedId
+    private ShowPK showPK;
 
     @Column(name = "Time", nullable = false)
     private Time time;
+
+    @Column(name = "Date", nullable = false)
+    private Date date;
 
     @ManyToOne
     @JoinColumns({

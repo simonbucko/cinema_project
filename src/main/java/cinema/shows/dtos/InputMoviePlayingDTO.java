@@ -7,16 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.sql.Time;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShowDTO {
-    private MoviePlayingDTO moviePlayingDTO;
-    private Time time;
-    private Date date;
-    private String hall;
+public class InputMoviePlayingDTO {
+    private Date dateStarts;
+    private Date dateEnds;
+    private int movieId;
+    private int theaterId;
 }
