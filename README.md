@@ -17,15 +17,10 @@ In this project we will use:
   <ol>
   <li>git clone https://github.com/simonbucko/cinema_project.git</li>
   <li>create a database schema on your local MySQL Server</li>
- <li>set up an environment variable to replace the <b>${DATABASE_URL}</b> variable in the <b>application-dev.properties</b></li>
-      *something like this: jdbc:mysql://localhost:3306/your_schema_name?username=your_db_username&password=your_db_password
-      <br/>
-      *if you're using IntelliJIDEA you can set that from the Edit Configuration option
-  <li>when you are running the project for the first time undo the comment line on the <b>@Configuration</b> annotation located in        <b>cinema.shows.configurations.DataBootstrap</b></li>
-      *this will create some data in your newly created schema
-      <br/>
- *make sure to <b>comment out</b> the @Configuration annotation after the first run or else you will encounter some sql exceptions
-  <li>if you are running your project from your IDE you can start the application</li>
+  <li>set up an environment variable named <b>${DATABASE_URL}</b> which represents the credentials to connect to the database.
+   <br>*in our project it is declared in the <b>application.properties</b> file which spring boot reads before running the program.
+   <br>*example: <b>jdbc:mysql://localhost:3306/your_schema_name?username=your_db_username&password=your_db_password</b>
+  <li>if you are running your project from your IDE you can start the application once you set up the variable</li>
       *if you are running maven: $ mvn compile, $ mvn install, $ mvn spring-boot:run -P dev
  </ol>
  
