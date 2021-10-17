@@ -10,6 +10,7 @@ import java.util.Set;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
+@ToString
 @Table(name = "movies")
 public class Movie {
     @Id
