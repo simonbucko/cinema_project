@@ -13,6 +13,6 @@ public class TestDataMaker {
 
     public static int createMovie(MovieRepo movieRepo, int categoryId){
         movieRepo.deleteAll();
-        return movieRepo.save(new Movie(1,"Godfather",10,(short)2,"a classic...",categoryId)).getId();
+        return movieRepo.save(new Movie("Godfather",10,(short)2,"a classic...",categoryId)).getId();
     }
 }

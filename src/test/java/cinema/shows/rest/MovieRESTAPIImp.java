@@ -50,12 +50,15 @@ public class MovieRESTAPIImp {
 
     @BeforeEach
     public void setupDatabase(){
+        categoryRepo.deleteAll();
+        movieRepo.deleteAll();
         int categoryId = TestDataMaker.createCategory(categoryRepo);
         movieId = TestDataMaker.createMovie(movieRepo, categoryId);
     }
 
     @Test
     void getMovie() {
+        System.out.println(movieId);
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<MovieDTOFull> responseEntity = restTemplate.exchange(makeUrl(BASE_PATH+"/"+movieId),
                 HttpMethod.GET,
