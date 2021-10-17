@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface MoviePlayingRepo extends JpaRepository<MoviePlaying, MoviePlayingPK> {
     List<MoviePlaying> getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(Date dateOne, Date dateTwo);
+    List<MoviePlaying> getAllByTheaterId(Integer theaterId);
 }

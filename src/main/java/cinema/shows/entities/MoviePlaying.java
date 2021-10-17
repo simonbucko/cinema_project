@@ -1,5 +1,6 @@
 package cinema.shows.entities;
 
+import cinema.shows.dtos.InputMoviePlayingDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,5 +37,11 @@ public class MoviePlaying {
         this.moviePlayingPK = moviePlayingPK;
         this.dateStarts = dateStarts;
         this.dateEnds = dateEnds;
+    }
+
+    public MoviePlaying(InputMoviePlayingDTO inputMoviePlayingDTO) {
+        this.moviePlayingPK = new MoviePlayingPK(inputMoviePlayingDTO.getMovieId(), inputMoviePlayingDTO.getTheaterId());
+        this.dateStarts = inputMoviePlayingDTO.getDateStarts();
+        this.dateEnds = inputMoviePlayingDTO.getDateEnds();
     }
 }
