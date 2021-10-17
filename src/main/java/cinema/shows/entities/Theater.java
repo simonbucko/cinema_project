@@ -34,14 +34,16 @@ public class Theater {
     @OneToMany(mappedBy = "theater")
     private List<Hall> halls;
 
-    public Theater(String street, String city, short zipcode) {
+    public Theater(String name, String street, String city, short zipcode) {
+        this.name = name;
         this.street = street;
         this.city = city;
         this.zipcode = zipcode;
     }
 
-    public Theater(int id, String street, String city, short zipcode) {
+    public Theater(int id, String name, String street, String city, short zipcode) {
         this.id = id;
+        this.name = name;
         this.street = street;
         this.city = city;
         this.zipcode = zipcode;

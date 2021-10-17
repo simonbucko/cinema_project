@@ -65,7 +65,7 @@ public class DataLoader {
     }
 
     private void loadTheater() {
-        theaterRepo.save(new Theater(1,"Lygten 16", "Copenhagen", (short) 2400));
+        theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", (short) 2400));
     }
 
     private void loadMoviesPlaying() {
