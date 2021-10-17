@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.util.*;
 
-@Component
+//@Component
 public class DataLoader {
     private CategoryRepo categoryRepo;
     private MovieRepo movieRepo;

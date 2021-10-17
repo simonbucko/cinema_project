@@ -1,1 +1,1 @@
-INSERT INTO theaters(id, Street, City, Zipcode) VALUES (1, 'Lygten 16', 'Copenhagen', '2400');
+INSERT INTO theaters(id, Name, Street, City, Zipcode) VALUES (1, 'Norrebro', 'Lygten 16', 'Copenhagen', '2400');

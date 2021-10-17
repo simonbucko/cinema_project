@@ -7,26 +7,24 @@ import cinema.shows.testUtils.TestDataMaker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
-@EnableAutoConfiguration
-//@AutoConfigureTestDatabase
 @SpringBootTest(classes = {cinema.shows.CinemaApplication.class},
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MovieRESTAPIImp {
+public class MovieRESTAPIImpTest {
     @Autowired
     MovieRepo movieRepo;
     @Autowired
@@ -35,14 +33,15 @@ public class MovieRESTAPIImp {
     private final String BASE_PATH = "/api/movies";
     private final HttpHeaders headers = new HttpHeaders();
 
-    @LocalServerPort
-    private Integer port;
+    @Value("${local.server.port}")
+    private int port;
 
     @Autowired
     TestRestTemplate restTemplate;
 
 
     private String makeUrl(String path){
+        System.out.println(port);
         return "http://localhost:"+port+path;
     }
 
@@ -58,13 +57,12 @@ public class MovieRESTAPIImp {
 
     @Test
     void getMovie() {
-        System.out.println(movieId);
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<MovieDTOFull> responseEntity = restTemplate.exchange(makeUrl(BASE_PATH+"/"+movieId),
                 HttpMethod.GET,
                 entity,
                 MovieDTOFull.class);
-        assertEquals("Godfather", responseEntity.getBody().getTitle());
+        assertEquals("Godfather", Objects.requireNonNull(responseEntity.getBody()).getTitle());
     }
 
 }
