@@ -92,10 +92,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemaV3`.`Theaters` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
   `Street` VARCHAR(45) NOT NULL,
   `City` VARCHAR(45) NOT NULL,
   `Zipcode` SMALLINT NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `Name_UNIQUE` (`Name` ASC))
 ENGINE = InnoDB;
 
 
@@ -126,12 +128,12 @@ ENGINE = InnoDB;
 -- Table `cinemaV3`.`Shows`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemaV3`.`Shows` (
-  `Number` BIGINT NOT NULL AUTO_INCREMENT,
   `Movies_Playing_Theaters_id` INT NOT NULL,
   `Movies_Playing_Movies_id` INT NOT NULL,
   `Time` TIME NOT NULL,
+  `Date` DATE NOT NULL,
   `Halls_id` INT NOT NULL,
-  PRIMARY KEY (`Number`, `Movies_Playing_Theaters_id`, `Movies_Playing_Movies_id`),
+  PRIMARY KEY (`Movies_Playing_Theaters_id`, `Movies_Playing_Movies_id`),
   INDEX `fk_Shows_Halls1_idx` (`Halls_id` ASC),
   INDEX `fk_Shows_Movies_Playing1_idx` (`Movies_Playing_Theaters_id` ASC, `Movies_Playing_Movies_id` ASC),
   CONSTRAINT `fk_Shows_Halls1`
