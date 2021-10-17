@@ -5,7 +5,6 @@ import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.MoviePlayingPK;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.MoviePlayingRepo;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -22,6 +21,12 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     private String errorMessage(Integer movieId, Integer theaterId){
         return "Resource Not found with movieId = " + movieId + " and theaterId = " + theaterId;
+    }
+
+    @Override
+    public MoviePlaying getMoviePlaying(Integer moviePlayingId, Integer theaterId) {
+        return moviePlayingRepo.findById(new MoviePlayingPK(moviePlayingId,theaterId))
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(moviePlayingId, theaterId)));
     }
 
     private MoviePlayingDTOFull getMoviePlayingDTOFull(MoviePlaying moviePlaying) {
@@ -68,9 +73,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     public MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
         int movieId = inputMoviePlayingDTO.getMovieId();
         int theaterId = inputMoviePlayingDTO.getTheaterId();
-        MoviePlaying moviePlayingInDB = moviePlayingRepo.findById(
-                new MoviePlayingPK(movieId, theaterId))
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId, theaterId)));
+        MoviePlaying moviePlayingInDB = getMoviePlaying(movieId,theaterId);
         Date dateStarts = inputMoviePlayingDTO.getDateStarts();
         Date dateEnds = inputMoviePlayingDTO.getDateEnds();
         if (dateStarts != null) {
@@ -85,17 +88,13 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     @Override
     public void removeMoviePlayingInTheater(Integer movieId, Integer theaterId) {
-        moviePlayingRepo.findById(
-                        new MoviePlayingPK(movieId, theaterId))
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId, theaterId)));
+        getMoviePlaying(movieId,theaterId);
         moviePlayingRepo.deleteById(new MoviePlayingPK(movieId,theaterId));
     }
 
     @Override
     public MoviePlayingDTOFull getMoviePlayingInTheater(Integer movieId, Integer theaterId) {
-        MoviePlaying moviePlaying = moviePlayingRepo.findById(
-                        new MoviePlayingPK(movieId, theaterId))
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId, theaterId)));
+        MoviePlaying moviePlaying = getMoviePlaying(movieId,theaterId);
         return getMoviePlayingDTOFull(moviePlaying);
     }
 
@@ -125,9 +124,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     @Override
     public MoviePlayingDTOMin getMinMoviePlayingInTheater(Integer movieId, Integer theaterId) {
-        MoviePlaying moviePlaying = moviePlayingRepo.findById(
-                        new MoviePlayingPK(movieId, theaterId))
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId, theaterId)));
+        MoviePlaying moviePlaying = getMoviePlaying(movieId,theaterId);
         return getMoviePlayingDTOMin(moviePlaying);
     }
 

@@ -3,12 +3,15 @@ package cinema.shows.services;
 import cinema.shows.dtos.InputMoviePlayingDTO;
 import cinema.shows.dtos.MoviePlayingDTOFull;
 import cinema.shows.dtos.MoviePlayingDTOMin;
+import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.MoviePlayingPK;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface MoviePlayingServices {
+    MoviePlaying getMoviePlaying(Integer moviePlayingId, Integer theaterId);
+
     MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO);
     MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO);
     void removeMoviePlayingInTheater(Integer movieId, Integer theaterId);

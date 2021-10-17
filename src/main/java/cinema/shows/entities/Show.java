@@ -1,5 +1,6 @@
 package cinema.shows.entities;
 
+import cinema.shows.dtos.InputShowDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,4 +32,5 @@ public class Show {
     @ManyToOne
     @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false)
     private Hall hall;
+
 }

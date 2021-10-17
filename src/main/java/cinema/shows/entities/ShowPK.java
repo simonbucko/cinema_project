@@ -1,5 +1,6 @@
 package cinema.shows.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -7,7 +8,7 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Embeddable
 public class ShowPK implements Serializable {
     @Column(name = "Movies_Playing_Theaters_id", nullable = false)

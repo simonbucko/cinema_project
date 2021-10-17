@@ -12,7 +12,7 @@ import java.sql.Time;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShowDTOFUll {
+public class ShowDTOFull {
     private MoviePlayingDTOFull moviePlayingDTOFull;
     private Time time;
     private Date date;

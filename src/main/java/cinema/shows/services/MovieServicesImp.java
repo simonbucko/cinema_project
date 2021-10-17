@@ -1,8 +1,6 @@
 package cinema.shows.services;
 
-import cinema.shows.dtos.ActorDTO;
-import cinema.shows.dtos.InputMovieDTO;
-import cinema.shows.dtos.MovieDTOFull;
+import cinema.shows.dtos.*;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 import cinema.shows.exceptions.ResourceNotFoundException;
@@ -85,4 +83,23 @@ public class MovieServicesImp implements MovieServices {
         movieRepo.deleteById(movieId);
     }
 
+    @Override
+    public List<MovieDTOFull> getAllMovies() {
+        List<Movie> movies = movieRepo.findAll();
+        List<MovieDTOFull> movieDTOsFull = new ArrayList<>();
+        for (Movie movie: movies) {
+            movieDTOsFull.add(new MovieDTOFull(movie));
+        }
+        return movieDTOsFull;
+    }
+
+    @Override
+    public List<MovieDTOMin> getAllMinMovies() {
+        List<Movie> movies = movieRepo.findAll();
+        List<MovieDTOMin> movieDTOsMin = new ArrayList<>();
+        for (Movie movie: movies) {
+            movieDTOsMin.add(new MovieDTOMin(movie));
+        }
+        return movieDTOsMin;
+    }
 }
