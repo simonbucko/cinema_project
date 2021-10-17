@@ -22,8 +22,10 @@ public class Show {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "Movies_Playing_Theaters_id", referencedColumnName = "Theaters_id", nullable = false),
-            @JoinColumn(name = "Movies_Playing_Movies_id", referencedColumnName = "Movies_id", nullable = false)})
+            @JoinColumn(name = "Movies_Playing_Theaters_id", referencedColumnName = "Theaters_id", nullable = false,
+                    insertable = false, updatable = false),
+            @JoinColumn(name = "Movies_Playing_Movies_id", referencedColumnName = "Movies_id", nullable = false,
+                    insertable = false, updatable = false)})
     private MoviePlaying moviePlaying;
 
     @ManyToOne

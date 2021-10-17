@@ -9,13 +9,11 @@ import lombok.Setter;
 import java.sql.Date;
 import java.sql.Time;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @AllArgsConstructor
+@Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShowDTO {
-    private MoviePlayingDTO moviePlayingDTO;
+public class ShowDTOFUll {
+    private MoviePlayingDTOFull moviePlayingDTOFull;
     private Time time;
     private Date date;
     private String hall;

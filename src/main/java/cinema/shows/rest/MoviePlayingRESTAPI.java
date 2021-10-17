@@ -1,11 +1,11 @@
 package cinema.shows.rest;
 
-import cinema.shows.dtos.MoviePlayingDTO;
+import cinema.shows.dtos.MoviePlayingDTOFull;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface MoviePlayingRESTAPI {
-    ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDate(String date);
-    ResponseEntity<List<MoviePlayingDTO>> getAllMoviesPlayingForDates(String dateStarts, String dateEnds);
+    ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForDate(String date);
+    ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForDates(String dateStarts, String dateEnds);
 }

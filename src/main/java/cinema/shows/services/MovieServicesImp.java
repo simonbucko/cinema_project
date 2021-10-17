@@ -1,11 +1,10 @@
 package cinema.shows.services;
 
-import cinema.shows.dtos.EditMovieDTO;
+import cinema.shows.dtos.ActorDTO;
 import cinema.shows.dtos.InputMovieDTO;
-import cinema.shows.dtos.MovieDTO;
+import cinema.shows.dtos.MovieDTOFull;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
-import cinema.shows.repos.ActorRepo;
 import cinema.shows.repos.MovieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,34 +15,33 @@ import java.util.*;
 public class MovieServicesImp implements MovieServices {
     private MovieRepo movieRepo;
     @Autowired
-    ActorRepo actorRepo;
-
+    ActorServices actorServices;
 
     public MovieServicesImp(MovieRepo movieRepo) {
         this.movieRepo = movieRepo;
     }
 
     @Override
-    public MovieDTO addMovie(InputMovieDTO inputMovieDTO) {
+    public MovieDTOFull addMovie(InputMovieDTO inputMovieDTO) {
         Movie newMovie = new Movie(inputMovieDTO);
         Movie movieSaved = movieRepo.save(newMovie);
-        return new MovieDTO(movieSaved);
+        return new MovieDTOFull(movieSaved);
     }
 
     @Override
-    public MovieDTO getMovie(int id) {
-        return new MovieDTO(movieRepo.getById(id));
+    public MovieDTOFull getMovie(int id) {
+        return new MovieDTOFull(movieRepo.getById(id));
     }
 
     @Override
-    public MovieDTO updateMovie(EditMovieDTO movieDTO) {
+    public MovieDTOFull updateMovie(MovieDTOFull movieDTO, Boolean replace) {
         Movie movieInDB = movieRepo.getById(movieDTO.getId());
         String title = movieDTO.getTitle();
         Double rating = movieDTO.getRating();
         Short minAge = movieDTO.getMinAge();
         String description = movieDTO.getDescription();
         Integer categoryId = movieDTO.getCategoryId();
-        List<Actor> actorDTOList = movieDTO.getActorList();
+        List<ActorDTO> actors = movieDTO.getActorList();
         if (title != null) {
             movieInDB.setTitle(title);
         }
@@ -59,13 +57,17 @@ public class MovieServicesImp implements MovieServices {
         if (categoryId != null) {
             movieInDB.setCategoryId(categoryId);
         }
-        if (actorDTOList != null) {
-            Set<Actor> actorSet = new HashSet(actorDTOList);
-            actorRepo.saveAll(actorDTOList);
-            movieInDB.getActorSet().addAll(actorSet);
+        if (actors != null) {
+            List<Actor> actorList = actorServices.saveAll(actors);
+            Set<Actor> actorSet = new HashSet(actorList);
+            if (replace) {
+                movieInDB.setActorSet(actorSet);
+            } else {
+                movieInDB.getActorSet().addAll(actorSet);
+            }
         }
         Movie movieSaved = movieRepo.save(movieInDB);
-        return new MovieDTO(movieSaved);
+        return new MovieDTOFull(movieSaved);
     }
 
     @Override

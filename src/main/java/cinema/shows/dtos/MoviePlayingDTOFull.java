@@ -11,8 +11,8 @@ import java.sql.Date;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MoviePlayingDTO {
-    private MovieDTO movieDTO;
+public class MoviePlayingDTOFull {
+    private MovieDTOFull movieDTOFull;
     private Date dateStarts;
     private Date dateEnds;
     private String theater;

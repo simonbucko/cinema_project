@@ -1,6 +1,5 @@
 package cinema.shows.dtos;
 
-import cinema.shows.entities.MoviePlayingPK;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,10 +12,9 @@ import java.sql.Time;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InputShowDTO {
-    private Integer movieId;
-    private Integer theaterId;
-    private Date date;
+public class ShowDTOMin {
+    private MoviePlayingDTOMin moviePlayingDTOMin;
     private Time time;
-    private int hallId;
+    private Date date;
+    private String hall;
 }
