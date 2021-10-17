@@ -5,6 +5,7 @@ import cinema.shows.dtos.InputMovieDTO;
 import cinema.shows.dtos.MovieDTOFull;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
+import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.MovieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,10 @@ public class MovieServicesImp implements MovieServices {
         this.movieRepo = movieRepo;
     }
 
+    private String errorMessage(Integer id){
+        return "Resource Not found with id = " + id;
+    }
+
     @Override
     public MovieDTOFull addMovie(InputMovieDTO inputMovieDTO) {
         Movie newMovie = new Movie(inputMovieDTO);
@@ -29,13 +34,16 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
-    public MovieDTOFull getMovie(int id) {
-        return new MovieDTOFull(movieRepo.getById(id));
+    public MovieDTOFull getMovie(Integer movieId) {
+        Movie movie = movieRepo.findById(movieId)
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
+        return new MovieDTOFull(movie);
     }
 
     @Override
     public MovieDTOFull updateMovie(MovieDTOFull movieDTO, Boolean replace) {
-        Movie movieInDB = movieRepo.getById(movieDTO.getId());
+        Movie movieInDB = movieRepo.findById(movieDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieDTO.getId())));
         String title = movieDTO.getTitle();
         Double rating = movieDTO.getRating();
         Short minAge = movieDTO.getMinAge();
@@ -71,7 +79,9 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
-    public void removeMovie(int movieId) {
+    public void removeMovie(Integer movieId) {
+        movieRepo.findById(movieId)
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
         movieRepo.deleteById(movieId);
     }
 

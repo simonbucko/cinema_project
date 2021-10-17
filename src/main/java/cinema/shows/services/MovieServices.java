@@ -5,7 +5,7 @@ import cinema.shows.dtos.MovieDTOFull;
 
 public interface MovieServices {
     MovieDTOFull addMovie(InputMovieDTO inputMovieDTO);
-    MovieDTOFull getMovie(int id);
+    MovieDTOFull getMovie(Integer movieId);
     MovieDTOFull updateMovie(MovieDTOFull movieDTOFull, Boolean replace);
-    void removeMovie(int movieId);
+    void removeMovie(Integer movieId);
 }
