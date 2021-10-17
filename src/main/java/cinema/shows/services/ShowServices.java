@@ -18,8 +18,10 @@ public interface ShowServices {
     List<ShowDTOMin> getMinShowsByDates(Date dateStarts, Date dateEnds);
     List<ShowDTOMin> getMinShowsByTheater(Integer theaterId);
 
-    List<ShowDTOFull> getShowsByDate(Date date);
-    List<ShowDTOFull> getShowsByDates(Date dateStarts, Date dateEnds);
-    List<ShowDTOFull> getShowsByMoviePlaying(Integer theaterId);
+    List<ShowDTOMin> getMinShowsByDateAndTheater(Date date, Integer theaterId);
+    List<ShowDTOMin> getMinShowsByDatesAndTheater(Date dateOne, Date dateTwo, Integer theaterId);
+
+    List<ShowDTOFull> getShowsByDateAndTheater(Date date, Integer theaterId);
+    List<ShowDTOFull> getShowsByDatesAndTheater(Date date, Date dateTwo, Integer theaterId);
 
 }

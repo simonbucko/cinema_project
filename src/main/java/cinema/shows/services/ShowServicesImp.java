@@ -1,18 +1,17 @@
 package cinema.shows.services;
 
-import cinema.shows.dtos.InputShowDTO;
-import cinema.shows.dtos.MoviePlayingDTOMin;
-import cinema.shows.dtos.ShowDTOFull;
-import cinema.shows.dtos.ShowDTOMin;
+import cinema.shows.dtos.*;
 import cinema.shows.entities.*;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.HallRepo;
 import cinema.shows.repos.ShowRepo;
+import cinema.shows.repos.TheaterRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +21,8 @@ public class ShowServicesImp implements ShowServices {
     HallRepo hallRepo;
     @Autowired
     MoviePlayingServices moviePlayingServices;
+    @Autowired
+    TheaterRepo theaterRepo;
 
     public ShowServicesImp(ShowRepo showRepo) {
         this.showRepo = showRepo;
@@ -46,7 +47,6 @@ public class ShowServicesImp implements ShowServices {
         show.setHall(hall);
         return show;
     }
-
     private ShowDTOMin getShowDTOMinFromShow(Show show) {
         ShowDTOMin showDTOMin = new ShowDTOMin();
         showDTOMin.setDate(show.getDate());
@@ -58,6 +58,32 @@ public class ShowServicesImp implements ShowServices {
                 moviePlayingServices.getMinMoviePlayingInTheater(moviePlayingId,theaterId);
         showDTOMin.setMoviePlayingDTOMin(moviePlayingDTOMin);
         return showDTOMin;
+    }
+    private List<ShowDTOMin> getShowDTOsMinFromShows(List<Show> shows) {
+        List<ShowDTOMin> showDTOsMin = new ArrayList<>();
+        for (Show s: shows) {
+            showDTOsMin.add(getShowDTOMinFromShow(s));
+        }
+        return showDTOsMin;
+    }
+    private ShowDTOFull getShowDTOFullFromShow(Show show) {
+        ShowDTOFull showDTOFull = new ShowDTOFull();
+        showDTOFull.setDate(show.getDate());
+        showDTOFull.setTime(show.getTime());
+        ShowPK showPK = show.getShowPK();
+        int moviePlayingId = showPK.getMoviesPlayingMoviesId();
+        int theaterId = showPK.getMoviesPlayingTheatersId();
+        MoviePlayingDTOFull moviePlayingDTOFull =
+                moviePlayingServices.getMoviePlayingInTheater(moviePlayingId,theaterId);
+        showDTOFull.setMoviePlayingDTOFull(moviePlayingDTOFull);
+        return showDTOFull;
+    }
+    private List<ShowDTOFull> getShowDTOsFullFromShows(List<Show> shows) {
+        List<ShowDTOFull> showDTOsFull = new ArrayList<>();
+        for (Show s: shows) {
+            showDTOsFull.add(getShowDTOFullFromShow(s));
+        }
+        return showDTOsFull;
     }
 
     @Override
@@ -103,31 +129,48 @@ public class ShowServicesImp implements ShowServices {
 
     @Override
     public List<ShowDTOMin> getMinShowsByDate(Date date) {
-        return null;
+        List<Show> shows = showRepo.getAllByDateIs(date);
+        return getShowDTOsMinFromShows(shows);
     }
 
     @Override
     public List<ShowDTOMin> getMinShowsByDates(Date dateStarts, Date dateEnds) {
-        return null;
+        List<Show> shows = showRepo.getAllByDateIsBetween(dateStarts,dateEnds);
+        return getShowDTOsMinFromShows(shows);
     }
 
     @Override
     public List<ShowDTOMin> getMinShowsByTheater(Integer theaterId) {
-        return null;
+        Theater theater = theaterRepo.getById(theaterId);
+        List<Show> shows = showRepo.getAllByMoviePlaying_TheaterIs(theater);
+        return getShowDTOsMinFromShows(shows);
     }
 
     @Override
-    public List<ShowDTOFull> getShowsByDate(Date date) {
-        return null;
+    public List<ShowDTOMin> getMinShowsByDateAndTheater(Date date, Integer theaterId) {
+        Theater theater = theaterRepo.getById(theaterId);
+        List<Show> shows = showRepo.getAllByDateIsAndMoviePlaying_TheaterIs(date, theater);
+        return getShowDTOsMinFromShows(shows);
     }
 
     @Override
-    public List<ShowDTOFull> getShowsByDates(Date dateStarts, Date dateEnds) {
-        return null;
+    public List<ShowDTOMin> getMinShowsByDatesAndTheater(Date dateOne, Date dateTwo, Integer theaterId) {
+        Theater theater = theaterRepo.getById(theaterId);
+        List<Show> shows = showRepo.getAllByDateIsBetweenAndMoviePlaying_TheaterIs(dateOne,dateTwo,theater);
+        return getShowDTOsMinFromShows(shows);
     }
 
     @Override
-    public List<ShowDTOFull> getShowsByMoviePlaying(Integer theaterId) {
-        return null;
+    public List<ShowDTOFull> getShowsByDateAndTheater(Date date, Integer theaterId) {
+        Theater theater = theaterRepo.getById(theaterId);
+        List<Show> shows = showRepo.getAllByDateIsAndMoviePlaying_TheaterIs(date, theater);
+        return getShowDTOsFullFromShows(shows);
+    }
+
+    @Override
+    public List<ShowDTOFull> getShowsByDatesAndTheater(Date dateOne, Date dateTwo, Integer theaterId) {
+        Theater theater = theaterRepo.getById(theaterId);
+        List<Show> shows = showRepo.getAllByDateIsBetweenAndMoviePlaying_TheaterIs(dateOne,dateTwo,theater);
+        return getShowDTOsFullFromShows(shows);
     }
 }
