@@ -17,4 +17,5 @@ public class ShowDTOFull {
     private Time time;
     private Date date;
     private String hall;
+    private String hallId;
 }

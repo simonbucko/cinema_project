@@ -5,6 +5,7 @@ import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.MoviePlayingPK;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.MoviePlayingRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -14,6 +15,8 @@ import java.util.List;
 @Service
 public class MoviePlayingServicesImp implements MoviePlayingServices {
     private MoviePlayingRepo moviePlayingRepo;
+    @Autowired
+    MovieServices movieServices;
 
     public MoviePlayingServicesImp(MoviePlayingRepo moviePlayingRepo) {
         this.moviePlayingRepo = moviePlayingRepo;
@@ -31,7 +34,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     private MoviePlayingDTOFull getMoviePlayingDTOFull(MoviePlaying moviePlaying) {
         MoviePlayingDTOFull moviePlayingDTOFull = new MoviePlayingDTOFull();
-        MovieDTOFull movieDTOFull = new MovieDTOFull(moviePlaying.getMovie());
+        MovieDTOFull movieDTOFull = movieServices.getMovieDTOFullFromMovie(moviePlaying.getMovie());
         moviePlayingDTOFull.setMovieDTOFull(movieDTOFull);
         moviePlayingDTOFull.setDateStarts(moviePlaying.getDateStarts());
         moviePlayingDTOFull.setDateEnds(moviePlaying.getDateEnds());
@@ -47,11 +50,11 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
     private MoviePlayingDTOMin getMoviePlayingDTOMin(MoviePlaying moviePlaying) {
         MoviePlayingDTOMin moviePlayingDTOMin = new MoviePlayingDTOMin();
-        MovieDTOMin movieDTOMin = new MovieDTOMin(moviePlaying.getMovie());
+        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(moviePlaying.getMovie());
         moviePlayingDTOMin.setMovieDTOMin(movieDTOMin);
         moviePlayingDTOMin.setDateStarts(moviePlaying.getDateStarts());
         moviePlayingDTOMin.setDateEnds(moviePlaying.getDateEnds());
-        moviePlayingDTOMin.setTheaterId(moviePlaying.getTheater().getId());
+        moviePlayingDTOMin.setTheater(moviePlaying.getTheater().getName());
         return moviePlayingDTOMin;
     }
     private List<MoviePlayingDTOMin> getMoviesPlayingDTOsMin(List<MoviePlaying> moviesPlaying) {

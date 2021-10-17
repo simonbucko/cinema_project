@@ -1,6 +1,8 @@
 package cinema.shows.rest;
 
+import cinema.shows.dtos.InputMoviePlayingDTO;
 import cinema.shows.dtos.MoviePlayingDTOFull;
+import cinema.shows.dtos.MoviePlayingDTOMin;
 import cinema.shows.services.MoviePlayingServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,22 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
 
     public MoviePlayingRESTAPIImp(MoviePlayingServices moviePlayingServices) {
         this.moviePlayingServices = moviePlayingServices;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForTheater(
+            @RequestParam("theaterId") Integer theaterId) {
+        List<MoviePlayingDTOFull> moviePlayingDTOFsFull =
+                moviePlayingServices.getAllMoviesPlayingInTheater(theaterId);
+        return new ResponseEntity<>(moviePlayingDTOFsFull, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<MoviePlayingDTOMin> addMoviePlayingForTheater(
+            @RequestBody InputMoviePlayingDTO inputMoviePlayingDTO) {
+        MoviePlayingDTOMin moviePlayingDTOMin =
+                moviePlayingServices.addMoviePlayingInTheater(inputMoviePlayingDTO);
+        return new ResponseEntity<>(moviePlayingDTOMin, HttpStatus.OK);
     }
 
     @GetMapping("/date")

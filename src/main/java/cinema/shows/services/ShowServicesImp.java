@@ -43,8 +43,7 @@ public class ShowServicesImp implements ShowServices {
         show.setShowPK(new ShowPK(inputShowDTO.getMoviePlayingId(),inputShowDTO.getTheaterId()));
         show.setDate(inputShowDTO.getDate());
         show.setTime(inputShowDTO.getTime());
-        Hall hall = hallRepo.getById(inputShowDTO.getHallId());
-        show.setHall(hall);
+        show.setHallId(inputShowDTO.getHallId());
         return show;
     }
     private ShowDTOMin getShowDTOMinFromShow(Show show) {
@@ -57,6 +56,8 @@ public class ShowServicesImp implements ShowServices {
         MoviePlayingDTOMin moviePlayingDTOMin =
                 moviePlayingServices.getMinMoviePlayingInTheater(moviePlayingId,theaterId);
         showDTOMin.setMoviePlayingDTOMin(moviePlayingDTOMin);
+        String hall = hallRepo.getById(show.getHallId()).getTag();
+        showDTOMin.setHall(hall);
         return showDTOMin;
     }
     private List<ShowDTOMin> getShowDTOsMinFromShows(List<Show> shows) {
@@ -75,6 +76,8 @@ public class ShowServicesImp implements ShowServices {
         int theaterId = showPK.getMoviesPlayingTheatersId();
         MoviePlayingDTOFull moviePlayingDTOFull =
                 moviePlayingServices.getMoviePlayingInTheater(moviePlayingId,theaterId);
+        String hall = hallRepo.getById(show.getHallId()).getTag();
+        showDTOFull.setHall(hall);
         showDTOFull.setMoviePlayingDTOFull(moviePlayingDTOFull);
         return showDTOFull;
     }
@@ -108,8 +111,7 @@ public class ShowServicesImp implements ShowServices {
             showInDB.setTime(time);
         }
         if (hallId != null) {
-            Hall hall = hallRepo.getById(hallId);
-            showInDB.setHall(hall);
+            showInDB.setHallId(hallId);
         }
         Show showSaved = showRepo.save(showInDB);
         return getShowDTOMinFromShow(showSaved);

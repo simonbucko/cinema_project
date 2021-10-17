@@ -16,4 +16,5 @@ public class MoviePlayingDTOFull {
     private Date dateStarts;
     private Date dateEnds;
     private String theater;
+    private Integer theaterId;
 }

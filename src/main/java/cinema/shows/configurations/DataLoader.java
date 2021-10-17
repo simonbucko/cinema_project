@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.*;
 
 //@Component
@@ -15,20 +16,27 @@ public class DataLoader {
     private ActorRepo actorRepo;
     private TheaterRepo theaterRepo;
     private MoviePlayingRepo moviePlayingRepo;
+    private HallRepo hallRepo;
+    private ShowRepo showRepo;
 
     @Autowired
     public DataLoader(CategoryRepo categoryRepo, MovieRepo movieRepo,
-                      ActorRepo actorRepo, MoviePlayingRepo moviePlayingRepo, TheaterRepo theaterRepo) {
+                      ActorRepo actorRepo, MoviePlayingRepo moviePlayingRepo,
+                      TheaterRepo theaterRepo, HallRepo hallRepo, ShowRepo showRepo) {
         this.categoryRepo = categoryRepo;
         this.movieRepo = movieRepo;
         this.actorRepo = actorRepo;
         this.theaterRepo = theaterRepo;
         this.moviePlayingRepo = moviePlayingRepo;
+        this.hallRepo = hallRepo;
+        this.showRepo = showRepo;
         if (categoryRepo.count() == 0) {
             loadCategories();
             loadMoviesAndActors();
             loadTheater();
             loadMoviesPlaying();
+            loadHall();
+            loadShows();
         }
     }
 
@@ -84,5 +92,16 @@ public class DataLoader {
         Date dateEndsMatrix = Date.valueOf("2021-10-25");
         MoviePlaying moviePlayingMatrix= new MoviePlaying(moviePlayingPKThree, dateStartsMatrix, dateEndsMatrix);
         moviePlayingRepo.save(moviePlayingMatrix);
+    }
+
+    private void loadHall() {
+        Hall hall = new Hall(1,"Room One",1);
+        hallRepo.save(hall);
+    }
+
+    private void loadShows() {
+        ShowPK showPKOne = new ShowPK(1,1);
+        Show showOneGodfather = new Show(showPKOne, Time.valueOf("15:00:00"),Date.valueOf("2021-10-16"),1);
+        showRepo.save(showOneGodfather);
     }
 }

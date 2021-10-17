@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/movies")
 public class MovieRESTAPIImp implements MovieRESTAPI {
@@ -14,6 +16,12 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
 
     public MovieRESTAPIImp(MovieServices movieServices) {
         this.movieServices = movieServices;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MovieDTOFull>> getAllMovies() {
+        List<MovieDTOFull> movieDTOsFull = movieServices.getAllMovies();
+        return new ResponseEntity<>(movieDTOsFull, HttpStatus.OK);
     }
 
     @PostMapping

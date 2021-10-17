@@ -1,6 +1,5 @@
 package cinema.shows.entities;
 
-import cinema.shows.dtos.InputShowDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +20,9 @@ public class Show {
     @Column(name = "Date", nullable = false)
     private Date date;
 
+    @Column(name = "Halls_id", nullable = false)
+    private int hallId;
+
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "Movies_Playing_Theaters_id", referencedColumnName = "Theaters_id", nullable = false,
@@ -29,8 +31,10 @@ public class Show {
                     insertable = false, updatable = false)})
     private MoviePlaying moviePlaying;
 
-    @ManyToOne
-    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false)
-    private Hall hall;
-
+    public Show(ShowPK showPK, Time time, Date date, int hallId) {
+        this.showPK = showPK;
+        this.time = time;
+        this.date = date;
+        this.hallId = hallId;
+    }
 }

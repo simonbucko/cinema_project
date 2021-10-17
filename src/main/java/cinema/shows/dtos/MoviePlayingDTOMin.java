@@ -15,5 +15,5 @@ public class MoviePlayingDTOMin {
     private MovieDTOMin movieDTOMin;
     private Date dateStarts;
     private Date dateEnds;
-    private Integer theaterId;
+    private String theater;
 }

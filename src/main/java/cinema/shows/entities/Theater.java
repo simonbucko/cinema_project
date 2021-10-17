@@ -31,9 +31,6 @@ public class Theater {
     @OneToMany(mappedBy = "theater")
     public List<MoviePlaying> moviesPlaying;
 
-    @OneToMany(mappedBy = "theater")
-    private List<Hall> halls;
-
     public Theater(String name, String street, String city, short zipcode) {
         this.name = name;
         this.street = street;

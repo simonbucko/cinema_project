@@ -3,6 +3,7 @@ package cinema.shows.services;
 import cinema.shows.dtos.InputMovieDTO;
 import cinema.shows.dtos.MovieDTOFull;
 import cinema.shows.dtos.MovieDTOMin;
+import cinema.shows.entities.Movie;
 
 import java.util.List;
 
@@ -14,4 +15,7 @@ public interface MovieServices {
 
     List<MovieDTOFull> getAllMovies();
     List<MovieDTOMin> getAllMinMovies();
+
+    MovieDTOMin getMovieDTOMinFromMovie(Movie movie);
+    MovieDTOFull getMovieDTOFullFromMovie(Movie movie);
 }

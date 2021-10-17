@@ -4,7 +4,9 @@ import cinema.shows.dtos.*;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 import cinema.shows.exceptions.ResourceNotFoundException;
+import cinema.shows.repos.CategoryRepo;
 import cinema.shows.repos.MovieRepo;
+import cinema.shows.staticCalls.StaticCalls;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class MovieServicesImp implements MovieServices {
     private MovieRepo movieRepo;
     @Autowired
     ActorServices actorServices;
+    @Autowired
+    CategoryRepo categoryRepo;
 
     public MovieServicesImp(MovieRepo movieRepo) {
         this.movieRepo = movieRepo;
@@ -25,17 +29,48 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
+    public MovieDTOMin getMovieDTOMinFromMovie(Movie movie) {
+        MovieDTOMin movieDTOMin = new MovieDTOMin();
+        movieDTOMin.setTitle(movie.getTitle());
+        movieDTOMin.setMinAge(movie.getMinAge());
+        String category = categoryRepo.getById(movie.getCategoryId()).getName();
+        movieDTOMin.setCategory(category);
+        return movieDTOMin;
+    }
+
+    @Override
+    public MovieDTOFull getMovieDTOFullFromMovie(Movie movie) {
+       MovieDTOFull movieDTOFull = new MovieDTOFull();
+       movieDTOFull.setId(movie.getId());
+       movieDTOFull.setTitle(movie.getTitle());
+       movieDTOFull.setCategoryId(movie.getCategoryId());
+       String category = categoryRepo.getById(movie.getCategoryId()).getName();
+       movieDTOFull.setCategory(category);
+       movieDTOFull.setMinAge(movie.getMinAge());
+       movieDTOFull.setDescription(movie.getDescription());
+       movieDTOFull.setRating(movie.getRating());
+       if (!movie.getActorSet().isEmpty()) {
+            Set<Actor> actorSet = movie.getActorSet();
+            movieDTOFull.setActorList(
+                    StaticCalls.getListOfActorsToShowWithMovieRequest(actorSet));
+       } else {
+           movieDTOFull.setActorList(new ArrayList<>());
+       }
+       return movieDTOFull;
+    }
+
+    @Override
     public MovieDTOFull addMovie(InputMovieDTO inputMovieDTO) {
         Movie newMovie = new Movie(inputMovieDTO);
         Movie movieSaved = movieRepo.save(newMovie);
-        return new MovieDTOFull(movieSaved);
+        return getMovieDTOFullFromMovie(movieSaved);
     }
 
     @Override
     public MovieDTOFull getMovie(Integer movieId) {
         Movie movie = movieRepo.findById(movieId)
                 .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
-        return new MovieDTOFull(movie);
+        return getMovieDTOFullFromMovie(movie);
     }
 
     @Override
@@ -73,7 +108,7 @@ public class MovieServicesImp implements MovieServices {
             }
         }
         Movie movieSaved = movieRepo.save(movieInDB);
-        return new MovieDTOFull(movieSaved);
+        return getMovieDTOFullFromMovie(movieSaved);
     }
 
     @Override
@@ -88,7 +123,7 @@ public class MovieServicesImp implements MovieServices {
         List<Movie> movies = movieRepo.findAll();
         List<MovieDTOFull> movieDTOsFull = new ArrayList<>();
         for (Movie movie: movies) {
-            movieDTOsFull.add(new MovieDTOFull(movie));
+            movieDTOsFull.add(getMovieDTOFullFromMovie(movie));
         }
         return movieDTOsFull;
     }
@@ -98,7 +133,7 @@ public class MovieServicesImp implements MovieServices {
         List<Movie> movies = movieRepo.findAll();
         List<MovieDTOMin> movieDTOsMin = new ArrayList<>();
         for (Movie movie: movies) {
-            movieDTOsMin.add(new MovieDTOMin(movie));
+            movieDTOsMin.add(getMovieDTOMinFromMovie(movie));
         }
         return movieDTOsMin;
     }

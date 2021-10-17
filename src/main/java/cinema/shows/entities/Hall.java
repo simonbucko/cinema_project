@@ -19,10 +19,7 @@ public class Hall {
     @Column(name = "Tag", nullable = false, length = 45)
     private String tag;
 
-    @ManyToOne
-    @JoinColumn(name = "Theaters_id", referencedColumnName = "id", nullable = false)
-    private Theater theater;
+    @Column(name = "Theaters_id", nullable = false)
+    private int theaterId;
 
-    @OneToMany(mappedBy = "hall")
-    private List<Show> showList;
 }
