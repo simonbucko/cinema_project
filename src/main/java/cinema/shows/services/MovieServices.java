@@ -1,12 +1,17 @@
 package cinema.shows.services;
 
-import cinema.shows.dtos.EditMovieDTO;
 import cinema.shows.dtos.InputMovieDTO;
-import cinema.shows.dtos.MovieDTO;
+import cinema.shows.dtos.MovieDTOFull;
+import cinema.shows.dtos.MovieDTOMin;
+
+import java.util.List;
 
 public interface MovieServices {
-    MovieDTO addMovie(InputMovieDTO inputMovieDTO);
-    MovieDTO getMovie(int id);
-    MovieDTO updateMovie(EditMovieDTO editMovieDTO);
-    void removeMovie(int movieId);
+    MovieDTOFull addMovie(InputMovieDTO inputMovieDTO);
+    MovieDTOFull getMovie(Integer movieId);
+    MovieDTOFull updateMovie(MovieDTOFull movieDTOFull, Boolean replace);
+    void removeMovie(Integer movieId);
+
+    List<MovieDTOFull> getAllMovies();
+    List<MovieDTOMin> getAllMinMovies();
 }

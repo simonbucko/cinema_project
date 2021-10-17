@@ -1,13 +1,12 @@
 package cinema.shows.rest;
 
-import cinema.shows.dtos.EditMovieDTO;
 import cinema.shows.dtos.InputMovieDTO;
-import cinema.shows.dtos.MovieDTO;
+import cinema.shows.dtos.MovieDTOFull;
 import org.springframework.http.ResponseEntity;
 
 public interface MovieRESTAPI {
-    ResponseEntity<MovieDTO> addMovie(InputMovieDTO inputMovieDTO);
-    ResponseEntity<MovieDTO> getMovie(int id);
-    ResponseEntity<MovieDTO> updateMovie(EditMovieDTO editMovieDTO);
+    ResponseEntity<MovieDTOFull> addMovie(InputMovieDTO inputMovieDTO);
+    ResponseEntity<MovieDTOFull> getMovie(int id);
+    ResponseEntity<MovieDTOFull> updateMovie(MovieDTOFull movieDTOFull, Boolean replace);
     void removeMovie(int id);
 }

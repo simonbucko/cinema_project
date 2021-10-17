@@ -4,7 +4,10 @@ import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 import cinema.shows.staticCalls.StaticCalls;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +17,7 @@ import java.util.Set;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@ToString
-public class MovieDTO {
+public class MovieDTOFull {
     private Integer id;
     private String title;
     private Double rating;
@@ -24,7 +26,7 @@ public class MovieDTO {
     private Integer categoryId;
     private List<ActorDTO> actorList;
 
-    public MovieDTO(Movie movie) {
+    public MovieDTOFull(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.rating = movie.getRating();
@@ -38,8 +40,5 @@ public class MovieDTO {
             this.actorList = new ArrayList<>();
         }
     }
-
-
-
 
 }
