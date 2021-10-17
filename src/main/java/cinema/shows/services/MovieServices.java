@@ -1,12 +1,11 @@
 package cinema.shows.services;
 
-import cinema.shows.dtos.EditMovieDTO;
 import cinema.shows.dtos.InputMovieDTO;
-import cinema.shows.dtos.MovieDTO;
+import cinema.shows.dtos.MovieDTOFull;
 
 public interface MovieServices {
-    MovieDTO addMovie(InputMovieDTO inputMovieDTO);
-    MovieDTO getMovie(int id);
-    MovieDTO updateMovie(EditMovieDTO editMovieDTO);
+    MovieDTOFull addMovie(InputMovieDTO inputMovieDTO);
+    MovieDTOFull getMovie(int id);
+    MovieDTOFull updateMovie(MovieDTOFull movieDTOFull, Boolean replace);
     void removeMovie(int movieId);
 }

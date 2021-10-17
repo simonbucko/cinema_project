@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor @NoArgsConstructor
@@ -45,5 +46,18 @@ public class Actor implements Serializable {
     public void addMovie(Movie movie) {
         movieSet.add(movie);
         movie.getActorSet().add(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Actor)) return false;
+        Actor actor = (Actor) o;
+        return getFirstName().equals(actor.getFirstName()) && getLastName().equals(actor.getLastName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName());
     }
 }

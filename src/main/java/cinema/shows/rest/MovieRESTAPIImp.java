@@ -1,8 +1,7 @@
 package cinema.shows.rest;
 
-import cinema.shows.dtos.EditMovieDTO;
 import cinema.shows.dtos.InputMovieDTO;
-import cinema.shows.dtos.MovieDTO;
+import cinema.shows.dtos.MovieDTOFull;
 import cinema.shows.services.MovieServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +17,21 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
     }
 
     @PostMapping
-    public ResponseEntity<MovieDTO> addMovie(@RequestBody InputMovieDTO movieDTO) {
-        MovieDTO movie = movieServices.addMovie(movieDTO);
+    public ResponseEntity<MovieDTOFull> addMovie(@RequestBody InputMovieDTO movieDTO) {
+        MovieDTOFull movie = movieServices.addMovie(movieDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDTO> getMovie(@PathVariable int id) {
-        MovieDTO movie = movieServices.getMovie(id);
+    public ResponseEntity<MovieDTOFull> getMovie(@PathVariable int id) {
+        MovieDTOFull movie = movieServices.getMovie(id);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<MovieDTO> updateMovie(@RequestBody EditMovieDTO movieDTO) {
-        MovieDTO movie = movieServices.updateMovie(movieDTO);
+    public ResponseEntity<MovieDTOFull> updateMovie(@RequestBody MovieDTOFull movieDTO,
+                                                    @RequestParam(required = false) Boolean replace) {
+        MovieDTOFull movie = movieServices.updateMovie(movieDTO, replace);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 

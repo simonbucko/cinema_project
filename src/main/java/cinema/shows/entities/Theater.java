@@ -16,6 +16,9 @@ public class Theater {
     @Column(name = "id", nullable = false)
     private int id;
 
+    @Column(name = "Name", nullable = false, length = 45)
+    private String name;
+
     @Column(name = "Street", nullable = false, length = 45)
     private String street;
 

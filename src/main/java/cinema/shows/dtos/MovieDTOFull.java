@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MovieDTO {
+public class MovieDTOFull {
     private Integer id;
     private String title;
     private Double rating;
@@ -26,7 +26,7 @@ public class MovieDTO {
     private Integer categoryId;
     private List<ActorDTO> actorList;
 
-    public MovieDTO(Movie movie) {
+    public MovieDTOFull(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.rating = movie.getRating();
@@ -40,8 +40,5 @@ public class MovieDTO {
             this.actorList = new ArrayList<>();
         }
     }
-
-
-
 
 }
