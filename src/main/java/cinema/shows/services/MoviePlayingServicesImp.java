@@ -77,8 +77,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
         int movieId = inputMoviePlayingDTO.getMovieId();
         int theaterId = inputMoviePlayingDTO.getTheaterId();
         MoviePlaying moviePlayingInDB = getMoviePlaying(movieId,theaterId);
-        Date dateStarts = inputMoviePlayingDTO.getDateStarts();
-        Date dateEnds = inputMoviePlayingDTO.getDateEnds();
+        Date dateStarts = Date.valueOf(inputMoviePlayingDTO.getDateStarts());
+        Date dateEnds = Date.valueOf(inputMoviePlayingDTO.getDateEnds());
         if (dateStarts != null) {
             moviePlayingInDB.setDateStarts(dateStarts);
         }

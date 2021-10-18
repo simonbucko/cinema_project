@@ -40,7 +40,6 @@ public class ShowServicesImp implements ShowServices {
 
     private Show getShowFromInputShowDTO(InputShowDTO inputShowDTO) {
         Show show = new Show();
-        inputShowDTO.toString();
         show.setShowPK(new ShowPK(inputShowDTO.getMoviePlayingId(),inputShowDTO.getTheaterId()));
         show.setDate(Date.valueOf(inputShowDTO.getDate()));
         show.setTime(Time.valueOf(inputShowDTO.getTime()));
@@ -50,7 +49,7 @@ public class ShowServicesImp implements ShowServices {
     private ShowDTOMin getShowDTOMinFromShow(Show show) {
         ShowDTOMin showDTOMin = new ShowDTOMin();
         showDTOMin.setDate(show.getDate());
-        showDTOMin.setTime(show.getTime());
+        showDTOMin.setTime(show.getTime().toString());
         ShowPK showPK = show.getShowPK();
         int moviePlayingId = showPK.getMoviesPlayingMoviesId();
         int theaterId = showPK.getMoviesPlayingTheatersId();

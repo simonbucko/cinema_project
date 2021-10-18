@@ -6,7 +6,7 @@ import cinema.shows.entities.Movie;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.CategoryRepo;
 import cinema.shows.repos.MovieRepo;
-import cinema.shows.staticCalls.StaticCalls;
+import cinema.shows.utils.StaticCalls;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -14,7 +14,7 @@ import java.sql.Time;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShowDTOMin {
     private MoviePlayingDTOMin moviePlayingDTOMin;
-    private Time time;
+    private String time;
     private Date date;
     private String hall;
 }

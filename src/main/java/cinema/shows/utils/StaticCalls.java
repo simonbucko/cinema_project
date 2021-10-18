@@ -1,4 +1,4 @@
-package cinema.shows.staticCalls;
+package cinema.shows.utils;
 
 import cinema.shows.dtos.ActorDTO;
 import cinema.shows.entities.Actor;

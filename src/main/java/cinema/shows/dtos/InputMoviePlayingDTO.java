@@ -1,5 +1,6 @@
 package cinema.shows.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +13,10 @@ import java.sql.Date;
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class InputMoviePlayingDTO {
-    private Date dateStarts;
-    private Date dateEnds;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String dateStarts;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String dateEnds;
     private int movieId;
     private int theaterId;
 }
