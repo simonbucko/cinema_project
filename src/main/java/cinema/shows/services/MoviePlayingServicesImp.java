@@ -1,10 +1,12 @@
 package cinema.shows.services;
 
 import cinema.shows.dtos.*;
+import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.Theater;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.MoviePlayingRepo;
+import cinema.shows.repos.MovieRepo;
 import cinema.shows.repos.TheaterRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     MovieServices movieServices;
     @Autowired
     TheaterRepo theaterRepo;
+    @Autowired
+    MovieRepo movieRepo;
 
     public MoviePlayingServicesImp(MoviePlayingRepo moviePlayingRepo) {
         this.moviePlayingRepo = moviePlayingRepo;
@@ -83,6 +87,17 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
         return moviePlayingDTOsMin;
     }
 
+
+    private MoviePlayingDTOMin getMoviePlayingDTOMinToAdd(MoviePlaying moviePlaying,Integer movieId) {
+        MoviePlayingDTOMin moviePlayingDTOMin = new MoviePlayingDTOMin();
+        Movie movie = movieRepo.getById(movieId);
+        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(movie);
+        moviePlayingDTOMin.setMovieDTOMin(movieDTOMin);
+        moviePlayingDTOMin.setDateStarts(moviePlaying.getDateStarts());
+        moviePlayingDTOMin.setDateEnds(moviePlaying.getDateEnds());
+        moviePlayingDTOMin.setTheater(moviePlaying.getTheater().getName());
+        return moviePlayingDTOMin;
+    }
     @Override
     public MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
         MoviePlaying moviePlaying = moviePlayingRepo.getByMovie_IdAndTheater_Id(inputMoviePlayingDTO.getMovieId(),
@@ -91,7 +106,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
             MoviePlaying newMoviePlaying = getMoviePlayingFromInput(inputMoviePlayingDTO);
             moviePlaying = moviePlayingRepo.save(newMoviePlaying);
         }
-        return getMoviePlayingDTOMin(moviePlaying);
+        return getMoviePlayingDTOMinToAdd(moviePlaying, inputMoviePlayingDTO.getMovieId());
     }
 
     @Override
@@ -108,7 +123,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
             moviePlayingInDB.setDateEnds(dateEnds);
         }
         MoviePlaying moviePlayingSaved = moviePlayingRepo.save(moviePlayingInDB);
-        return getMoviePlayingDTOMin(moviePlayingSaved);
+        return getMoviePlayingDTOMinToAdd(moviePlayingSaved,movieId);
     }
 
     @Override
