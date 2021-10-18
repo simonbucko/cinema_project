@@ -1,10 +1,13 @@
 package cinema.shows.services;
 
 import cinema.shows.dtos.*;
+import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.MoviePlayingPK;
+import cinema.shows.entities.Theater;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.MoviePlayingRepo;
+import cinema.shows.repos.TheaterRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     private MoviePlayingRepo moviePlayingRepo;
     @Autowired
     MovieServices movieServices;
+    @Autowired
+    TheaterRepo theaterRepo;
 
     public MoviePlayingServicesImp(MoviePlayingRepo moviePlayingRepo) {
         this.moviePlayingRepo = moviePlayingRepo;
@@ -24,6 +29,19 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     private String errorMessage(Integer movieId, Integer theaterId){
         return "Resource Not found with movieId = " + movieId + " and theaterId = " + theaterId;
+    }
+
+
+    public MoviePlaying getMoviePlayingFromInput(InputMoviePlayingDTO inputMoviePlayingDTO) {
+        MoviePlaying moviePlaying = new MoviePlaying();
+        MoviePlayingPK moviePlayingPK = new MoviePlayingPK(inputMoviePlayingDTO.getMovieId(),
+                inputMoviePlayingDTO.getTheaterId());
+        moviePlaying.setMoviePlayingPK(moviePlayingPK);
+        moviePlaying.setDateStarts(Date.valueOf(inputMoviePlayingDTO.getDateStarts()));
+        moviePlaying.setDateEnds(Date.valueOf(inputMoviePlayingDTO.getDateEnds()));
+        Theater theater = theaterRepo.getById(inputMoviePlayingDTO.getTheaterId());
+        moviePlaying.setTheater(theater);
+        return moviePlaying;
     }
 
     @Override
@@ -50,7 +68,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
     private MoviePlayingDTOMin getMoviePlayingDTOMin(MoviePlaying moviePlaying) {
         MoviePlayingDTOMin moviePlayingDTOMin = new MoviePlayingDTOMin();
-        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(moviePlaying.getMovie());
+        Movie movie = movieServices.getMovieById(moviePlaying.getMoviePlayingPK().getMoviesId());
+        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(movie);
         moviePlayingDTOMin.setMovieDTOMin(movieDTOMin);
         moviePlayingDTOMin.setDateStarts(moviePlaying.getDateStarts());
         moviePlayingDTOMin.setDateEnds(moviePlaying.getDateEnds());
@@ -67,7 +86,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     @Override
     public MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
-        MoviePlaying newMoviePlaying = new MoviePlaying(inputMoviePlayingDTO);
+        MoviePlaying newMoviePlaying = getMoviePlayingFromInput(inputMoviePlayingDTO);
         MoviePlaying moviePlayingSaved = moviePlayingRepo.save(newMoviePlaying);
         return getMoviePlayingDTOMin(moviePlayingSaved);
     }

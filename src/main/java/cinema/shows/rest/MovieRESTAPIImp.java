@@ -32,7 +32,7 @@ public class MovieRESTAPIImp implements MovieRESTAPI {
 
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTOFull> getMovie(@PathVariable int id) {
-        MovieDTOFull movie = movieServices.getMovie(id);
+        MovieDTOFull movie = movieServices.getMovieDTOFull(id);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 

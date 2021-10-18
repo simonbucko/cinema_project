@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
-
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,6 +15,6 @@ public class InputMoviePlayingDTO {
     private String dateStarts;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String dateEnds;
-    private int movieId;
-    private int theaterId;
+    private Integer movieId;
+    private Integer theaterId;
 }

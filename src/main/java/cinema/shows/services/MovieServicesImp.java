@@ -67,10 +67,17 @@ public class MovieServicesImp implements MovieServices {
     }
 
     @Override
-    public MovieDTOFull getMovie(Integer movieId) {
+    public MovieDTOFull getMovieDTOFull(Integer movieId) {
         Movie movie = movieRepo.findById(movieId)
                 .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
         return getMovieDTOFullFromMovie(movie);
+    }
+
+    @Override
+    public Movie getMovieById(Integer movieId) {
+        Movie movie = movieRepo.findById(movieId)
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
+        return movie;
     }
 
     @Override

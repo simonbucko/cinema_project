@@ -4,12 +4,15 @@ import cinema.shows.dtos.InputMovieDTO;
 import cinema.shows.dtos.MovieDTOFull;
 import cinema.shows.dtos.MovieDTOMin;
 import cinema.shows.entities.Movie;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
 public interface MovieServices {
+    Movie getMovieById(Integer movieId);
+
     MovieDTOFull addMovie(InputMovieDTO inputMovieDTO);
-    MovieDTOFull getMovie(Integer movieId);
+    MovieDTOFull getMovieDTOFull(Integer movieId);
     MovieDTOFull updateMovie(MovieDTOFull movieDTOFull, Boolean replace);
     void removeMovie(Integer movieId);
 

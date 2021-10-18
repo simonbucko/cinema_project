@@ -39,10 +39,4 @@ public class MoviePlaying {
         this.dateStarts = dateStarts;
         this.dateEnds = dateEnds;
     }
-
-    public MoviePlaying(InputMoviePlayingDTO inputMoviePlayingDTO) {
-        this.moviePlayingPK = new MoviePlayingPK(inputMoviePlayingDTO.getMovieId(), inputMoviePlayingDTO.getTheaterId());
-        this.dateStarts = Date.valueOf(inputMoviePlayingDTO.getDateStarts());
-        this.dateEnds = Date.valueOf(inputMoviePlayingDTO.getDateEnds());
-    }
 }
