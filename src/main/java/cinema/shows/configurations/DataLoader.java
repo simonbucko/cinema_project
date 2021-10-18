@@ -88,15 +88,15 @@ public class DataLoader {
     private void loadMoviesPlaying() {
         Date dateStartsGodfather = Date.valueOf("2021-10-15");
         Date dateEndsGodfather = Date.valueOf("2021-10-21");
-        MoviePlaying moviePlayingGodfather = new MoviePlaying(dateStartsGodfather, dateEndsGodfather, movieOne, theater);
+        MoviePlaying moviePlayingGodfather = new MoviePlaying(dateStartsGodfather, dateEndsGodfather, movieOne.getId(), theater);
         moviePlayingOne = moviePlayingRepo.save(moviePlayingGodfather);
         Date dateStartsTrumanShow = Date.valueOf("2021-10-17");
         Date dateEndsTrumanShow = Date.valueOf("2021-10-23");
-        MoviePlaying moviePlayingTrumanShow = new MoviePlaying(dateStartsTrumanShow, dateEndsTrumanShow, movieTwo, theater);
+        MoviePlaying moviePlayingTrumanShow = new MoviePlaying(dateStartsTrumanShow, dateEndsTrumanShow, movieTwo.getId(), theater);
         moviePlayingTwo = moviePlayingRepo.save(moviePlayingTrumanShow);
         Date dateStartsMatrix = Date.valueOf("2021-10-19");
         Date dateEndsMatrix = Date.valueOf("2021-10-25");
-        MoviePlaying moviePlayingMatrix= new MoviePlaying(dateStartsMatrix, dateEndsMatrix, movieThree, theater);
+        MoviePlaying moviePlayingMatrix= new MoviePlaying(dateStartsMatrix, dateEndsMatrix, movieThree.getId(), theater);
         moviePlayingThree = moviePlayingRepo.save(moviePlayingMatrix);
     }
 

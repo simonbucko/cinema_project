@@ -51,12 +51,13 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     @Override
     public MoviePlaying getMoviePlayingByMovieAndTheater(Integer movieId, Integer theaterId) {
-        return moviePlayingRepo.getByMovie_IdAndTheater_Id(movieId,theaterId);
+        return moviePlayingRepo.findMoviePlayingByMovieIdAndTheaterId(movieId,theaterId);
     }
 
     private MoviePlayingDTOFull getMoviePlayingDTOFull(MoviePlaying moviePlaying) {
         MoviePlayingDTOFull moviePlayingDTOFull = new MoviePlayingDTOFull();
-        MovieDTOFull movieDTOFull = movieServices.getMovieDTOFullFromMovie(moviePlaying.getMovie());
+        Movie movie = movieServices.getMovieById(moviePlaying.getMovieId());
+        MovieDTOFull movieDTOFull = movieServices.getMovieDTOFullFromMovie(movie);
         moviePlayingDTOFull.setMovieDTOFull(movieDTOFull);
         moviePlayingDTOFull.setDateStarts(moviePlaying.getDateStarts());
         moviePlayingDTOFull.setDateEnds(moviePlaying.getDateEnds());
@@ -72,7 +73,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
     private MoviePlayingDTOMin getMoviePlayingDTOMin(MoviePlaying moviePlaying) {
         MoviePlayingDTOMin moviePlayingDTOMin = new MoviePlayingDTOMin();
-        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(moviePlaying.getMovie());
+        Movie movie = movieServices.getMovieById(moviePlaying.getMovieId());
+        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(movie);
         moviePlayingDTOMin.setMovieDTOMin(movieDTOMin);
         moviePlayingDTOMin.setDateStarts(moviePlaying.getDateStarts());
         moviePlayingDTOMin.setDateEnds(moviePlaying.getDateEnds());
@@ -86,27 +88,15 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
         }
         return moviePlayingDTOsMin;
     }
-
-
-    private MoviePlayingDTOMin getMoviePlayingDTOMinToAdd(MoviePlaying moviePlaying,Integer movieId) {
-        MoviePlayingDTOMin moviePlayingDTOMin = new MoviePlayingDTOMin();
-        Movie movie = movieRepo.getById(movieId);
-        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(movie);
-        moviePlayingDTOMin.setMovieDTOMin(movieDTOMin);
-        moviePlayingDTOMin.setDateStarts(moviePlaying.getDateStarts());
-        moviePlayingDTOMin.setDateEnds(moviePlaying.getDateEnds());
-        moviePlayingDTOMin.setTheater(moviePlaying.getTheater().getName());
-        return moviePlayingDTOMin;
-    }
     @Override
     public MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
-        MoviePlaying moviePlaying = moviePlayingRepo.getByMovie_IdAndTheater_Id(inputMoviePlayingDTO.getMovieId(),
+        MoviePlaying moviePlaying = moviePlayingRepo.findMoviePlayingByMovieIdAndTheaterId(inputMoviePlayingDTO.getMovieId(),
                 inputMoviePlayingDTO.getTheaterId());
         if (moviePlaying == null) {
             MoviePlaying newMoviePlaying = getMoviePlayingFromInput(inputMoviePlayingDTO);
             moviePlaying = moviePlayingRepo.save(newMoviePlaying);
         }
-        return getMoviePlayingDTOMinToAdd(moviePlaying, inputMoviePlayingDTO.getMovieId());
+        return getMoviePlayingDTOMin(moviePlaying);
     }
 
     @Override
@@ -123,7 +113,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
             moviePlayingInDB.setDateEnds(dateEnds);
         }
         MoviePlaying moviePlayingSaved = moviePlayingRepo.save(moviePlayingInDB);
-        return getMoviePlayingDTOMinToAdd(moviePlayingSaved,movieId);
+        return getMoviePlayingDTOMin(moviePlayingSaved);
     }
 
     @Override

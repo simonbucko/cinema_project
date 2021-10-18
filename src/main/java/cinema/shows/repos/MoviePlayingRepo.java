@@ -9,5 +9,5 @@ import java.util.List;
 public interface MoviePlayingRepo extends JpaRepository<MoviePlaying, Integer> {
     List<MoviePlaying> getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(Date dateOne, Date dateTwo);
     List<MoviePlaying> getAllByTheaterId(Integer theaterId);
-    MoviePlaying getByMovie_IdAndTheater_Id(Integer movieId, Integer theaterId);
+    MoviePlaying findMoviePlayingByMovieIdAndTheaterId(int movieId, int theaterId);
 }

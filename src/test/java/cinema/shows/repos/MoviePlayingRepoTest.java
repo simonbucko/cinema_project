@@ -43,7 +43,7 @@ class MoviePlayingRepoTest {
         Date dateEnds = Date.valueOf("2021-11-22");
         Movie movie = movieRepo.getById(1);
         Theater theater = theaterRepo.getById(1);
-        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie, theater);
+        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie.getId(), theater);
         assertEquals(0, moviePlayingRepo.count());
         moviePlayingRepo.save(moviePlaying);
         assertEquals(1, moviePlayingRepo.count());
@@ -61,7 +61,7 @@ class MoviePlayingRepoTest {
         Date dateEnds = Date.valueOf("2021-11-22");
         Movie movie = movieRepo.getById(1);
         Theater theater = theaterRepo.getById(1);
-        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie, theater);
+        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie.getId(), theater);
         Date beforeStartDate = Date.valueOf("2021-11-10");
         Date betweenPlayingDates = Date.valueOf("2021-11-16");
         Date afterEndingDate = Date.valueOf("2021-11-23");
@@ -81,7 +81,7 @@ class MoviePlayingRepoTest {
         Date dateEnds = Date.valueOf("2021-11-22");
         Movie movie = movieRepo.getById(1);
         Theater theater = theaterRepo.getById(1);
-        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie, theater);
+        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie.getId(), theater);
         Date beforeStartDate = Date.valueOf("2021-11-10");
         Date betweenPlayingDates = Date.valueOf("2021-11-16");
         moviePlayingRepo.save(moviePlaying);

@@ -34,9 +34,6 @@ public class Movie implements Serializable {
     @Column(name = "Category_id", nullable = false)
     private int categoryId;
 
-    @OneToMany(mappedBy = "movie")
-    private Collection<MoviePlaying> moviesPlaying;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
             joinColumns = {

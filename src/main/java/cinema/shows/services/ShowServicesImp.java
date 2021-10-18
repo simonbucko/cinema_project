@@ -50,7 +50,7 @@ public class ShowServicesImp implements ShowServices {
         showDTOMin.setDate(show.getDate());
         showDTOMin.setTime(show.getTime().toString());
         MoviePlayingDTOMin moviePlayingDTOMin =
-                moviePlayingServices.getMinMoviePlayingInTheater(show.getMoviePlaying().getMovie().getId());
+                moviePlayingServices.getMinMoviePlayingInTheater(show.getMoviePlaying().getId());
         showDTOMin.setMoviePlayingDTOMin(moviePlayingDTOMin);
         String hall = hallRepo.getById(show.getHallId()).getTag();
         showDTOMin.setHall(hall);
@@ -68,7 +68,7 @@ public class ShowServicesImp implements ShowServices {
         showDTOFull.setDate(show.getDate());
         showDTOFull.setTime(show.getTime());
         MoviePlayingDTOFull moviePlayingDTOFull =
-                moviePlayingServices.getMoviePlayingInTheater(show.getMoviePlaying().getMovie().getId());
+                moviePlayingServices.getMoviePlayingInTheater(show.getMoviePlaying().getId());
         String hall = hallRepo.getById(show.getHallId()).getTag();
         showDTOFull.setHall(hall);
         showDTOFull.setMoviePlayingDTOFull(moviePlayingDTOFull);
