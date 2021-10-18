@@ -105,9 +105,10 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     public List<MoviePlayingDTOFull> getAllMoviesPlayingInTheater(Integer theaterId) {
         List<MoviePlaying> moviesPlaying = moviePlayingRepo.getAllByTheaterId(theaterId);
         List<MoviePlayingDTOFull> moviesPlayingDTOsFull = new ArrayList<>();
-        if (!moviesPlaying.isEmpty()) {
-            moviesPlayingDTOsFull = getMoviesPlayingDTOsFull(moviesPlaying);
+        if (moviesPlaying.isEmpty()) {
+            return moviesPlayingDTOsFull;
         }
+        moviesPlayingDTOsFull = getMoviesPlayingDTOsFull(moviesPlaying);
         return moviesPlayingDTOsFull;
     }
 

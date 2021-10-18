@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.List;
 

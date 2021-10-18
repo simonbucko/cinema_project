@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface MoviePlayingRESTAPI {
-    ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForTheater(Integer theaterId);
+    ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForTheater(int theaterId);
     ResponseEntity<MoviePlayingDTOMin> addMoviePlayingForTheater(InputMoviePlayingDTO inputMoviePlayingDTO);
     ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForDate(String date);
     ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForDates(String dateStarts, String dateEnds);

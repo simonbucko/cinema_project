@@ -26,7 +26,7 @@ public class ShowRESTAPIImp implements ShowRESTAPI {
     }
 
     @PostMapping
-    public ResponseEntity<ShowDTOMin> addShow(InputShowDTO inputShowDTO) {
+    public ResponseEntity<ShowDTOMin> addShow(@RequestBody InputShowDTO inputShowDTO) {
         ShowDTOMin show = showServices.addShow(inputShowDTO);
         return new ResponseEntity<>(show, HttpStatus.OK);
     }

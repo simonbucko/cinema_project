@@ -22,9 +22,10 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
 
     @GetMapping
     public ResponseEntity<List<MoviePlayingDTOFull>> getAllMoviesPlayingForTheater(
-            @RequestParam("theaterId") Integer theaterId) {
+            @RequestParam("theaterId") int theaterId) {
         List<MoviePlayingDTOFull> moviePlayingDTOFsFull =
                 moviePlayingServices.getAllMoviesPlayingInTheater(theaterId);
+        System.out.println(moviePlayingDTOFsFull);
         return new ResponseEntity<>(moviePlayingDTOFsFull, HttpStatus.OK);
     }
 
