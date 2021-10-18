@@ -43,6 +43,8 @@ public class ShowServicesImp implements ShowServices {
         show.setDate(Date.valueOf(inputShowDTO.getDate()));
         show.setTime(Time.valueOf(inputShowDTO.getTime()));
         show.setHallId(inputShowDTO.getHallId());
+        MoviePlaying moviePlaying = moviePlayingServices.getMoviePlaying(inputShowDTO.getMoviePlayingId());
+        show.setMoviePlaying(moviePlaying);
         return show;
     }
     private ShowDTOMin getShowDTOMinFromShow(Show show) {
@@ -84,9 +86,16 @@ public class ShowServicesImp implements ShowServices {
 
     @Override
     public ShowDTOMin addShow(InputShowDTO inputShowDTO) {
-        Show newShow = getShowFromInputShowDTO(inputShowDTO);
-        Show showSaved = showRepo.save(newShow);
-        return getShowDTOMinFromShow(showSaved);
+        Show show = showRepo.findByDateAndTimeAndHallId
+                (Date.valueOf(inputShowDTO.getDate()),
+                        Time.valueOf(inputShowDTO.getTime()),
+                        inputShowDTO.getHallId());
+        if (show == null) {
+            Show newShow = getShowFromInputShowDTO(inputShowDTO);
+            Show showSaved = showRepo.save(newShow);
+            return getShowDTOMinFromShow(showSaved);
+        }
+        return getShowDTOMinFromShow(show);
     }
 
     @Override
@@ -109,8 +118,13 @@ public class ShowServicesImp implements ShowServices {
             MoviePlaying moviePlaying = moviePlayingServices.getMoviePlaying(moviePlayingId);
             showInDB.setMoviePlaying(moviePlaying);
         }
-        Show showSaved = showRepo.save(showInDB);
-        return getShowDTOMinFromShow(showSaved);
+        Show show = showRepo.findByDateAndTimeAndHallId
+                (showInDB.getDate(),showInDB.getTime(),showInDB.getHallId());
+        if (show == null) {
+            Show showSaved = showRepo.save(showInDB);
+            return getShowDTOMinFromShow(showSaved);
+        }
+        return getShowDTOMinFromShow(showInDB);
     }
 
     @Override

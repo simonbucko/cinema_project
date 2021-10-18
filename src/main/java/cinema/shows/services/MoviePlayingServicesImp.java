@@ -40,6 +40,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
         moviePlaying.setDateEnds(Date.valueOf(inputMoviePlayingDTO.getDateEnds()));
         Theater theater = theaterRepo.getById(inputMoviePlayingDTO.getTheaterId());
         moviePlaying.setTheater(theater);
+        moviePlaying.setMovieId(inputMoviePlayingDTO.getMovieId());
         return moviePlaying;
     }
 
@@ -90,8 +91,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
     @Override
     public MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
-        MoviePlaying moviePlaying = moviePlayingRepo.findMoviePlayingByMovieIdAndTheaterId(inputMoviePlayingDTO.getMovieId(),
-                inputMoviePlayingDTO.getTheaterId());
+        MoviePlaying moviePlaying = moviePlayingRepo.findMoviePlayingByMovieIdAndTheaterId
+                (inputMoviePlayingDTO.getMovieId(), inputMoviePlayingDTO.getTheaterId());
         if (moviePlaying == null) {
             MoviePlaying newMoviePlaying = getMoviePlayingFromInput(inputMoviePlayingDTO);
             moviePlaying = moviePlayingRepo.save(newMoviePlaying);
