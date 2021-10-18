@@ -3,7 +3,7 @@
 ## Overview :
 REST API solution for cinema project, third semester KEA
 
-### REST overview at:
+### REST overview:
 http://localhost:8080/swagger-ui/index.html#/
 
 ## Project Description
