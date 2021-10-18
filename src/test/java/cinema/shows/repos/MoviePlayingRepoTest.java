@@ -1,7 +1,8 @@
 package cinema.shows.repos;
 
+import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
-import cinema.shows.entities.MoviePlayingPK;
+import cinema.shows.entities.Theater;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +39,11 @@ class MoviePlayingRepoTest {
     @Sql("/createMovie.sql")
     @Sql("/createTheater.sql")
     public void testAddingMoviePlayingInTheater() {
-        MoviePlayingPK moviePlayingPK = new MoviePlayingPK(1,1);
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
-        MoviePlaying moviePlaying = new MoviePlaying(moviePlayingPK, dateStarts, dateEnds);
+        Movie movie = movieRepo.getById(1);
+        Theater theater = theaterRepo.getById(1);
+        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie, theater);
         assertEquals(0, moviePlayingRepo.count());
         moviePlayingRepo.save(moviePlaying);
         assertEquals(1, moviePlayingRepo.count());
@@ -55,11 +57,11 @@ class MoviePlayingRepoTest {
     @Sql("/createMovie.sql")
     @Sql("/createTheater.sql")
     public void testGettingMoviePlayingForASpecificDate() {
-        MoviePlayingPK moviePlayingPK = new MoviePlayingPK(1,1);
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
-        MoviePlaying moviePlaying = new MoviePlaying(moviePlayingPK, dateStarts, dateEnds);
-
+        Movie movie = movieRepo.getById(1);
+        Theater theater = theaterRepo.getById(1);
+        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie, theater);
         Date beforeStartDate = Date.valueOf("2021-11-10");
         Date betweenPlayingDates = Date.valueOf("2021-11-16");
         Date afterEndingDate = Date.valueOf("2021-11-23");
@@ -75,11 +77,11 @@ class MoviePlayingRepoTest {
     @Sql("/createMovie.sql")
     @Sql("/createTheater.sql")
     public void testGettingMoviePlayingForAPairOFDates() {
-        MoviePlayingPK moviePlayingPK = new MoviePlayingPK(1,1);
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
-        MoviePlaying moviePlaying = new MoviePlaying(moviePlayingPK, dateStarts, dateEnds);
-
+        Movie movie = movieRepo.getById(1);
+        Theater theater = theaterRepo.getById(1);
+        MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie, theater);
         Date beforeStartDate = Date.valueOf("2021-11-10");
         Date betweenPlayingDates = Date.valueOf("2021-11-16");
         moviePlayingRepo.save(moviePlaying);

@@ -1,9 +1,7 @@
 package cinema.shows.services;
 
 import cinema.shows.dtos.*;
-import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
-import cinema.shows.entities.MoviePlayingPK;
 import cinema.shows.entities.Theater;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.MoviePlayingRepo;
@@ -27,16 +25,13 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
         this.moviePlayingRepo = moviePlayingRepo;
     }
 
-    private String errorMessage(Integer movieId, Integer theaterId){
-        return "Resource Not found with movieId = " + movieId + " and theaterId = " + theaterId;
+    private String errorMessage(Integer moviePlayingId){
+        return "No Movie Playing found with Id = " + moviePlayingId;
     }
 
 
     public MoviePlaying getMoviePlayingFromInput(InputMoviePlayingDTO inputMoviePlayingDTO) {
         MoviePlaying moviePlaying = new MoviePlaying();
-        MoviePlayingPK moviePlayingPK = new MoviePlayingPK(inputMoviePlayingDTO.getMovieId(),
-                inputMoviePlayingDTO.getTheaterId());
-        moviePlaying.setMoviePlayingPK(moviePlayingPK);
         moviePlaying.setDateStarts(Date.valueOf(inputMoviePlayingDTO.getDateStarts()));
         moviePlaying.setDateEnds(Date.valueOf(inputMoviePlayingDTO.getDateEnds()));
         Theater theater = theaterRepo.getById(inputMoviePlayingDTO.getTheaterId());
@@ -45,9 +40,14 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
 
     @Override
-    public MoviePlaying getMoviePlaying(Integer moviePlayingId, Integer theaterId) {
-        return moviePlayingRepo.findById(new MoviePlayingPK(moviePlayingId,theaterId))
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(moviePlayingId, theaterId)));
+    public MoviePlaying getMoviePlaying(Integer moviePlayingId) {
+        return moviePlayingRepo.findById(moviePlayingId)
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(moviePlayingId)));
+    }
+
+    @Override
+    public MoviePlaying getMoviePlayingByMovieAndTheater(Integer movieId, Integer theaterId) {
+        return moviePlayingRepo.getByMovie_IdAndTheater_Id(movieId,theaterId);
     }
 
     private MoviePlayingDTOFull getMoviePlayingDTOFull(MoviePlaying moviePlaying) {
@@ -68,8 +68,7 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
     private MoviePlayingDTOMin getMoviePlayingDTOMin(MoviePlaying moviePlaying) {
         MoviePlayingDTOMin moviePlayingDTOMin = new MoviePlayingDTOMin();
-        Movie movie = movieServices.getMovieById(moviePlaying.getMoviePlayingPK().getMoviesId());
-        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(movie);
+        MovieDTOMin movieDTOMin = movieServices.getMovieDTOMinFromMovie(moviePlaying.getMovie());
         moviePlayingDTOMin.setMovieDTOMin(movieDTOMin);
         moviePlayingDTOMin.setDateStarts(moviePlaying.getDateStarts());
         moviePlayingDTOMin.setDateEnds(moviePlaying.getDateEnds());
@@ -86,16 +85,20 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
 
     @Override
     public MoviePlayingDTOMin addMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
-        MoviePlaying newMoviePlaying = getMoviePlayingFromInput(inputMoviePlayingDTO);
-        MoviePlaying moviePlayingSaved = moviePlayingRepo.save(newMoviePlaying);
-        return getMoviePlayingDTOMin(moviePlayingSaved);
+        MoviePlaying moviePlaying = moviePlayingRepo.getByMovie_IdAndTheater_Id(inputMoviePlayingDTO.getMovieId(),
+                inputMoviePlayingDTO.getTheaterId());
+        if (moviePlaying == null) {
+            MoviePlaying newMoviePlaying = getMoviePlayingFromInput(inputMoviePlayingDTO);
+            moviePlaying = moviePlayingRepo.save(newMoviePlaying);
+        }
+        return getMoviePlayingDTOMin(moviePlaying);
     }
 
     @Override
     public MoviePlayingDTOMin updateMoviePlayingInTheater(InputMoviePlayingDTO inputMoviePlayingDTO) {
         int movieId = inputMoviePlayingDTO.getMovieId();
         int theaterId = inputMoviePlayingDTO.getTheaterId();
-        MoviePlaying moviePlayingInDB = getMoviePlaying(movieId,theaterId);
+        MoviePlaying moviePlayingInDB = getMoviePlayingByMovieAndTheater(movieId,theaterId);
         Date dateStarts = Date.valueOf(inputMoviePlayingDTO.getDateStarts());
         Date dateEnds = Date.valueOf(inputMoviePlayingDTO.getDateEnds());
         if (dateStarts != null) {
@@ -109,14 +112,14 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
 
     @Override
-    public void removeMoviePlayingInTheater(Integer movieId, Integer theaterId) {
-        getMoviePlaying(movieId,theaterId);
-        moviePlayingRepo.deleteById(new MoviePlayingPK(movieId,theaterId));
+    public void removeMoviePlayingInTheater(Integer moviePlayingId) {
+        getMoviePlaying(moviePlayingId);
+        moviePlayingRepo.deleteById(moviePlayingId);
     }
 
     @Override
-    public MoviePlayingDTOFull getMoviePlayingInTheater(Integer movieId, Integer theaterId) {
-        MoviePlaying moviePlaying = getMoviePlaying(movieId,theaterId);
+    public MoviePlayingDTOFull getMoviePlayingInTheater(Integer moviePlayingId) {
+        MoviePlaying moviePlaying = getMoviePlaying(moviePlayingId);
         return getMoviePlayingDTOFull(moviePlaying);
     }
 
@@ -146,8 +149,8 @@ public class MoviePlayingServicesImp implements MoviePlayingServices {
     }
 
     @Override
-    public MoviePlayingDTOMin getMinMoviePlayingInTheater(Integer movieId, Integer theaterId) {
-        MoviePlaying moviePlaying = getMoviePlaying(movieId,theaterId);
+    public MoviePlayingDTOMin getMinMoviePlayingInTheater(Integer moviePlayingId) {
+        MoviePlaying moviePlaying = getMoviePlaying(moviePlayingId);
         return getMoviePlayingDTOMin(moviePlaying);
     }
 

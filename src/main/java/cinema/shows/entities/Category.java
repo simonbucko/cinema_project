@@ -3,8 +3,10 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Objects;
 
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "categories")
@@ -17,12 +19,8 @@ public class Category {
     @Column(name = "Name", nullable = false, length = 45)
     private String name;
 
-    public Category(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public Category(String name) {
         this.name = name;
     }
+
 }

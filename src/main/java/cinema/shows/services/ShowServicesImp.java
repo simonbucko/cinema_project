@@ -28,19 +28,18 @@ public class ShowServicesImp implements ShowServices {
         this.showRepo = showRepo;
     }
 
-    private String errorMessage(Integer movieId, Integer theaterId){
-        return "Movie Playing NOT FOUND with movieId = " + movieId + " and theaterId = " + theaterId;
+    private String errorMessage(Long showId){
+        return "Show NOT FOUND for Id = " + showId;
     }
 
     @Override
-    public Show getShow(Integer moviePlayingId, Integer theaterId) {
-        return showRepo.findById(new ShowPK(moviePlayingId,theaterId))
-                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(moviePlayingId,theaterId)));
+    public Show getShow(Long showId) {
+        return showRepo.findById(showId)
+                .orElseThrow(() -> new ResourceNotFoundException(errorMessage(showId)));
     }
 
     private Show getShowFromInputShowDTO(InputShowDTO inputShowDTO) {
         Show show = new Show();
-        show.setShowPK(new ShowPK(inputShowDTO.getMoviePlayingId(),inputShowDTO.getTheaterId()));
         show.setDate(Date.valueOf(inputShowDTO.getDate()));
         show.setTime(Time.valueOf(inputShowDTO.getTime()));
         show.setHallId(inputShowDTO.getHallId());
@@ -50,11 +49,8 @@ public class ShowServicesImp implements ShowServices {
         ShowDTOMin showDTOMin = new ShowDTOMin();
         showDTOMin.setDate(show.getDate());
         showDTOMin.setTime(show.getTime().toString());
-        ShowPK showPK = show.getShowPK();
-        int moviePlayingId = showPK.getMoviesPlayingMoviesId();
-        int theaterId = showPK.getMoviesPlayingTheatersId();
         MoviePlayingDTOMin moviePlayingDTOMin =
-                moviePlayingServices.getMinMoviePlayingInTheater(moviePlayingId,theaterId);
+                moviePlayingServices.getMinMoviePlayingInTheater(show.getMoviePlaying().getMovie().getId());
         showDTOMin.setMoviePlayingDTOMin(moviePlayingDTOMin);
         String hall = hallRepo.getById(show.getHallId()).getTag();
         showDTOMin.setHall(hall);
@@ -71,11 +67,8 @@ public class ShowServicesImp implements ShowServices {
         ShowDTOFull showDTOFull = new ShowDTOFull();
         showDTOFull.setDate(show.getDate());
         showDTOFull.setTime(show.getTime());
-        ShowPK showPK = show.getShowPK();
-        int moviePlayingId = showPK.getMoviesPlayingMoviesId();
-        int theaterId = showPK.getMoviesPlayingTheatersId();
         MoviePlayingDTOFull moviePlayingDTOFull =
-                moviePlayingServices.getMoviePlayingInTheater(moviePlayingId,theaterId);
+                moviePlayingServices.getMoviePlayingInTheater(show.getMoviePlaying().getMovie().getId());
         String hall = hallRepo.getById(show.getHallId()).getTag();
         showDTOFull.setHall(hall);
         showDTOFull.setMoviePlayingDTOFull(moviePlayingDTOFull);
@@ -98,12 +91,11 @@ public class ShowServicesImp implements ShowServices {
 
     @Override
     public ShowDTOMin updateShow(InputShowDTO inputShowDTO) {
+        Integer hallId = inputShowDTO.getHallId();
         Integer moviePlayingId = inputShowDTO.getMoviePlayingId();
-        Integer theaterId = inputShowDTO.getTheaterId();
-        Show showInDB = getShow(moviePlayingId,theaterId);
+        Show showInDB = showRepo.getByMoviePlaying_IdAndHallId(moviePlayingId,hallId);
         Date date = Date.valueOf(inputShowDTO.getDate());
         Time time = Time.valueOf(inputShowDTO.getTime());
-        Integer hallId = inputShowDTO.getHallId();
         if (date != null) {
             showInDB.setDate(date);
         }
@@ -113,19 +105,23 @@ public class ShowServicesImp implements ShowServices {
         if (hallId != null) {
             showInDB.setHallId(hallId);
         }
+        if (moviePlayingId != null) {
+            MoviePlaying moviePlaying = moviePlayingServices.getMoviePlaying(moviePlayingId);
+            showInDB.setMoviePlaying(moviePlaying);
+        }
         Show showSaved = showRepo.save(showInDB);
         return getShowDTOMinFromShow(showSaved);
     }
 
     @Override
-    public void removeShow(Integer movieId, Integer theaterId) {
-        getShow(movieId,theaterId);
-        showRepo.deleteById(new ShowPK(movieId,theaterId));
+    public void removeShow(Long showId) {
+        getShow(showId);
+        showRepo.deleteById(showId);
     }
 
     @Override
-    public ShowDTOMin getMinShow(Integer movieId, Integer theaterId) {
-        Show show = getShow(movieId,theaterId);
+    public ShowDTOMin getMinShow(Long showId) {
+        Show show = getShow(showId);
         return getShowDTOMinFromShow(show);
     }
 

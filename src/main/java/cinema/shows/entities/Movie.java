@@ -4,15 +4,16 @@ import cinema.shows.dtos.InputMovieDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
-@ToString
 @Table(name = "movies")
-public class Movie {
+public class Movie implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -33,8 +34,8 @@ public class Movie {
     @Column(name = "Category_id", nullable = false)
     private int categoryId;
 
-    @OneToOne(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private MoviePlaying moviePlaying;
+    @OneToMany(mappedBy = "movie")
+    private Collection<MoviePlaying> moviesPlaying;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
@@ -45,6 +46,11 @@ public class Movie {
                     @JoinColumn(name = "Actors_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
     private Set<Actor> actorSet = new HashSet<>();
+
+    public void addActor(Actor actor) {
+        actorSet.add(actor);
+        actor.getMovieSet().add(this);
+    }
 
     public Movie(String title, double rating, short minAge, String description, int categoryId) {
         this.title = title;
@@ -63,17 +69,13 @@ public class Movie {
         this.actorSet=actorSet;
     }
 
-    public Movie(InputMovieDTO inputMovieDTO) {
+    public Movie(InputMovieDTO inputMovieDTO, Set<Actor> actors) {
         this.title = inputMovieDTO.getTitle();
         this.rating = inputMovieDTO.getRating();
         this.minAge = inputMovieDTO.getMinAge();
         this.description = inputMovieDTO.getDescription();
         this.categoryId = inputMovieDTO.getCategoryId();
-        if (inputMovieDTO.getActorList() != null || inputMovieDTO.getActorList().size() != 0) {
-            this.actorSet = new HashSet(inputMovieDTO.getActorList());
-        } else {
-            this.actorSet = new HashSet<>();
-        }
+        this.actorSet = actors;
     }
 
     public Movie(int id, String title, double rating, short minAge, String description, int categoryId) {
@@ -85,10 +87,4 @@ public class Movie {
         this.categoryId = categoryId;
         this.actorSet = new HashSet<>();
     }
-
-    public void addActor(Actor actor) {
-        actorSet.add(actor);
-        actor.getMovieSet().add(this);
-    }
-
 }

@@ -3,7 +3,6 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
@@ -29,7 +28,7 @@ public class Theater {
     private short zipcode;
 
     @OneToMany(mappedBy = "theater")
-    public List<MoviePlaying> moviesPlaying;
+    private List<MoviePlaying> moviesPlaying;
 
     public Theater(String name, String street, String city, short zipcode) {
         this.name = name;
@@ -45,4 +44,5 @@ public class Theater {
         this.city = city;
         this.zipcode = zipcode;
     }
+
 }

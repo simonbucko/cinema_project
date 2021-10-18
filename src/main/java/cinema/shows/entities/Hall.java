@@ -3,8 +3,6 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -21,5 +19,4 @@ public class Hall {
 
     @Column(name = "Theaters_id", nullable = false)
     private int theaterId;
-
 }

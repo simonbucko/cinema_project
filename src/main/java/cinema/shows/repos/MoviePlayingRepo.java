@@ -1,13 +1,13 @@
 package cinema.shows.repos;
 
 import cinema.shows.entities.MoviePlaying;
-import cinema.shows.entities.MoviePlayingPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.sql.Date;
 import java.util.List;
 
-public interface MoviePlayingRepo extends JpaRepository<MoviePlaying, MoviePlayingPK> {
+public interface MoviePlayingRepo extends JpaRepository<MoviePlaying, Integer> {
     List<MoviePlaying> getAllByDateEndsIsGreaterThanEqualAndDateStartsIsLessThanEqual(Date dateOne, Date dateTwo);
     List<MoviePlaying> getAllByTheaterId(Integer theaterId);
+    MoviePlaying getByMovie_IdAndTheater_Id(Integer movieId, Integer theaterId);
 }

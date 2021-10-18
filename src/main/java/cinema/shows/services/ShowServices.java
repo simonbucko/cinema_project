@@ -7,12 +7,12 @@ import java.sql.Date;
 import java.util.List;
 
 public interface ShowServices {
-    Show getShow(Integer moviePlayingId, Integer theaterId);
+    Show getShow(Long showId);
 
     ShowDTOMin addShow(InputShowDTO inputShowDTO);
     ShowDTOMin updateShow(InputShowDTO inputShowDTO);
-    void removeShow(Integer movieId, Integer theaterId);
-    ShowDTOMin getMinShow(Integer movieId, Integer theaterId);
+    void removeShow(Long showId);
+    ShowDTOMin getMinShow(Long showId);
 
     List<ShowDTOMin> getMinShowsByDate(Date date);
     List<ShowDTOMin> getMinShowsByDates(Date dateStarts, Date dateEnds);

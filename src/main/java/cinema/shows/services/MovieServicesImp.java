@@ -6,7 +6,6 @@ import cinema.shows.entities.Movie;
 import cinema.shows.exceptions.ResourceNotFoundException;
 import cinema.shows.repos.CategoryRepo;
 import cinema.shows.repos.MovieRepo;
-import cinema.shows.utils.StaticCalls;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +50,7 @@ public class MovieServicesImp implements MovieServices {
        movieDTOFull.setRating(movie.getRating());
        if (!movie.getActorSet().isEmpty()) {
             Set<Actor> actorSet = movie.getActorSet();
-            movieDTOFull.setActorList(
-                    StaticCalls.getListOfActorsToShowWithMovieRequest(actorSet));
+            movieDTOFull.setActorList(actorServices.getListOfActorsToShowWithMovieRequest(actorSet));
        } else {
            movieDTOFull.setActorList(new ArrayList<>());
        }
@@ -61,7 +59,13 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public MovieDTOFull addMovie(InputMovieDTO inputMovieDTO) {
-        Movie newMovie = new Movie(inputMovieDTO);
+        Set<Actor> actors;
+        if (inputMovieDTO.getActorList().isEmpty() || inputMovieDTO.getActorList() == null) {
+            actors = new HashSet<>();
+        } else {
+            actors = actorServices.getSetOfActorsFromListOfActorDTOs(inputMovieDTO.getActorList());
+        }
+        Movie newMovie = new Movie(inputMovieDTO, actors);
         Movie movieSaved = movieRepo.save(newMovie);
         return getMovieDTOFullFromMovie(movieSaved);
     }
@@ -75,9 +79,8 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public Movie getMovieById(Integer movieId) {
-        Movie movie = movieRepo.findById(movieId)
+        return movieRepo.findById(movieId)
                 .orElseThrow(() -> new ResourceNotFoundException(errorMessage(movieId)));
-        return movie;
     }
 
     @Override

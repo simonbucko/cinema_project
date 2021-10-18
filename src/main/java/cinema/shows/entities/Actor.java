@@ -4,7 +4,6 @@ import cinema.shows.dtos.ActorDTO;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,20 +11,25 @@ import java.util.Set;
 @Getter @Setter
 @Entity
 @Table(name = "actors")
-public class Actor implements Serializable {
+public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "First_Name", length = 45)
+    @Column(name = "First_Name", nullable = false, length = 45)
     private String firstName;
 
-    @Column(name = "Last_Name", length = 45)
+    @Column(name = "Last_Name", nullable = false, length = 45)
     private String lastName;
 
     @ManyToMany(mappedBy = "actorSet")
     private Set<Movie> movieSet;
+
+    public void addMovie(Movie movie) {
+        movieSet.add(movie);
+        movie.getActorSet().add(this);
+    }
 
     public Actor(String firstName, String lastName) {
         this.firstName = firstName;
@@ -43,17 +47,11 @@ public class Actor implements Serializable {
         this.lastName = actorDTO.getLastName();
     }
 
-    public void addMovie(Movie movie) {
-        movieSet.add(movie);
-        movie.getActorSet().add(this);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Actor)) return false;
-        Actor actor = (Actor) o;
-        return getFirstName().equals(actor.getFirstName()) && getLastName().equals(actor.getLastName());
+        if (!(o instanceof Actor actor)) return false;
+        return Objects.equals(getFirstName(), actor.getFirstName()) && Objects.equals(getLastName(), actor.getLastName());
     }
 
     @Override

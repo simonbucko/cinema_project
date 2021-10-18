@@ -1,6 +1,5 @@
 package cinema.shows.dtos;
 
-import cinema.shows.entities.Actor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +16,5 @@ public class InputMovieDTO {
     private Short minAge;
     private String description;
     private Integer categoryId;
-    private List<Actor> actorList;
+    private List<ActorDTO> actorList;
 }

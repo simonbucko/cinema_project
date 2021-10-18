@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.*;
 
-//@Component
+@Component
 public class DataLoader {
     private CategoryRepo categoryRepo;
     private MovieRepo movieRepo;
@@ -46,6 +46,11 @@ public class DataLoader {
         categoryRepo.save(new Category(3, "sci-fy"));
     }
 
+    Movie movieOne;
+    Movie movieTwo;
+    Movie movieThree;
+    Theater theater;
+
     private void loadMoviesAndActors() {
         Actor one = new Actor(1, "Al", "Pacino");
         Actor two = new Actor(2, "Robert", "DeNiro");
@@ -59,39 +64,40 @@ public class DataLoader {
         List<Actor> actorListGodfather = new ArrayList(Arrays.asList(one,two));
         Set<Actor> actorSetGodfather = new HashSet(actorListGodfather);
         godfather.setActorSet(actorSetGodfather);
-        movieRepo.save(godfather);
+        movieOne = movieRepo.save(godfather);
         Movie truman = new Movie(2, "The Truman Show", 8, (short) 12, "Something different...",2);
         List<Actor> actorListTruman = new ArrayList(Arrays.asList(three));
         Set<Actor> actorSetTruman = new HashSet(actorListTruman);
         truman.setActorSet(actorSetTruman);
-        movieRepo.save(truman);
+        movieTwo = movieRepo.save(truman);
         Movie matrix = new Movie(3, "The Matrix", 10, (short) 14, "Will blow your mind...",3);
         List<Actor> actorListMatrix = new ArrayList(Arrays.asList(four));
         Set<Actor> actorSetMatrix = new HashSet(actorListMatrix);
         matrix.setActorSet(actorSetMatrix);
-        movieRepo.save(matrix);
+        movieThree = movieRepo.save(matrix);
     }
 
     private void loadTheater() {
-        theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", (short) 2400));
+        theater = theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", (short) 2400));
     }
 
+    MoviePlaying moviePlayingOne;
+    MoviePlaying moviePlayingTwo;
+    MoviePlaying moviePlayingThree;
+
     private void loadMoviesPlaying() {
-        MoviePlayingPK moviePlayingPKOne = new MoviePlayingPK(1, 1);
         Date dateStartsGodfather = Date.valueOf("2021-10-15");
         Date dateEndsGodfather = Date.valueOf("2021-10-21");
-        MoviePlaying moviePlayingGodfather = new MoviePlaying(moviePlayingPKOne, dateStartsGodfather, dateEndsGodfather);
-        moviePlayingRepo.save(moviePlayingGodfather);
-        MoviePlayingPK moviePlayingPKTwo= new MoviePlayingPK(2, 1);
+        MoviePlaying moviePlayingGodfather = new MoviePlaying(dateStartsGodfather, dateEndsGodfather, movieOne, theater);
+        moviePlayingOne = moviePlayingRepo.save(moviePlayingGodfather);
         Date dateStartsTrumanShow = Date.valueOf("2021-10-17");
         Date dateEndsTrumanShow = Date.valueOf("2021-10-23");
-        MoviePlaying moviePlayingTrumanShow = new MoviePlaying(moviePlayingPKTwo, dateStartsTrumanShow, dateEndsTrumanShow);
-        moviePlayingRepo.save(moviePlayingTrumanShow);
-        MoviePlayingPK moviePlayingPKThree= new MoviePlayingPK(3, 1);
+        MoviePlaying moviePlayingTrumanShow = new MoviePlaying(dateStartsTrumanShow, dateEndsTrumanShow, movieTwo, theater);
+        moviePlayingTwo = moviePlayingRepo.save(moviePlayingTrumanShow);
         Date dateStartsMatrix = Date.valueOf("2021-10-19");
         Date dateEndsMatrix = Date.valueOf("2021-10-25");
-        MoviePlaying moviePlayingMatrix= new MoviePlaying(moviePlayingPKThree, dateStartsMatrix, dateEndsMatrix);
-        moviePlayingRepo.save(moviePlayingMatrix);
+        MoviePlaying moviePlayingMatrix= new MoviePlaying(dateStartsMatrix, dateEndsMatrix, movieThree, theater);
+        moviePlayingThree = moviePlayingRepo.save(moviePlayingMatrix);
     }
 
     private void loadHall() {
@@ -100,8 +106,7 @@ public class DataLoader {
     }
 
     private void loadShows() {
-        ShowPK showPKOne = new ShowPK(1,1);
-        Show showOneGodfather = new Show(showPKOne, Time.valueOf("15:00:00"),Date.valueOf("2021-10-16"),1);
+        Show showOneGodfather = new Show(Date.valueOf("2021-10-16"),Time.valueOf("15:00:00"),moviePlayingOne,1);
         showRepo.save(showOneGodfather);
     }
 }

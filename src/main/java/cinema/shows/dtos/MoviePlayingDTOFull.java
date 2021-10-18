@@ -12,6 +12,7 @@ import java.sql.Date;
 @Getter @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MoviePlayingDTOFull {
+    private Integer moviePlayingId;
     private MovieDTOFull movieDTOFull;
     private Date dateStarts;
     private Date dateEnds;
