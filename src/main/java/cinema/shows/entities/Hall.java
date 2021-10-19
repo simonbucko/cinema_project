@@ -17,6 +17,12 @@ public class Hall {
     @Column(name = "Tag", nullable = false, length = 45)
     private String tag;
 
+    @Column(name = "Rows", nullable = false)
+    private int rows;
+
+    @Column(name = "Columns", nullable = false)
+    private int columns;
+
     @Column(name = "Theaters_id", nullable = false)
     private int theaterId;
 }
