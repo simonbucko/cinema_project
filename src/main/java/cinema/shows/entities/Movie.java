@@ -69,7 +69,7 @@ public class Movie implements Serializable {
         this.minAge = minAge;
         this.description = description;
         this.categoryId = categoryId;
-        this.actorSet=actorSet;
+        this.actorSet = actorSet;
     }
 
     public Movie(InputMovieDTO inputMovieDTO, Set<Actor> actors) {
