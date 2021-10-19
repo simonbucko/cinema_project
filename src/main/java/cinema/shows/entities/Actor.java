@@ -17,9 +17,11 @@ public class Actor {
     @Column(name = "id", nullable = false)
     private int id;
 
+//    @Transient
     @Column(name = "First_Name", nullable = false, length = 45)
     private String firstName;
 
+//    @Transient
     @Column(name = "Last_Name", nullable = false, length = 45)
     private String lastName;
 

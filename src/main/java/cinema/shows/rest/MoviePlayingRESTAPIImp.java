@@ -28,7 +28,7 @@ public class MoviePlayingRESTAPIImp implements MoviePlayingRESTAPI {
         System.out.println(moviePlayingDTOFsFull);
         return new ResponseEntity<>(moviePlayingDTOFsFull, HttpStatus.OK);
     }
-
+    
     @PostMapping
     public ResponseEntity<MoviePlayingDTOMin> addMoviePlayingForTheater(
             @RequestBody InputMoviePlayingDTO inputMoviePlayingDTO) {
