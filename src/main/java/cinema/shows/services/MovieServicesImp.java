@@ -4,6 +4,7 @@ import cinema.shows.dtos.*;
 import cinema.shows.entities.Actor;
 import cinema.shows.entities.Movie;
 import cinema.shows.exceptions.ResourceNotFoundException;
+import cinema.shows.repos.ActorRepo;
 import cinema.shows.repos.CategoryRepo;
 import cinema.shows.repos.MovieRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class MovieServicesImp implements MovieServices {
     ActorServices actorServices;
     @Autowired
     CategoryRepo categoryRepo;
+    @Autowired
+    ActorRepo actorRepo;
 
     public MovieServicesImp(MovieRepo movieRepo) {
         this.movieRepo = movieRepo;
@@ -109,8 +112,8 @@ public class MovieServicesImp implements MovieServices {
             movieInDB.setCategoryId(categoryId);
         }
         if (actors != null) {
-            List<Actor> actorList = actorServices.saveAll(actors);
-            Set<Actor> actorSet = new HashSet(actorList);
+            Set<Actor> actorSet = actorServices.getSetOfActorsFromListOfActorDTOs(actors);
+            System.out.println(actorSet);
             if (replace) {
                 movieInDB.setActorSet(actorSet);
             } else {
