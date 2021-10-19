@@ -64,6 +64,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `cinemav5`.`halls` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Tag` VARCHAR(45) NOT NULL,
+  `Rows` INT NOT NULL,
+  `Columns` INT NOT NULL,
   `Theaters_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Halls_Theaters1_idx` (`Theaters_id` ASC) VISIBLE,
