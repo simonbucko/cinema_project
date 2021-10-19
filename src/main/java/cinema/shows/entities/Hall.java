@@ -23,4 +23,10 @@ public class Hall {
 
     @OneToMany(mappedBy = "hall")
     private Set<Seat> seats;
+
+    public Hall(int id, String tag, int theaterId) {
+        this.id = id;
+        this.tag = tag;
+        this.theaterId = theaterId;
+    }
 }

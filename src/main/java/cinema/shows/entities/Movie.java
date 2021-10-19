@@ -34,6 +34,12 @@ public class Movie implements Serializable {
     @Column(name = "Category_id", nullable = false)
     private int categoryId;
 
+    @Column(name = "Image")
+    private byte[] image;
+
+    @Column(name = "Trailer")
+    private String trailer;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
             joinColumns = {
@@ -57,7 +63,7 @@ public class Movie implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Movie(String title, double rating, short minAge, String description, int categoryId, HashSet actorSet) {
+    public Movie(String title, double rating, short minAge, String description, int categoryId, Set<Actor>actorSet) {
         this.title = title;
         this.rating = rating;
         this.minAge = minAge;
