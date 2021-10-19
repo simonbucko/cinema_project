@@ -3,6 +3,7 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -24,5 +25,16 @@ public class Hall {
     private int columns;
 
     @Column(name = "Theaters_id", nullable = false)
-    private int theaterId;
+    private int theater_id;
+
+    @OneToMany(mappedBy = "hallId")
+    private List<Show> shows;
+
+    public Hall(int id, String tag, int rows, int columns, int theater_id) {
+        this.id = id;
+        this.tag = tag;
+        this.rows = rows;
+        this.columns = columns;
+        this.theater_id = theater_id;
+    }
 }

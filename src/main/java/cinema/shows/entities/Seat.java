@@ -25,4 +25,7 @@ public class Seat {
     @Column(name = "column", nullable = false)
     private short columns;
 
+    @OneToOne
+    (mappedBy="seat", cascade = CascadeType.ALL)
+    private Ticket ticket;
 }

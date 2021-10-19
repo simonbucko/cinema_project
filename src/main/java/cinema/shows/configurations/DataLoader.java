@@ -50,6 +50,7 @@ public class DataLoader {
     Movie movieTwo;
     Movie movieThree;
     Theater theater;
+    Hall hall;
 
     private void loadMoviesAndActors() {
         Actor one = new Actor(1, "Al", "Pacino");
@@ -101,12 +102,11 @@ public class DataLoader {
     }
 
     private void loadHall() {
-        Hall hall = new Hall(1,"Room One",1);
-        hallRepo.save(hall);
+        hall = hallRepo.save(new Hall(1,"Room One",5,5,1));
     }
 
     private void loadShows() {
-        Show showOneGodfather = new Show(Date.valueOf("2021-10-16"),Time.valueOf("15:00:00"),moviePlayingOne,1);
+        Show showOneGodfather = new Show(Date.valueOf("2021-10-16"),Time.valueOf("15:00:00"),moviePlayingOne,hall);
         showRepo.save(showOneGodfather);
     }
 }

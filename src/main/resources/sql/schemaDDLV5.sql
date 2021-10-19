@@ -5,9 +5,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema cinemav5
 -- -----------------------------------------------------
 
@@ -185,16 +182,18 @@ CREATE TABLE IF NOT EXISTS `cinemav5`.`tickets` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `Price` DOUBLE NOT NULL,
   `Shows_id` BIGINT NOT NULL,
-  `Seats_Number` VARCHAR(45) NOT NULL,
+  `seats_Number` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Tickets_Shows1_idx` (`Shows_id` ASC) VISIBLE,
-  INDEX `fk_Tickets_Seats1_idx` (`Seats_Number` ASC) VISIBLE,
-  CONSTRAINT `fk_Tickets_Seats1`
-    FOREIGN KEY (`Seats_Number`)
-    REFERENCES `cinemav5`.`seats` (`Number`),
+  INDEX `fk_tickets_seats1_idx` (`seats_Number` ASC) VISIBLE,
   CONSTRAINT `fk_Tickets_Shows1`
     FOREIGN KEY (`Shows_id`)
-    REFERENCES `cinemav5`.`shows` (`id`))
+    REFERENCES `cinemav5`.`shows` (`id`),
+  CONSTRAINT `fk_tickets_seats1`
+    FOREIGN KEY (`seats_Number`)
+    REFERENCES `cinemav5`.`seats` (`Number`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
