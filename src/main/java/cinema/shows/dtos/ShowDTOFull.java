@@ -1,5 +1,6 @@
 package cinema.shows.dtos;
 
+import cinema.shows.entities.Hall;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,6 @@ public class ShowDTOFull {
     private MoviePlayingDTOFull moviePlayingDTOFull;
     private Time time;
     private Date date;
-    private String hall;
+    private Hall hall;
     private String hallId;
 }
