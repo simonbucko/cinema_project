@@ -3,6 +3,7 @@ package cinema.shows.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -19,4 +20,7 @@ public class Hall {
 
     @Column(name = "Theaters_id", nullable = false)
     private int theaterId;
+
+    @OneToMany(mappedBy = "hall")
+    private Set<Seat> seats;
 }

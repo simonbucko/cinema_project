@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;
+import java.util.Set;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -29,6 +30,9 @@ public class Show {
 
     @Column(name = "Halls_id", nullable = false)
     private int hallId;
+
+    @OneToMany(mappedBy = "show")
+    public Set<Ticket> ticketSet;
 
     public Show(Date date, Time time, MoviePlaying moviePlaying, int hallId) {
         this.date = date;
