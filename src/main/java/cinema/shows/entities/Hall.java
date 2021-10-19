@@ -27,7 +27,7 @@ public class Hall {
     @Column(name = "Theaters_id", nullable = false)
     private int theater_id;
 
-    @OneToMany(mappedBy = "hallId")
+    @OneToMany(mappedBy = "hall")
     private List<Show> shows;
 
     public Hall(int id, String tag, int rows, int columns, int theater_id) {
