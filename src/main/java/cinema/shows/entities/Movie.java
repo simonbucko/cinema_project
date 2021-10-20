@@ -42,7 +42,7 @@ public class Movie implements Serializable {
             inverseJoinColumns = {
                     @JoinColumn(name = "Actors_id", referencedColumnName = "id",
                             nullable = false, updatable = false)})
-    private Set<Actor> actorSet = new HashSet<>();
+    private Set<Actor> actorSet;
 
     public void addActor(Actor actor) {
         actorSet.add(actor);
@@ -57,13 +57,13 @@ public class Movie implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Movie(String title, double rating, short minAge, String description, int categoryId, HashSet actorSet) {
+    public Movie(String title, double rating, short minAge, String description, int categoryId, Set<Actor> actors) {
         this.title = title;
         this.rating = rating;
         this.minAge = minAge;
         this.description = description;
         this.categoryId = categoryId;
-        this.actorSet=actorSet;
+        this.actorSet = actors;
     }
 
     public Movie(InputMovieDTO inputMovieDTO, Set<Actor> actors) {
