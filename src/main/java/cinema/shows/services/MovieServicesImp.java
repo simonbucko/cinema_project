@@ -54,6 +54,8 @@ public class MovieServicesImp implements MovieServices {
         movieDTOFull.setMinAge(movie.getMinAge());
         movieDTOFull.setDescription(movie.getDescription());
         movieDTOFull.setRating(movie.getRating());
+        movieDTOFull.setImage(movie.getImage());
+        movieDTOFull.setTrailer(movie.getTrailer());
         if (!movie.getActorSet().isEmpty()) {
             Set<Actor> actorSet = movie.getActorSet();
             movieDTOFull.setActorList(actorServices.getListOfActorsToShowWithMovieRequest(actorSet));
