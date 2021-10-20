@@ -61,8 +61,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `cinemav6`.`halls` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Tag` VARCHAR(45) NOT NULL,
-  `Rows` INT NOT NULL,
-  `Columns` INT NOT NULL,
+  `Rows` SMALLINT NOT NULL,
+  `Columns` SMALLINT NOT NULL,
   `Theaters_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Halls_Theaters1_idx` (`Theaters_id` ASC),
@@ -145,9 +145,9 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `cinemav6`.`seats`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemav6`.`seats` (
-  `Number` VARCHAR(45) NOT NULL,
-  `row` SMALLINT NOT NULL,
-  `column` SMALLINT NOT NULL,
+  `Number` INT NOT NULL AUTO_INCREMENT,
+  `Row` SMALLINT NOT NULL,
+  `Column` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`Number`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
@@ -161,17 +161,19 @@ CREATE TABLE IF NOT EXISTS `cinemav6`.`shows` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `Date` DATE NOT NULL,
   `Time` TIME NOT NULL,
-  `Halls_id` INT NOT NULL,
   `Movies_Playing_id` INT NOT NULL,
+  `halls_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Shows_Halls1_idx` (`Halls_id` ASC),
   INDEX `fk_Shows_Movies_Playing1_idx` (`Movies_Playing_id` ASC),
-  CONSTRAINT `fk_Shows_Halls1`
-    FOREIGN KEY (`Halls_id`)
-    REFERENCES `cinemav6`.`halls` (`id`),
+  INDEX `fk_shows_halls1_idx` (`halls_id` ASC),
   CONSTRAINT `fk_Shows_Movies_Playing1`
     FOREIGN KEY (`Movies_Playing_id`)
-    REFERENCES `cinemav6`.`movies_playing` (`id`))
+    REFERENCES `cinemav6`.`movies_playing` (`id`),
+  CONSTRAINT `fk_shows_halls1`
+    FOREIGN KEY (`halls_id`)
+    REFERENCES `cinemav6`.`halls` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -183,14 +185,16 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `cinemav6`.`tickets` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `Price` DOUBLE NOT NULL,
-  `Shows_id` BIGINT NOT NULL,
-  `seats_Number` VARCHAR(45) NOT NULL,
+  `shows_id` BIGINT NOT NULL,
+  `seats_Number` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Tickets_Shows1_idx` (`Shows_id` ASC),
+  INDEX `fk_tickets_shows1_idx` (`shows_id` ASC),
   INDEX `fk_tickets_seats1_idx` (`seats_Number` ASC),
-  CONSTRAINT `fk_Tickets_Shows1`
-    FOREIGN KEY (`Shows_id`)
-    REFERENCES `cinemav6`.`shows` (`id`),
+  CONSTRAINT `fk_tickets_shows1`
+    FOREIGN KEY (`shows_id`)
+    REFERENCES `cinemav6`.`shows` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_tickets_seats1`
     FOREIGN KEY (`seats_Number`)
     REFERENCES `cinemav6`.`seats` (`Number`)
