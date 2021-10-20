@@ -17,4 +17,6 @@ public interface ShowRepo extends JpaRepository<Show, Long> {
 
     Show getByMoviePlaying_IdAndHallId(Integer moviePlayingId, Integer hallId);
     Show findByDateAndTimeAndHallId(Date date, Time time, int hallId);
+
+
 }
