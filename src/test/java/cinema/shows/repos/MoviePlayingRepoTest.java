@@ -28,10 +28,10 @@ class MoviePlayingRepoTest {
 
     @AfterEach
     public void cleanDB() {
+        moviePlayingRepo.deleteAll();
         categoryRepo.deleteAll();
         movieRepo.deleteAll();
         theaterRepo.deleteAll();
-        moviePlayingRepo.deleteAll();
     }
 
     @Test
