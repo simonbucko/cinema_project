@@ -102,7 +102,7 @@ public class DataLoader {
     }
 
     private void loadHall() {
-        hall = hallRepo.save(new Hall(1,"Room One",5,5,1));
+        hall = hallRepo.save(new Hall(1,"Room One",(short) 5,(short) 5,1));
     }
 
     private void loadShows() {

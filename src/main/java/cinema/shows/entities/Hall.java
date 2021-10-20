@@ -19,10 +19,10 @@ public class Hall {
     private String tag;
 
     @Column(name = "Rows", nullable = false)
-    private int rows;
+    private short rows;
 
     @Column(name = "Columns", nullable = false)
-    private int columns;
+    private short columns;
 
     @Column(name = "Theaters_id", nullable = false)
     private int theater_id;
@@ -30,7 +30,7 @@ public class Hall {
     @OneToMany(mappedBy = "hall")
     private List<Show> shows;
 
-    public Hall(int id, String tag, int rows, int columns, int theater_id) {
+    public Hall(int id, String tag, short rows, short columns, int theater_id) {
         this.id = id;
         this.tag = tag;
         this.rows = rows;

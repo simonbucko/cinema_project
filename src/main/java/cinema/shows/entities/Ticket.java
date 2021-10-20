@@ -7,10 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "tickets")
 public class Ticket {
@@ -22,9 +20,8 @@ public class Ticket {
     @Column(name = "Price", nullable = false)
     private double price;
 
-    @OneToOne
-    @JoinColumn(name = "seats_Number", referencedColumnName = "Number", nullable = false)
-    private Seat seat;
+    @Column(name = "Seats_Number", nullable = false)
+    private String seatNumber;
 
     @ManyToOne
     @JoinColumn(name = "Shows_id", referencedColumnName = "id", nullable = false)

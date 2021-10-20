@@ -7,16 +7,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor @NoArgsConstructor
+@Getter @Setter
 @Entity
 @Table(name = "seats")
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "number", nullable = false, length = 45)
+    @Column(name = "Number", nullable = false, length = 45)
     private String number;
 
     @Column(name = "row", nullable = false)
@@ -24,8 +22,4 @@ public class Seat {
 
     @Column(name = "column", nullable = false)
     private short columns;
-
-    @OneToOne
-    (mappedBy="seat", cascade = CascadeType.ALL)
-    private Ticket ticket;
 }
