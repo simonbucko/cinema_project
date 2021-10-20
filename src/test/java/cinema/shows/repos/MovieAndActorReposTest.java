@@ -32,7 +32,7 @@ class MovieAndActorReposTest {
     @Sql("/createMovie.sql")
     public void testBidirectionalRel() {
         Actor actorOne = new Actor("Al", "Pacino");
-//        actorRepo.save(actorOne);
+        actorRepo.save(actorOne);
         Actor actorOneSaved = actorRepo.getById(1);
         Actor actorTwo = new Actor("Robert", "DeNiro");
         actorRepo.save(actorTwo);
