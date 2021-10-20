@@ -34,6 +34,12 @@ public class Movie implements Serializable {
     @Column(name = "Category_id", nullable = false)
     private int categoryId;
 
+    @Column(name = "Image", nullable = false, length = 180)
+    private String image;
+
+    @Column(name = "Trailer", nullable = false, length = 180)
+    private String trailer;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
             joinColumns = {
