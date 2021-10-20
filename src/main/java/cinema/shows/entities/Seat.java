@@ -17,9 +17,9 @@ public class Seat {
     @Column(name = "Number", nullable = false, length = 45)
     private int number;
 
-    @Column(name = "row", nullable = false)
-    private short row;
+    @Column(name = "Seat_Row", nullable = false)
+    private int seatRow;
 
-    @Column(name = "column", nullable = false)
-    private String column;
+    @Column(name = "Seat_Column", nullable = false)
+    private String seatColumn;
 }

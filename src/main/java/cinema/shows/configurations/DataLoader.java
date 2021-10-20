@@ -79,8 +79,7 @@ public class DataLoader {
     }
 
     private void loadTheater() {
-        theater = theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", (short) 2400));
-    }
+        theater = theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", 2400));}
 
     MoviePlaying moviePlayingOne;
     MoviePlaying moviePlayingTwo;
@@ -102,7 +101,7 @@ public class DataLoader {
     }
 
     private void loadHall() {
-        hall = hallRepo.save(new Hall(1,"Room One",(short) 5,(short) 5,1));
+        hall = hallRepo.save(new Hall(1, 5, 5, "Room One", 1));
     }
 
     private void loadShows() {

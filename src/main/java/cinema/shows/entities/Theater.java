@@ -25,19 +25,19 @@ public class Theater {
     private String city;
 
     @Column(name = "Zipcode", nullable = false)
-    private short zipcode;
+    private int zipcode;
 
     @OneToMany(mappedBy = "theater")
     private List<MoviePlaying> moviesPlaying;
 
-    public Theater(String name, String street, String city, short zipcode) {
+    public Theater(String name, String street, String city, int zipcode) {
         this.name = name;
         this.street = street;
         this.city = city;
         this.zipcode = zipcode;
     }
 
-    public Theater(int id, String name, String street, String city, short zipcode) {
+    public Theater(int id, String name, String street, String city, int zipcode) {
         this.id = id;
         this.name = name;
         this.street = street;

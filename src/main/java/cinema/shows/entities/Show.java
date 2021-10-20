@@ -35,11 +35,19 @@ public class Show {
     @OneToMany(mappedBy = "show")
     private List<Ticket> tickets;
 
-    public Show(Date date, Time time, MoviePlaying moviePlaying, Hall hallId) {
+    public Show(long id, Date date, Time time, MoviePlaying moviePlaying, Hall hall) {
+        this.id = id;
         this.date = date;
         this.time = time;
         this.moviePlaying = moviePlaying;
-        this.hall = hallId;
+        this.hall = hall;
+    }
+
+    public Show(Date date, Time time, MoviePlaying moviePlaying, Hall hall) {
+        this.date = date;
+        this.time = time;
+        this.moviePlaying = moviePlaying;
+        this.hall = hall;
     }
 
     @Override

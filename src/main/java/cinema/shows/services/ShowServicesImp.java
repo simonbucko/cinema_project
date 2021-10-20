@@ -54,7 +54,7 @@ public class ShowServicesImp implements ShowServices {
         MoviePlayingDTOMin moviePlayingDTOMin =
                 moviePlayingServices.getMinMoviePlayingInTheater(show.getMoviePlaying().getId());
         showDTOMin.setMoviePlayingDTOMin(moviePlayingDTOMin);
-        String hall = hallRepo.getById(show.getHall().getId()).getTag();
+        String hall = hallRepo.getById(show.getHall().getId()).getHallName();
         showDTOMin.setHall(hall);
         return showDTOMin;
     }

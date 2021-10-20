@@ -15,14 +15,14 @@ public class Hall {
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "Tag", nullable = false, length = 45)
-    private String tag;
+    @Column(name = "Hall_Rows", nullable = false)
+    private int hallRows;
 
-    @Column(name = "Rows", nullable = false)
-    private short rows;
+    @Column(name = "Hall_Columns", nullable = false)
+    private int hallColumns;
 
-    @Column(name = "Columns", nullable = false)
-    private short columns;
+    @Column(name = "Hall_Name", nullable = false, length = 45)
+    private String hallName;
 
     @Column(name = "Theaters_id", nullable = false)
     private int theater_id;
@@ -30,11 +30,18 @@ public class Hall {
     @OneToMany(mappedBy = "hall")
     private List<Show> shows;
 
-    public Hall(int id, String tag, short rows, short columns, int theater_id) {
+    public Hall(int id, int hallRows, int hallColumns, String hallName, int theater_id) {
         this.id = id;
-        this.tag = tag;
-        this.rows = rows;
-        this.columns = columns;
+        this.hallRows = hallRows;
+        this.hallColumns = hallColumns;
+        this.hallName = hallName;
+        this.theater_id = theater_id;
+    }
+
+    public Hall(int hallRows, int hallColumns, String hallName, int theater_id) {
+        this.hallRows = hallRows;
+        this.hallColumns = hallColumns;
+        this.hallName = hallName;
         this.theater_id = theater_id;
     }
 }
