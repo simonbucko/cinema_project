@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.*;
 
-//@Component
+@Component
 public class DataLoader {
     private CategoryRepo categoryRepo;
     private MovieRepo movieRepo;
@@ -18,11 +18,12 @@ public class DataLoader {
     private MoviePlayingRepo moviePlayingRepo;
     private HallRepo hallRepo;
     private ShowRepo showRepo;
+    private SeatRepo seatRepo;
 
     @Autowired
     public DataLoader(CategoryRepo categoryRepo, MovieRepo movieRepo,
                       ActorRepo actorRepo, MoviePlayingRepo moviePlayingRepo,
-                      TheaterRepo theaterRepo, HallRepo hallRepo, ShowRepo showRepo) {
+                      TheaterRepo theaterRepo, HallRepo hallRepo, ShowRepo showRepo, SeatRepo seatRepo) {
         this.categoryRepo = categoryRepo;
         this.movieRepo = movieRepo;
         this.actorRepo = actorRepo;
@@ -30,6 +31,7 @@ public class DataLoader {
         this.moviePlayingRepo = moviePlayingRepo;
         this.hallRepo = hallRepo;
         this.showRepo = showRepo;
+        this.seatRepo = seatRepo;
         if (categoryRepo.count() == 0) {
             loadCategories();
             loadMoviesAndActors();
@@ -37,6 +39,7 @@ public class DataLoader {
             loadMoviesPlaying();
             loadHall();
             loadShows();
+            loadSeats();
         }
     }
 
@@ -107,5 +110,17 @@ public class DataLoader {
     private void loadShows() {
         Show showOneGodfather = new Show(Date.valueOf("2021-10-16"),Time.valueOf("15:00:00"),moviePlayingOne,hall);
         showRepo.save(showOneGodfather);
+    }
+
+    private void loadSeats(){
+        Seat seat1 = new Seat(1,(short)1,"A");
+        Seat seat2 = new Seat(2,(short)1,"B");
+        Seat seat3 = new Seat(3,(short)1,"C");
+        Seat seat4 = new Seat(4,(short)1,"D");
+        Seat seat = seatRepo.save(seat1);
+        System.out.println(seat);
+        seatRepo.save(seat2);
+        seatRepo.save(seat3);
+        seatRepo.save(seat4);
     }
 }

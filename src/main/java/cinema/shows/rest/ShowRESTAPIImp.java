@@ -50,10 +50,10 @@ public class ShowRESTAPIImp implements ShowRESTAPI {
         return new ResponseEntity<>(showDTOsMin, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ShowDTOFull> getShow(@PathVariable int id){
-        //here comes the logic
-        return new ResponseEntity<>(ShowDTOFull.class, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ShowDTOFull> getShow(@PathVariable int id){
+//        //here comes the logic
+//        return new ResponseEntity<>(ShowDTOFull.class, HttpStatus.OK);
+//    }
 
 }
