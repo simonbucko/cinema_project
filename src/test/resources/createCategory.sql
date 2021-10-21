@@ -1,1 +1,1 @@
-INSERT INTO categories(id, Name) VALUES (2, 'drama');
+INSERT INTO categories(id, Name) VALUES (1, 'drama');

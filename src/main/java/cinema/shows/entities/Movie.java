@@ -93,4 +93,14 @@ public class Movie implements Serializable {
         this.trailer = trailer;
         this.actorSet = new HashSet<>();
     }
+
+    public Movie(String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
+        this.title = title;
+        this.rating = rating;
+        this.minAge = minAge;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.trailer = trailer;
+    }
 }
