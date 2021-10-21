@@ -40,41 +40,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `cinemav6`.`theaters`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cinemav6`.`theaters` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Name` VARCHAR(45) NOT NULL,
-  `Street` VARCHAR(45) NOT NULL,
-  `City` VARCHAR(45) NOT NULL,
-  `Zipcode` SMALLINT NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `Name_UNIQUE` (`Name` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `cinemav6`.`halls`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cinemav6`.`halls` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `Tag` VARCHAR(45) NOT NULL,
-  `Rows` SMALLINT NOT NULL,
-  `Columns` SMALLINT NOT NULL,
-  `Theaters_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Halls_Theaters1_idx` (`Theaters_id` ASC),
-  CONSTRAINT `fk_Halls_Theaters1`
-    FOREIGN KEY (`Theaters_id`)
-    REFERENCES `cinemav6`.`theaters` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `cinemav6`.`movies`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemav6`.`movies` (
@@ -117,6 +82,22 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `cinemav6`.`theaters`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cinemav6`.`theaters` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
+  `Street` VARCHAR(45) NOT NULL,
+  `City` VARCHAR(45) NOT NULL,
+  `Zipcode` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `Name_UNIQUE` (`Name` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `cinemav6`.`movies_playing`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemav6`.`movies_playing` (
@@ -146,12 +127,31 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cinemav6`.`seats` (
   `Number` INT NOT NULL AUTO_INCREMENT,
-  `Row` SMALLINT NOT NULL,
-  `Column` VARCHAR(45) NOT NULL,
+  `Seat_Row` INT NOT NULL,
+  `Seat_Column` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`Number`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `cinemav6`.`Halls`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cinemav6`.`Halls` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Hall_Rows` INT NOT NULL,
+  `Hall_Columns` INT NOT NULL,
+  `Hall_Name` VARCHAR(45) NOT NULL,
+  `theaters_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Halls_theaters1_idx` (`theaters_id` ASC),
+  CONSTRAINT `fk_Halls_theaters1`
+    FOREIGN KEY (`theaters_id`)
+    REFERENCES `cinemav6`.`theaters` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -162,16 +162,16 @@ CREATE TABLE IF NOT EXISTS `cinemav6`.`shows` (
   `Date` DATE NOT NULL,
   `Time` TIME NOT NULL,
   `Movies_Playing_id` INT NOT NULL,
-  `halls_id` INT NOT NULL,
+  `Halls_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Shows_Movies_Playing1_idx` (`Movies_Playing_id` ASC),
-  INDEX `fk_shows_halls1_idx` (`halls_id` ASC),
+  INDEX `fk_shows_Halls1_idx` (`Halls_id` ASC),
   CONSTRAINT `fk_Shows_Movies_Playing1`
     FOREIGN KEY (`Movies_Playing_id`)
     REFERENCES `cinemav6`.`movies_playing` (`id`),
-  CONSTRAINT `fk_shows_halls1`
-    FOREIGN KEY (`halls_id`)
-    REFERENCES `cinemav6`.`halls` (`id`)
+  CONSTRAINT `fk_shows_Halls1`
+    FOREIGN KEY (`Halls_id`)
+    REFERENCES `cinemav6`.`Halls` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
