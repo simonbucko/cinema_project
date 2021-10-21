@@ -12,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
+@ToString
 @Table(name = "movies")
 public class Movie implements Serializable {
     @Id
@@ -33,6 +34,12 @@ public class Movie implements Serializable {
 
     @Column(name = "Category_id", nullable = false)
     private int categoryId;
+
+    @Column(name = "Image", nullable = false, length = 180)
+    private String image;
+
+    @Column(name = "Trailer", nullable = false, length = 180)
+    private String trailer;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "movie_actors",
@@ -75,13 +82,25 @@ public class Movie implements Serializable {
         this.actorSet = actors;
     }
 
-    public Movie(int id, String title, double rating, short minAge, String description, int categoryId) {
+    public Movie(int id, String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
         this.id = id;
         this.title = title;
         this.rating = rating;
         this.minAge = minAge;
         this.description = description;
         this.categoryId = categoryId;
+        this.image = image;
+        this.trailer = trailer;
         this.actorSet = new HashSet<>();
+    }
+
+    public Movie(String title, double rating, short minAge, String description, int categoryId, String image, String trailer) {
+        this.title = title;
+        this.rating = rating;
+        this.minAge = minAge;
+        this.description = description;
+        this.categoryId = categoryId;
+        this.image = image;
+        this.trailer = trailer;
     }
 }
