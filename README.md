@@ -27,5 +27,8 @@ In this project we will use:
       *if you are running maven: $ mvn compile, $ mvn install, $ mvn spring-boot:run -P dev
  </ol>
  
+Group BBH:
+1. Vlad Chivu: implementation of CRUD Movie, CRUD MoviePlaying and partially REST for displaying the Shows
+2. Simon Bucko: 
 
  
