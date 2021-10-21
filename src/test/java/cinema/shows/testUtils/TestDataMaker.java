@@ -10,16 +10,17 @@ import cinema.shows.repos.TheaterRepo;
 public class TestDataMaker {
     public static int createCategory(CategoryRepo categoryRepo){
         categoryRepo.deleteAll();
-        return categoryRepo.save(new Category(1,"drama")).getId();
+        return categoryRepo.save(new Category("drama")).getId();
     }
 
     public static int createMovie(MovieRepo movieRepo, int categoryId){
         movieRepo.deleteAll();
-        return movieRepo.save(new Movie("Godfather", 9, (short) 16, "A classic for any time...",categoryId, "https://images.seoghoer.dk/s3fs-public/media/article/the-godfather.png","https://www.youtube.com/watch?v=sY1S34973zA")).getId();
+        return movieRepo.save(new Movie("Godfather",10,(short)2,"A classic for any time...",categoryId, "https://images.seoghoer.dk/s3fs-public/media/article/the-godfather.png","https://www.youtube.com/watch?v=sY1S34973zA")).getId();
     }
 
     public static int createTheater(TheaterRepo theaterRepo){
         theaterRepo.deleteAll();
-        return theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", 2400)).getId();
+        return theaterRepo.save(new Theater("Norrebro", "Lygten 16", "Copenhagen", 2400)).getId();
     }
+
 }

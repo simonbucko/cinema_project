@@ -4,7 +4,6 @@ import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.Theater;
 import cinema.shows.testUtils.TestDataMaker;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,23 +25,22 @@ class MoviePlayingRepoTest {
     TheaterRepo theaterRepo;
     @Autowired
     CategoryRepo categoryRepo;
+    @Autowired
+    ShowRepo showRepo;
 
     int theaterId;
     int categoryId;
     int movieId;
     @BeforeEach
     public void initDate() {
-        theaterId = TestDataMaker.createTheater(theaterRepo);
-        categoryId = TestDataMaker.createCategory(categoryRepo);
-        movieId = TestDataMaker.createMovie(movieRepo,categoryId);
-    }
-
-    @AfterEach
-    public void cleanDB() {
+        showRepo.deleteAll();
         moviePlayingRepo.deleteAll();
         movieRepo.deleteAll();
         categoryRepo.deleteAll();
         theaterRepo.deleteAll();
+        theaterId = TestDataMaker.createTheater(theaterRepo);
+        categoryId = TestDataMaker.createCategory(categoryRepo);
+        movieId = TestDataMaker.createMovie(movieRepo,categoryId);
     }
 
     @Test
