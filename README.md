@@ -28,7 +28,16 @@ In this project we will use:
  </ol>
  
 Group BBH:
-1. Vlad Chivu: implementation of CRUD Movie, CRUD MoviePlaying and partially REST for displaying the Shows
+1. Vlad Chivu: 
+   1. implementation of CRUD Movie, 
+   2. implementation of CRUD MoviePlaying and 
+   3. partially REST for displaying the Shows
 2. Simon Bucko: 
+   1. Implemented REST test for MovieRESTImp
+   2. Worked creating on ticketing part
+   3. partially helped on implementing detailed version of the movie resource
+3. Vlag Garau:
+   1. Worked on implementing detailed information about a movie
+   2. Added DTO layer for our movie 
 
  
