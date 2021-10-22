@@ -38,6 +38,8 @@ public class MovieServicesImp implements MovieServices {
         MovieDTOMin movieDTOMin = new MovieDTOMin();
         movieDTOMin.setTitle(movie.getTitle());
         movieDTOMin.setMinAge(movie.getMinAge());
+        movieDTOMin.setImage(movie.getImage());
+        movieDTOMin.setTrailer(movie.getTrailer());
         String category = categoryRepo.getById(movie.getCategoryId()).getName();
         movieDTOMin.setCategory(category);
         return movieDTOMin;
@@ -92,6 +94,8 @@ public class MovieServicesImp implements MovieServices {
         Short minAge = movieDTO.getMinAge();
         String description = movieDTO.getDescription();
         Integer categoryId = movieDTO.getCategoryId();
+        String trailer = movieDTO.getTrailer();
+        String image = movieDTO.getImage();
         List<ActorDTO> actors = movieDTO.getActorList();
         if (title != null) {
             movieInDB.setTitle(title);
@@ -107,6 +111,12 @@ public class MovieServicesImp implements MovieServices {
         }
         if (categoryId != null) {
             movieInDB.setCategoryId(categoryId);
+        }
+        if (trailer != null) {
+            movieInDB.setTrailer(trailer);
+        }
+        if (image != null) {
+            movieInDB.setImage(image);
         }
         if (actors != null) {
             Set<Actor> actorSet = actorServices.getSetOfActorsFromListOfActorDTOs(actors);
