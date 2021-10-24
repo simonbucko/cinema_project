@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.*;
 
-//@Component
+@Component
 public class DataLoader {
     private CategoryRepo categoryRepo;
     private MovieRepo movieRepo;
