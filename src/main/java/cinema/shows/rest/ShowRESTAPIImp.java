@@ -1,6 +1,7 @@
 package cinema.shows.rest;
 
 import cinema.shows.dtos.InputShowDTO;
+import cinema.shows.dtos.ShowDTOFull;
 import cinema.shows.dtos.ShowDTOMin;
 import cinema.shows.services.ShowServices;
 import org.springframework.http.HttpStatus;
@@ -48,5 +49,11 @@ public class ShowRESTAPIImp implements ShowRESTAPI {
         List<ShowDTOMin> showDTOsMin = showServices.getMinShowsByDates(dateOne,dateTwo);
         return new ResponseEntity<>(showDTOsMin, HttpStatus.OK);
     }
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ShowDTOFull> getShow(@PathVariable int id){
+//        //here comes the logic
+//        return new ResponseEntity<>(ShowDTOFull.class, HttpStatus.OK);
+//    }
 
 }

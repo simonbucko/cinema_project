@@ -34,7 +34,7 @@ public class ActorServicesImp implements ActorServices {
         for (ActorDTO a: actorDTOList) {
             Actor newActorSaved = getByFirstNameAndLastName(a.getFirstName(),a.getLastName());
             if (newActorSaved == null) {
-                 newActorSaved = actorRepo.save(new Actor(a));
+                newActorSaved = actorRepo.save(new Actor(a));
             }
             actorsSet.add(newActorSaved);
         }

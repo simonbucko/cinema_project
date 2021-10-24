@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.*;
 
-//@Component
+@Component
 public class DataLoader {
     private CategoryRepo categoryRepo;
     private MovieRepo movieRepo;
@@ -18,11 +18,12 @@ public class DataLoader {
     private MoviePlayingRepo moviePlayingRepo;
     private HallRepo hallRepo;
     private ShowRepo showRepo;
+    private SeatRepo seatRepo;
 
     @Autowired
     public DataLoader(CategoryRepo categoryRepo, MovieRepo movieRepo,
                       ActorRepo actorRepo, MoviePlayingRepo moviePlayingRepo,
-                      TheaterRepo theaterRepo, HallRepo hallRepo, ShowRepo showRepo) {
+                      TheaterRepo theaterRepo, HallRepo hallRepo, ShowRepo showRepo, SeatRepo seatRepo) {
         this.categoryRepo = categoryRepo;
         this.movieRepo = movieRepo;
         this.actorRepo = actorRepo;
@@ -30,6 +31,7 @@ public class DataLoader {
         this.moviePlayingRepo = moviePlayingRepo;
         this.hallRepo = hallRepo;
         this.showRepo = showRepo;
+        this.seatRepo = seatRepo;
         if (categoryRepo.count() == 0) {
             loadCategories();
             loadMoviesAndActors();
@@ -37,6 +39,7 @@ public class DataLoader {
             loadMoviesPlaying();
             loadHall();
             loadShows();
+            loadSeats();
         }
     }
 
@@ -50,6 +53,7 @@ public class DataLoader {
     Movie movieTwo;
     Movie movieThree;
     Theater theater;
+    Hall hall;
 
     private void loadMoviesAndActors() {
         Actor one = new Actor(1, "Al", "Pacino");
@@ -60,17 +64,17 @@ public class DataLoader {
         actorRepo.save(two);
         actorRepo.save(three);
         actorRepo.save(four);
-        Movie godfather = new Movie(1,"The Godfather", 9, (short) 16, "A classic for any time...",1);
+        Movie godfather = new Movie(1,"The Godfather", 9, (short) 16, "A classic for any time...",1, "https://images.seoghoer.dk/s3fs-public/media/article/the-godfather.png","https://www.youtube.com/watch?v=sY1S34973zA");
         List<Actor> actorListGodfather = new ArrayList(Arrays.asList(one,two));
         Set<Actor> actorSetGodfather = new HashSet(actorListGodfather);
         godfather.setActorSet(actorSetGodfather);
         movieOne = movieRepo.save(godfather);
-        Movie truman = new Movie(2, "The Truman Show", 8, (short) 12, "Something different...",2);
+        Movie truman = new Movie(2, "The Truman Show", 8, (short) 12, "Something different...",2,"https://images-na.ssl-images-amazon.com/images/S/pv-target-images/1372b1f835edc8dc24851b9f5c749dfcba767dc1e009f23605cd357fb2fb32c4._RI_V_TTW_.jpg","https://www.youtube.com/results?search_query=truemanshow+trailer");
         List<Actor> actorListTruman = new ArrayList(Arrays.asList(three));
         Set<Actor> actorSetTruman = new HashSet(actorListTruman);
         truman.setActorSet(actorSetTruman);
         movieTwo = movieRepo.save(truman);
-        Movie matrix = new Movie(3, "The Matrix", 10, (short) 14, "Will blow your mind...",3);
+        Movie matrix = new Movie(3, "The Matrix", 10, (short) 14, "Will blow your mind...",3,"https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_FMjpg_UX1000_.jpg","https://www.youtube.com/watch?v=vKQi3bBA1y8");
         List<Actor> actorListMatrix = new ArrayList(Arrays.asList(four));
         Set<Actor> actorSetMatrix = new HashSet(actorListMatrix);
         matrix.setActorSet(actorSetMatrix);
@@ -78,8 +82,7 @@ public class DataLoader {
     }
 
     private void loadTheater() {
-        theater = theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", (short) 2400));
-    }
+        theater = theaterRepo.save(new Theater(1, "Norrebro", "Lygten 16", "Copenhagen", 2400));}
 
     MoviePlaying moviePlayingOne;
     MoviePlaying moviePlayingTwo;
@@ -101,12 +104,23 @@ public class DataLoader {
     }
 
     private void loadHall() {
-        Hall hall = new Hall(1,"Room One",1);
-        hallRepo.save(hall);
+        hall = hallRepo.save(new Hall(1, 5, 5, "Room One", 1));
     }
 
     private void loadShows() {
-        Show showOneGodfather = new Show(Date.valueOf("2021-10-16"),Time.valueOf("15:00:00"),moviePlayingOne,1);
+        Show showOneGodfather = new Show(Date.valueOf("2021-10-16"),Time.valueOf("15:00:00"),moviePlayingOne,hall);
         showRepo.save(showOneGodfather);
+    }
+
+    private void loadSeats(){
+        Seat seat1 = new Seat(1,(short)1,"A");
+        Seat seat2 = new Seat(2,(short)1,"B");
+        Seat seat3 = new Seat(3,(short)1,"C");
+        Seat seat4 = new Seat(4,(short)1,"D");
+        Seat seat = seatRepo.save(seat1);
+        System.out.println(seat);
+        seatRepo.save(seat2);
+        seatRepo.save(seat3);
+        seatRepo.save(seat4);
     }
 }

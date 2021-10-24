@@ -46,7 +46,6 @@ public class MovieRESTAPIImpTest {
     }
 
     private static int movieId;
-
     @BeforeEach
     public void setupDatabase(){
         categoryRepo.deleteAll();

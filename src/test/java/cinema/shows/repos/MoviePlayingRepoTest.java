@@ -3,12 +3,12 @@ package cinema.shows.repos;
 import cinema.shows.entities.Movie;
 import cinema.shows.entities.MoviePlaying;
 import cinema.shows.entities.Theater;
-import org.junit.jupiter.api.AfterEach;
+import cinema.shows.testUtils.TestDataMaker;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.sql.Date;
 
@@ -25,24 +25,30 @@ class MoviePlayingRepoTest {
     TheaterRepo theaterRepo;
     @Autowired
     CategoryRepo categoryRepo;
+    @Autowired
+    ShowRepo showRepo;
 
-    @AfterEach
-    public void cleanDB() {
-        categoryRepo.deleteAll();
-        movieRepo.deleteAll();
-        theaterRepo.deleteAll();
+    int theaterId;
+    int categoryId;
+    int movieId;
+    @BeforeEach
+    public void initDate() {
+        showRepo.deleteAll();
         moviePlayingRepo.deleteAll();
+        movieRepo.deleteAll();
+        categoryRepo.deleteAll();
+        theaterRepo.deleteAll();
+        theaterId = TestDataMaker.createTheater(theaterRepo);
+        categoryId = TestDataMaker.createCategory(categoryRepo);
+        movieId = TestDataMaker.createMovie(movieRepo,categoryId);
     }
 
     @Test
-    @Sql("/createCategory.sql")
-    @Sql("/createMovie.sql")
-    @Sql("/createTheater.sql")
     public void testAddingMoviePlayingInTheater() {
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
-        Movie movie = movieRepo.getById(1);
-        Theater theater = theaterRepo.getById(1);
+        Movie movie = movieRepo.getById(movieId);
+        Theater theater = theaterRepo.getById(theaterId);
         MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie.getId(), theater);
         assertEquals(0, moviePlayingRepo.count());
         moviePlayingRepo.save(moviePlaying);
@@ -53,14 +59,11 @@ class MoviePlayingRepoTest {
     }
 
     @Test
-    @Sql("/createCategory.sql")
-    @Sql("/createMovie.sql")
-    @Sql("/createTheater.sql")
     public void testGettingMoviePlayingForASpecificDate() {
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
-        Movie movie = movieRepo.getById(1);
-        Theater theater = theaterRepo.getById(1);
+        Movie movie = movieRepo.getById(movieId);
+        Theater theater = theaterRepo.getById(theaterId);
         MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie.getId(), theater);
         Date beforeStartDate = Date.valueOf("2021-11-10");
         Date betweenPlayingDates = Date.valueOf("2021-11-16");
@@ -73,14 +76,11 @@ class MoviePlayingRepoTest {
     }
 
     @Test
-    @Sql("/createCategory.sql")
-    @Sql("/createMovie.sql")
-    @Sql("/createTheater.sql")
     public void testGettingMoviePlayingForAPairOFDates() {
         Date dateStarts = Date.valueOf("2021-11-11");
         Date dateEnds = Date.valueOf("2021-11-22");
-        Movie movie = movieRepo.getById(1);
-        Theater theater = theaterRepo.getById(1);
+        Movie movie = movieRepo.getById(movieId);
+        Theater theater = theaterRepo.getById(theaterId);
         MoviePlaying moviePlaying = new MoviePlaying(dateStarts, dateEnds, movie.getId(), theater);
         Date beforeStartDate = Date.valueOf("2021-11-10");
         Date betweenPlayingDates = Date.valueOf("2021-11-16");

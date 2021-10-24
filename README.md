@@ -6,7 +6,7 @@ REST API solution for cinema project, third semester KEA
 ### REST overview:
 http://localhost:8080/swagger-ui/index.html#/
 
-## Project Description
+## Project Descriptio
 ...
 
 In this project we will use:
@@ -27,5 +27,17 @@ In this project we will use:
       *if you are running maven: $ mvn compile, $ mvn install, $ mvn spring-boot:run -P dev
  </ol>
  
+Group BBH:
+1. Vlad Chivu: 
+   1. implementation of CRUD Movie, 
+   2. implementation of CRUD MoviePlaying and 
+   3. partially REST for displaying the Shows
+2. Simon Bucko: 
+   1. Implemented REST test for MovieRESTImp
+   2. Worked creating on ticketing part
+   3. partially helped on implementing detailed version of the movie resource
+3. Vlad Garau:
+   1. Worked on implementing detailed information about a movie
+   2. Added DTO layer for our movie 
 
  

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 import java.util.Objects;
 
 @AllArgsConstructor @NoArgsConstructor
@@ -27,25 +28,37 @@ public class Show {
     @JoinColumn(name = "Movies_Playing_id", referencedColumnName = "id", nullable = false)
     private MoviePlaying moviePlaying;
 
-    @Column(name = "Halls_id", nullable = false)
-    private int hallId;
+    @ManyToOne
+    @JoinColumn(name = "Halls_id", referencedColumnName = "id", nullable = false)
+    private Hall hall;
 
-    public Show(Date date, Time time, MoviePlaying moviePlaying, int hallId) {
+    @OneToMany(mappedBy = "show")
+    private List<Ticket> tickets;
+
+    public Show(long id, Date date, Time time, MoviePlaying moviePlaying, Hall hall) {
+        this.id = id;
         this.date = date;
         this.time = time;
         this.moviePlaying = moviePlaying;
-        this.hallId = hallId;
+        this.hall = hall;
+    }
+
+    public Show(Date date, Time time, MoviePlaying moviePlaying, Hall hall) {
+        this.date = date;
+        this.time = time;
+        this.moviePlaying = moviePlaying;
+        this.hall = hall;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Show show)) return false;
-        return getHallId() == show.getHallId() && Objects.equals(getDate(), show.getDate()) && Objects.equals(getTime(), show.getTime());
+        return getHall() == show.getHall() && Objects.equals(getDate(), show.getDate()) && Objects.equals(getTime(), show.getTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getDate(), getTime(), getHallId());
+        return Objects.hash(getDate(), getTime(), getHall());
     }
 }

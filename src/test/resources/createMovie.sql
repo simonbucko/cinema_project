@@ -1,1 +1,1 @@
-INSERT INTO movies (id, Title, Rating, Min_Age, Description, Category_id) VALUES (1,'Godfather',10,16,'a classic...',2);
+INSERT INTO movies (id, Title, Rating, Min_Age, Description, Image, Trailer, Category_id) VALUES (1,'Godfather',10,16,'a classic...','www.sss.comm', 'www.ttt.com', 1);
