@@ -91,8 +91,6 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>cinema.shows.CinemaApplication</mainClass>
                         </manifest>
                     </archive>
