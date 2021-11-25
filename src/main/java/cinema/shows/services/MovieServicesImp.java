@@ -69,6 +69,9 @@ public class MovieServicesImp implements MovieServices {
 
     @Override
     public MovieDTOFull addMovie(InputMovieDTO inputMovieDTO) {
+        if (movieRepo.getByTitle(inputMovieDTO.getTitle()) != null) {
+            return getMovieDTOFullFromMovie(movieRepo.getByTitle(inputMovieDTO.getTitle()));
+        }
         Set<Actor> actors;
         if (inputMovieDTO.getActorList().isEmpty() || inputMovieDTO.getActorList() == null) {
             actors = new HashSet<>();
