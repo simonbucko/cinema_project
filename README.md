@@ -29,9 +29,8 @@ In this project we will use:
  
 Group BBH:
 1. Vlad Chivu: 
-   1. implementation of CRUD Movie, 
-   2. implementation of CRUD MoviePlaying and Shows,
-   3. REST for displaying the Shows and Movies playing in cinema
+   1. implemented the CRUD Service for Movies, Movies Playing and Shows
+   2. REST for Movies, Movies playing and Shows
 2. Simon Bucko: 
    1. Implemented REST test for MovieRESTImp
    2. Worked creating on ticketing part
