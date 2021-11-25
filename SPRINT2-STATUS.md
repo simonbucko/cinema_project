@@ -7,3 +7,4 @@ all cinema halls in the theater for a given date
 5. ENDPOINT where a movie can be added, deleted, updated or picked by id
 6. All ENDPOINTS are documented, Swagger is working.
 7. Started implementation of booking a ticket but not completed.
+

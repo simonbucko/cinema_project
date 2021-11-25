@@ -38,6 +38,6 @@ Group BBH:
    3. partially helped on implementing detailed version of the movie resource
 3. Vlad Garau:
    1. Worked on implementing detailed information about a movie
-   2. Added DTO layer for our movie 
+   2. Added DTO layer for our movie
 
  
